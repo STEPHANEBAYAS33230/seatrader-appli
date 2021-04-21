@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creer Un Utilisateur|{{ parent() }}{% endblock %}
+
+{% block header %}
+    <h2>FORMULAIRE DE CREATION D'UTILISATEUR</h2>
+{% endblock %}
+
+{% block main %}
+    <div>
+        {{ form_start(registerForm) }}
+
+        {{ form_widget(registerForm) }}
+        <div class="centre">
+            <button class="btn-grad btn-grad1" type="submit">VALIDER</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
