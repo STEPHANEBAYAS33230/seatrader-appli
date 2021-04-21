@@ -71,7 +71,7 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator implements
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Nom De La Societe could not be found.');
+            throw new CustomUserMessageAuthenticationException('Nom De La Societe ou Mot de passe introuvable');
         }
 
         return $user;
@@ -96,8 +96,7 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator implements
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        return new RedirectResponse($this->urlGenerator->generate('home_connected'));
     }
 
     protected function getLoginUrl()

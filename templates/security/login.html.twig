@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}IDENTIFICATION{% endblock %}
-
+{% block title %}IDENTIFICATION|{{ parent() }}{% endblock %}
+{% block header %}
+    <a href="{{ path('home') }}" class="logo">
+        <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce de gros de Produits de la Mer Frais & Surgelés</p></h3>
+        <!--logo seatrader-->
+    </a>
+{% endblock %}
 {% block main %}
 <form method="post">
     {% if error %}
@@ -17,7 +22,7 @@
     <h1 class="h3 mb-3 font-weight-normal">IDENTFICATION</h1>
     <label for="inputNomDeLaSociete">Nom De La Societe</label>
     <input type="text" value="{{ last_username }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">MOT DE PASSE</label>
     <input type="password" name="password" id="inputPassword" class="form-control" required>
 
     <input type="hidden" name="_csrf_token"
@@ -27,7 +32,7 @@
 
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" name="_remember_me"> Remember me
+                <input type="checkbox" name="_remember_me"> SE SOUVENIR DE MOI
             </label>
         </div>
 

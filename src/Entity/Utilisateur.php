@@ -6,6 +6,7 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
@@ -27,9 +28,13 @@ class Utilisateur implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     /**
+     * @Assert\Regex(
+     * pattern = "/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%])(?!.*(.)\1{2}).*[a-z]/m",
+     * match=true,
+     * message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un caractère spécial.")
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -66,26 +71,25 @@ class Utilisateur implements UserInterface
     private $telephonePerso;
 
     /**
-     * @ORM\ManyToOne (targetEntity="App\Entity\EtatUtilisateur")
+     * @ORM\Column(type="string")
      */
-    private $etatUtilisateur=1;
+    private $etatUtilisateur;
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getEtatUtilisateur(): int
+    public function getEtatUtilisateur()
     {
         return $this->etatUtilisateur;
     }
 
     /**
-     * @param int $etatUtilisateur
+     * @param mixed $etatUtilisateur
      */
-    public function setEtatUtilisateur(int $etatUtilisateur): void
+    public function setEtatUtilisateur($etatUtilisateur): void
     {
         $this->etatUtilisateur = $etatUtilisateur;
     }
-
 
 
 

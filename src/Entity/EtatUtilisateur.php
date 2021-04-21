@@ -18,9 +18,18 @@ class EtatUtilisateur
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string")
      */
     private $etatUtilisateur;
+
+    /**
+     * EtatUtilisateur constructor.
+     * @param $etatUtilisateur
+     */
+    public function __construct($etatUtilisateur)
+    {
+        $this->etatUtilisateur = $etatUtilisateur;
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +38,10 @@ class EtatUtilisateur
 
     public function getEtatUtilisateur(): ?string
     {
+        return $this->etatUtilisateur;
+    }
+
+    public function __toString(){
         return $this->etatUtilisateur;
     }
 
