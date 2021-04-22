@@ -72,7 +72,7 @@
                         -->
                         <li class="scroll-to-section"><a href="#offers">Produits</a></li>
                         <li class="scroll-to-section"><a href="#chefs">Logistique</a></li>
-                        <li class="scroll-to-section"><a href="#">Nos Opportunités</a></li>
+                        <li class="scroll-to-section"><a href="#nosOpportunites">Nos Opportunités</a></li>
 
                         {# <li class="submenu">
                             <a href="javascript:;">Nos Opportunités</a>
@@ -413,7 +413,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="tab-item">
 
-                                                        <div class="price">
+                                                        <div class="price" >
 
                                                         </div>
                                                     </div>
@@ -428,26 +428,52 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </div >
+</section >
 <!-- ***** produits Ends ***** -->
 
-
-
-
 <!-- ***** Menu nos opportunités Starts ***** -->
-{# <section class="section" id="nosOpportunités">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="section-heading">
-                    <h6>Our Menu</h6>
-                    <h2>Our selection of cakes with quality taste</h2>
+ <div  class="container" id="nosOpportunites">
+
+        <div class="col-12 justify-content-center">
+            <div class="row">
+                <div class="justify-content-center section-heading">
+                    <div><h6>Nos Opportunités </h6></div>
+                    <div><h2>Retrouvez chaque jour notre sélection</h2></div>
                 </div>
             </div>
+
+            <div class="row justify-content-around">
+
+                    {%  for miseEa in miseEnAvant %}
+                        {% if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %}
+                        <div  style="width: 280px; margin-left:5%; background-color: #4978fb; margin-top: 20px;">
+                            {% if miseEa.raison.raison=="PROMOTION" %}
+                            <div class="promotion">
+                                {% elseif miseEa.raison.raison=="OFFRE DU JOUR"%}
+                                    <div class="offre-du-jour">
+                                        {% elseif miseEa.raison.raison=="POISSON SAUVAGE"%}
+                                        <div class="poisson-sauvage">
+                                {% endif %}
+                                    <h4 style="margin: 3px; text-align: center;">{{ miseEa.raison.raison }}</h4>
+                            </div>
+                            <div style="text-align: center;">
+                            <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">
+                            </div>
+                                <p style="text-align: center;">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                        <h4 style="margin: 3px; text-align: center; background-color: red; ">prix: {{ miseEa.prix }} €/kg</h4>
+                        <h3 style="height:75px; background-color: #7abaff; text-align: center;">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                        </div>
+                            {% endif %}
+
+                    {% endfor %}
+
+            </div>
+
         </div>
-    </div>
-    <div class="menu-item-carousel">
+
+ </div>
+ {#    <div class="menu-item-carousel">
         <div class="col-lg-12">
             <div class="owl-menu-item owl-carousel">
                 <div class="item">

@@ -1,9 +1,6 @@
 /*
 
-TemplateMo 558 Klassy Cafe
-
-https://templatemo.com/tm-558-klassy-cafe
-
+SEATERADER HOME ACCUEIL
 */
 
 /* ---------------------------------------------
@@ -43,6 +40,43 @@ figure, header, nav, section, article, aside, footer, figcaption {
   border: 0;
   outline: 0;
 }
+/*
+class des mise en Avant************************************
+ */
+.offre-du-jour{
+  margin: 3px 5px 3px 5px;
+  background-color: orange;
+  border-color: orange;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.promotion{
+  margin: 3px 5px 3px 5px;
+  background-color: red;
+  border-color: red;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.poisson-sauvage{
+  margin: 3px 5px 3px 5px;
+  background-color: #6f42c1;
+  border-color: #6f42c1;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+
+
+
+/*
+*************************************************************
+ */
+
 .cadrelogistique{
   background-color: #4978fbc0;
 }
@@ -51,6 +85,13 @@ color: #fff;
 background-color: #4978fb;
 
 }
+.init{
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
 .petitelignelogoseatrader{
 font-family: Arial, Helvetica, sans-serif;
 font-size: 8px;

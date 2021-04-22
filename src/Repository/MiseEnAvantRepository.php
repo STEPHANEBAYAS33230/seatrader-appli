@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\MiseEnAvant;
+use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,18 @@ class MiseEnAvantRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, MiseEnAvant::class);
+    }
+    public function filtrer($datePlus, $dateMoins) {
+
+        $result = $this->createQueryBuilder('s')
+            ->where('s.dateLivraisonMiseEnAvant > :dateMoins and s.dateLivraisonMiseEnAvant < :datePlus') // gestion date
+            ->setParameter('dateMoins', $dateMoins)
+            ->setParameter('datePlus', $datePlus)
+            ->getQuery()
+            ->getResult();
+
+
+    return $result;
     }
 
     // /**
