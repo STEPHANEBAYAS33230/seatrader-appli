@@ -70,9 +70,80 @@ class des mise en Avant************************************
   border-radius: 5px;
 }
 
+.produit-bio{
+  margin: 3px 5px 3px 5px;
+  background-color:#1e7e34;
+  border-color: #1e7e34;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+. pavillon-france{
+  margin: 3px 5px 3px 5px;
+  background-color:#1e7e34;
+  border-color: #1e7e34;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+. peche-msc{
+  margin: 3px 5px 3px 5px;
+  background-color:#8fd19e;
+  border-color: #8fd19e;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+. prix-casse{
+  margin: 3px 5px 3px 5px;
+  background-color:#4e555b;
+  border-color: #4e555b;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+. super-prix{
+  margin: 3px 5px 3px 5px;
+  background-color:#0f6674;
+  border-color: #0f6674;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+/******** css des card de mise en avant */
+.card-miseEn-Avant{
+  width: 270px !important;
+  margin-left:5% !important;
+  background-color: #4978fb !important;
+  margin-top: 20px !important;
+}
+
+.raison{
+  margin: 3px !important;
+  text-align: center !important;
+}
+.leproduit{
+  text-align: center !important;
+}
+
+.livraisonProduit{
+  text-align: center !important;
+}
+
+.prix{
 
 
+  background-color: red !important;
+  text-align: center;
+  border-color: #6f42c1;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
 
+}
 /*
 *************************************************************
  */

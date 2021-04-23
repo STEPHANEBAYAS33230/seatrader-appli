@@ -433,6 +433,7 @@
 <!-- ***** produits Ends ***** -->
 
 <!-- ***** Menu nos opportunités Starts ***** -->
+
  <div  class="container" id="nosOpportunites">
 
         <div class="col-12 justify-content-center">
@@ -447,22 +448,35 @@
 
                     {%  for miseEa in miseEnAvant %}
                         {% if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %}
-                        <div  style="width: 280px; margin-left:5%; background-color: #4978fb; margin-top: 20px;">
+                        <div  class="card-miseEn-Avant" >
                             {% if miseEa.raison.raison=="PROMOTION" %}
                             <div class="promotion">
                                 {% elseif miseEa.raison.raison=="OFFRE DU JOUR"%}
                                     <div class="offre-du-jour">
                                         {% elseif miseEa.raison.raison=="POISSON SAUVAGE"%}
                                         <div class="poisson-sauvage">
+                                            {% elseif miseEa.raison.raison=="PRODUIT BIO"%}
+                                            <div class="produit-bio">
+                                                {% elseif miseEa.raison.raison=="PAVILLON FRANCE"%}
+                                                <div class="pavillon-france">
+                                                    {% elseif miseEa.raison.raison=="PÊCHE MSC"%}
+                                                    <div class="peche-msc">
+                                                        {% elseif miseEa.raison.raison=="prix cassé"%}
+                                                        <div class="prix-casse">
+                                                            {% elseif miseEa.raison.raison=="SUPER PRIX"%}
+                                                            <div class="super-prix">
+
                                 {% endif %}
-                                    <h4 style="margin: 3px; text-align: center;">{{ miseEa.raison.raison }}</h4>
+                                    <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
                             </div>
-                            <div style="text-align: center;">
+                            <div class="leproduit">
                             <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">
                             </div>
-                                <p style="text-align: center;">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
-                        <h4 style="margin: 3px; text-align: center; background-color: red; ">prix: {{ miseEa.prix }} €/kg</h4>
-                        <h3 style="height:75px; background-color: #7abaff; text-align: center;">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                                <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                        <div class="align-items-center">
+                        <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
+                        </div>
+                            <h3 style="height:75px; background-color: #7abaff; text-align: center;">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
                         </div>
                             {% endif %}
 
@@ -472,7 +486,8 @@
 
         </div>
 
- </div>
+  </div>
+
  {#    <div class="menu-item-carousel">
         <div class="col-lg-12">
             <div class="owl-menu-item owl-carousel">
