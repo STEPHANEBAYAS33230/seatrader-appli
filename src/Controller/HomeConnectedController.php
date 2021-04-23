@@ -13,8 +13,9 @@ class HomeConnectedController extends AbstractController
      */
     public function index(): Response
     {
+        $today = strftime('%A %d %B %Y %I:%M:%S');
         return $this->render('home_connected/homeAdmin.html.twig', [
-
+            'dateToday'=>$today,
         ]);
     }
 }

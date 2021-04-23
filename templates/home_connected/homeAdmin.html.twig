@@ -1,22 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block title %}ADMIN|{{ parent() }}{% endblock %}
 
 
-{% block header %}
-
-    <h2>MENU ADMINISTRATEUR</h2>
 
 
-{% endblock %}
 
-{% block nav %}
-    <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce de gros de Produits de la Mer Frais & Surgelés</p></h3>
-    <!--logo seatrader-->
-    <a href="{{ path('creerUnUtilisateur') }}">CREER UN UTILISATEUR</a>
-    <a href="{{ path('app_logout') }}">DECONNECTION</a>
-
-{% endblock %}
 
 {% block main %}
 

@@ -142,7 +142,12 @@ class des mise en Avant************************************
   border-width: 2px;
   border-style: solid;
   border-radius: 5px;
+}
 
+.nomProduit{
+  height:75px;
+  background-color: #7abaff;
+  text-align: center;
 }
 /*
 *************************************************************

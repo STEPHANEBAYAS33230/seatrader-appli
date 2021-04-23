@@ -449,7 +449,7 @@
                     {%  for miseEa in miseEnAvant %}
                         {% if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %}
                         <div  class="card-miseEn-Avant" >
-                            {% if miseEa.raison.raison=="PROMOTION" %}
+                            {% if miseEa.raison.raison=="PROMOTION" or miseEa.raison.raison=="SPECIAL BARBECUE" %}
                             <div class="promotion">
                                 {% elseif miseEa.raison.raison=="OFFRE DU JOUR"%}
                                     <div class="offre-du-jour">
@@ -476,7 +476,7 @@
                         <div class="align-items-center">
                         <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
                         </div>
-                            <h3 style="height:75px; background-color: #7abaff; text-align: center;">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                            <h3 class="nomProduit" >{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
                         </div>
                             {% endif %}
 
