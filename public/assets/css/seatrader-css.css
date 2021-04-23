@@ -79,16 +79,16 @@ class des mise en Avant************************************
   border-radius: 5px;
 }
 
-. pavillon-france{
+.pavillon-france {
   margin: 3px 5px 3px 5px;
-  background-color:#1e7e34;
-  border-color: #1e7e34;
+  background: linear-gradient(to left,blue, white,red);
+  border-color: whitesmoke;
   border-width: 2px;
   border-style: solid;
   border-radius: 5px;
 }
 
-. peche-msc{
+.peche-msc{
   margin: 3px 5px 3px 5px;
   background-color:#8fd19e;
   border-color: #8fd19e;
@@ -97,7 +97,7 @@ class des mise en Avant************************************
   border-radius: 5px;
 }
 
-. prix-casse{
+.prix-casse{
   margin: 3px 5px 3px 5px;
   background-color:#4e555b;
   border-color: #4e555b;
@@ -105,7 +105,7 @@ class des mise en Avant************************************
   border-style: solid;
   border-radius: 5px;
 }
-. super-prix{
+.super-prix{
   margin: 3px 5px 3px 5px;
   background-color:#0f6674;
   border-color: #0f6674;
