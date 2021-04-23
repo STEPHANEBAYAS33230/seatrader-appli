@@ -37,12 +37,20 @@
 }
 
 li a:hover{
-    background-color: #5eb5e0;
-    border-width: 1px 1px 1px 1px;
-    border-color: blue;
-    border-style: solid;
+    color: #5eb5e0;
+    }
+.cacheMouseOver:before{
+    visibility: visible;
+}
+.cacheMouseOver:hover{
+    visibility:visible;
 }
 
+
+
+.cacheMouseOver:after{
+    visibility: hidden;
+}
 
 
 .lienA:hover{

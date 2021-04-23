@@ -28,7 +28,7 @@ class Produit
     private $quantite;
 
     /**
-     * @ORM\ManyToOne (targetEntity="App\Entity\FamilleProduit")
+     * @ORM\ManyToOne (targetEntity="App\Entity\FamilleProduit", inversedBy="listingProduits")
      */
     private $famille;
 
@@ -53,8 +53,6 @@ class Produit
         $this->pieceOuKg = $pieceOuKg;
     }
 
-
-
     /**
      * @return mixed
      */
@@ -70,6 +68,8 @@ class Produit
     {
         $this->famille = $famille;
     }
+
+
 
 
 
