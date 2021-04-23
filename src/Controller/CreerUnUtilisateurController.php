@@ -17,7 +17,7 @@ class CreerUnUtilisateurController extends AbstractController
      * @Route("/creer/un/utilisateur", name="creerUnUtilisateur")
      */
     public function index(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
-    {
+    {   $today = strftime('%A %d %B %Y %I:%M:%S');
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $participant = new Utilisateur();
         $registerForm = $this->createForm(UtilisateurType::class, $participant);
@@ -51,7 +51,7 @@ class CreerUnUtilisateurController extends AbstractController
 
         }
         return $this->render('creer_un_utilisateur/index.html.twig', [
-            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView()
+            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView(), 'dateToday'=>$today,
         ]);
 
     }
