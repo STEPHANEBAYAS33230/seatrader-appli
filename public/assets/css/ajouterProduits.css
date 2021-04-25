@@ -8,6 +8,10 @@
     border-style: solid;
     border-width: 3px 3px 3px 3px;
     border-radius: 5px;
+
+}
+.titreh2{
+    width: 10%;
 }
 
 .colonne-famille{
@@ -22,6 +26,7 @@
     }
 
 .colonne-famPdro{
+    color: white;
     font-weight: bold;
     width: 350px;
     margin: 20px;
@@ -40,3 +45,7 @@
     border-radius: 5px;
 }
 
+.formulaireBlue{
+    background-color: #7abaff;
+
+}

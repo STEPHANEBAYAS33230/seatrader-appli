@@ -12,8 +12,8 @@
     <!--**************************-->
         <div class=row">
             <div class="col-xl-12">
-                <div class="justify-content-center titre">
-                <h2>Les Produits</h2>
+                <div class="justify-content-center ">
+                <h2 class="titre">Les Produits</h2>
                 </div>
             </div>
         </div>
@@ -52,11 +52,13 @@
         </div>
         <!--fin du main*************-->
         <!--**************************-->
-        <div class="row">
+        <div class="row formulaireBlue">
             <div class="col-12 justify-content-center">
-                {{ form_start(produitForm) }}
-                {{ form_widget(produitForm) }}
-
+                {{ form_start(produitForm, { 'attr' : { 'class': '' } }) }}
+                {{ form_label(produitForm.nomProduit) }}{{ form_widget(produitForm.nomProduit) }}
+                {{ form_label(produitForm.famille) }}{{ form_widget(produitForm.famille) }}
+                {{ form_label(produitForm.pieceOuKg) }}{{ form_widget(produitForm.pieceOuKg) }}
+                {{ form_end(produitForm) }}
 
                 <button class="" type="submit"> Ajouter</button>
 
