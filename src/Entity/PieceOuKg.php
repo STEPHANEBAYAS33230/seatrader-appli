@@ -22,6 +22,11 @@ class PieceOuKg
      */
     private $mesure;
 
+    public function __toString()
+    {
+        return $this->id.' - '.$this->mesure;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

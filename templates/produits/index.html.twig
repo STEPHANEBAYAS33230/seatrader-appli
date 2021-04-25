@@ -10,36 +10,66 @@
 
     <div class="container">
     <!--**************************-->
-        <div class="col-12 justify-content-center">
-            <div class="row justify-content-center">
+        <div class=row">
+            <div class="col-xl-12">
+                <div class="justify-content-center titre">
                 <h2>Les Produits</h2>
+                </div>
             </div>
         </div>
     <!--fin du main*************-->
         <!--**************************-->
-        <div class="col-2 justify-content-center">
-            <div class="row justify-content-center colonne-famille">
-                <h5>Les familles</h5>
-                {%  for famille in familleProduit %}
-                <h6>{{ famille.nomFamille }}</h6>
-                {% endfor %}
+        <div class="row">
+            <div class="col-2  colonne-famille" >
+                    <div>
+                    <div class="justify-content-center" >
+                    <h5>Les familles</h5>
+                    </div>
+                    {%  for famille in familleProduit %}
+                    <div class="justify-content-center">
+                        <h6>{{ famille.nomFamille }}</h6>
+
+                    </div>
+                    {% endfor %}
+                    </div>
             </div>
+            {%  for famille in familleProduit %}
+
+                <div class="col-2 justify-content-around colonne-famPdro" >
+                    <div class="justify-content-around">
+
+                        <div style="">
+                            <h6 style="color:white;">{{ famille.nomFamille }}</h6>
+                            {%  for prod in famille.listingProduits %}
+
+                                    <p class="colonne-prod">{{ prod.nomProduit }}</p>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <!--fin du main*************-->
         <!--**************************-->
-        <div class="col-10 justify-content-center">
-            <div class="row justify-content-center">
+        <div class="row">
+            <div class="col-12 justify-content-center">
+                {{ form_start(produitForm) }}
+                {{ form_widget(produitForm) }}
 
-                {%  for famille in familleProduit %}
-                    <div>
-                    <h6>{{ famille.nomFamille }}</h6>
-                        {%  for prod in produit %}
-                        {% if famille.id==prod.famille.id %}
-                            <p>{{ prod.nomProduit }}</p>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                {% endfor %}
+
+                <button class="" type="submit"> Ajouter</button>
+
+
+                {{ form_end(produitForm) }}
+{# {{ form_start(form, { 'attr' : { 'class': 'app-location' } }) }}
+        {{ form_label(form.name) }} {{ form_widget(form.name) }}
+        {{ form_label(form.city) }} {{ form_widget(form.city) }}
+        {{ form_label(form.street) }} {{ form_widget(form.street) }}
+        {{ form_label(form.latitude) }} {{ form_widget(form.latitude) }}
+        {{ form_label(form.longitude) }} {{ form_widget(form.longitude) }} #}
+
+
             </div>
         </div>
         <!--fin du main*************-->

@@ -25,7 +25,7 @@ class FamilleProduit
     private $nomFamille;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Produit", mappedBy="famille")
+     * @ORM\OneToMany(targetEntity="App\Entity\Produit", mappedBy="famille", cascade={"persist","remove"})
      */
     private $listingProduits;
 
@@ -37,6 +37,36 @@ class FamilleProduit
     {
         $this->listingProduits = new ArrayCollection();
     }
+    //****************************************
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getListingProduits(): Collection
+    {
+        return $this->listingProduits;
+    }
+
+    //ajouter un produit
+    public function addProduit(Produit $listingProduits): self
+    {
+        if (!$this->listingProduits->contains($listingProduits)) {
+            $this->listingProduits[] = $listingProduits;
+            //$listingProduits->addSortie($this);
+        }
+        return $this;
+    }
+
+    //enlever un produit
+    public function removeProduit(Produit $listingProduits): self
+    {
+        if ($this->listingProduits->contains($listingProduits)) {
+            $this->listingProduits->removeElement($listingProduits);
+            //$listingProduits->removeSortie($this);
+        }
+        return $this;
+    }
+
+    //****************************************
 
     /**
      * @return Collection|Produit[]
@@ -45,6 +75,13 @@ class FamilleProduit
     {
         return $this->listingProduits;
     }
+
+    public function __toString()
+    {
+        return $this->id.' - '.$this->nomFamille;
+
+    }
+
 
     public function getId(): ?int
     {

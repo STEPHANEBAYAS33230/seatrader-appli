@@ -4,9 +4,15 @@ namespace App\Entity;
 
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
+ * @UniqueEntity(
+ *     fields={"nomProduit"},
+ *     errorPath="nomProduit",
+ *     message="ce produit existe déjà"
+ * )
  */
 class Produit
 {
@@ -25,15 +31,15 @@ class Produit
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
      */
-    private $quantite;
+    private $quantite=0;
 
     /**
-     * @ORM\ManyToOne (targetEntity="App\Entity\FamilleProduit", inversedBy="listingProduits")
+     * @ORM\ManyToOne(targetEntity="App\Entity\FamilleProduit", inversedBy="listingProduits")
      */
     private $famille;
 
     /**
-     * @ORM\ManyToOne (targetEntity="App\Entity\PieceOuKg")
+     * @ORM\Column(type="string", length=15)
      */
     private $pieceOuKg;
 

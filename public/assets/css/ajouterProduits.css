@@ -1,5 +1,42 @@
-.colonne-famille{
-    background-color: #5eb5e0;
-    color: black;
-
+.titre{
+    text-align: center;
+    background-image: url('../images/reservation-bg.jpg');
+    color: white;
+    margin-top: 30px;
+    font-weight: bold;
+    border-color:blue;
+    border-style: solid;
+    border-width: 3px 3px 3px 3px;
+    border-radius: 5px;
 }
+
+.colonne-famille{
+    margin-top: 20px;
+    background-image: url('../images/reservation-bg.jpg');
+    color: white;
+    font-weight: bold;
+    border-color:blue;
+    border-style: solid;
+    border-width: 3px 3px 3px 3px;
+    border-radius: 5px;
+    }
+
+.colonne-famPdro{
+    font-weight: bold;
+    width: 350px;
+    margin: 20px;
+    background-image: url('../images/reservation-bg.jpg');
+    border-color:blue;
+    border-style: solid;
+    border-width: 3px 3px 3px 3px;
+    border-radius: 5px;
+}
+
+.colonne-prod{
+    background-color: #7abaff;
+    border-color:blue;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-radius: 5px;
+}
+
