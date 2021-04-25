@@ -73,4 +73,25 @@ class ProduitsController extends AbstractController
         ]);
 
     }
+    /**
+     * @Route("/produits/{id}", name="supprimer_produit")
+     */
+    public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
+        //****************
+        echo ($id);
+        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+        $prod = $produitRepo->find($id);
+        //********************
+        $em->remove($prod);
+        $em->flush();
+
+        return $this->redirectToRoute('ajouter-produits');
+
+
+
+        //***************************
+
+
+
+    }
 }

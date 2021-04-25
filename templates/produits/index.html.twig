@@ -9,42 +9,45 @@
 {% block main %}
 
     <div class="container">
-    <!--**************************-->
         <div class=row">
-            <div class="col-xl-12">
-                <div class="justify-content-center ">
-                <h2 class="titre">Les Produits</h2>
+
+            <!--*****************************-->
+            <div class="col-2  colonne-famille" >
+
+                <div class="justify-content-center" >
+                    <h5>Les familles</h5>
+                </div>
+                    {%  for famille in familleProduit %}
+                <div class="justify-content-center">
+                    <h6>{{ famille.nomFamille }}</h6>
+                </div>
+                    {% endfor %}
+
+            </div>
+            <!--//****************************-->
+            <!--**************************-->
+            <div class="col-9 justify-content-center titre">
+                <div>
+                <h2 class="">Ajouter des  Produits <i class="fas fa-fish"></i></h2>
                 </div>
             </div>
         </div>
-    <!--fin du main*************-->
-        <!--**************************-->
-        <div class="row">
-            <div class="col-2  colonne-famille" >
-                    <div>
-                    <div class="justify-content-center" >
-                    <h5>Les familles</h5>
-                    </div>
-                    {%  for famille in familleProduit %}
-                    <div class="justify-content-center">
-                        <h6>{{ famille.nomFamille }}</h6>
 
-                    </div>
-                    {% endfor %}
-                    </div>
-            </div>
+        <!--//*****************************-->
+        <div class="row">
             {%  for famille in familleProduit %}
 
-                <div class="col-2 justify-content-around colonne-famPdro" >
+                <div class="col-3 justify-content-around colonne-famPdro" >
                     <div class="justify-content-around">
 
-                        <div style="">
-                            <h6 style="color:white;">{{ famille.nomFamille }}</h6>
+                        <div>
+                            <h6 style="text-align:center; color:white;">{{ famille.nomFamille }}</h6>
                             {%  for prod in famille.listingProduits %}
 
-                                    <p class="colonne-prod">{{ prod.nomProduit }}</p>
+                                <p class="colonne-prod">{{ prod.nomProduit }}  <a  href=" {{ path('supprimer_produit',{'id':prod.id}) }}"><i class="fas fa-trash"></i></a></p>
 
-                            {% endfor %}
+
+                                {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -52,26 +55,18 @@
         </div>
         <!--fin du main*************-->
         <!--**************************-->
-        <div class="row formulaireBlue">
-            <div class="col-12 justify-content-center">
-                {{ form_start(produitForm, { 'attr' : { 'class': '' } }) }}
-                {{ form_label(produitForm.nomProduit) }}{{ form_widget(produitForm.nomProduit) }}
-                {{ form_label(produitForm.famille) }}{{ form_widget(produitForm.famille) }}
-                {{ form_label(produitForm.pieceOuKg) }}{{ form_widget(produitForm.pieceOuKg) }}
-                {{ form_end(produitForm) }}
+        <div class="row">
+            <div class="col-12 justify-content-center formulaireBlue">
+                {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                <div class="caseform">
+                    {{ form_errors(produitForm) }}
+                {{ form_label(produitForm.nomProduit) }}{{ form_widget(produitForm.nomProduit) }}{{ form_help(produitForm.nomProduit) }}
+                {{ form_label(produitForm.famille) }}: {{ form_widget(produitForm.famille) }}
+                {{ form_label(produitForm.pieceOuKg) }}: {{ form_widget(produitForm.pieceOuKg) }}
 
-                <button class="" type="submit"> Ajouter</button>
-
-
-                {{ form_end(produitForm) }}
-{# {{ form_start(form, { 'attr' : { 'class': 'app-location' } }) }}
-        {{ form_label(form.name) }} {{ form_widget(form.name) }}
-        {{ form_label(form.city) }} {{ form_widget(form.city) }}
-        {{ form_label(form.street) }} {{ form_widget(form.street) }}
-        {{ form_label(form.latitude) }} {{ form_widget(form.latitude) }}
-        {{ form_label(form.longitude) }} {{ form_widget(form.longitude) }} #}
-
-
+                    <button class="btn-grad" type="submit">valider</button>
+                    {{ form_end(produitForm) }}
+                </div>
             </div>
         </div>
         <!--fin du main*************-->
