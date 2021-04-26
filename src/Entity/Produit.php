@@ -91,7 +91,7 @@ class Produit
 
     public function setNomProduit(string $nomProduit): self
     {
-        $this->nomProduit = $nomProduit;
+        $this->nomProduit = ucwords(strtolower($nomProduit));
 
         return $this;
     }

@@ -3,34 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\FamilleProduit;
-use App\Entity\Produit;
-use App\Form\ProduitType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProduitsController extends AbstractController
+class FamilleController extends AbstractController
 {
     /**
-     * @Route("/produits", name="ajouter-produits")
+     * @Route("/famille", name="ajouter-famille")
      */
-    public function index(EntityManagerInterface $em, Request $request): Response
+    public function index(): Response
     {
         // on récupère l'user
         $user=$this->getUser();
         // recupere toutes les familles
         $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $famille = $familleProduitRepo->findAll();
-        // recupere tous les produits
-        $ProduitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $produit = $ProduitRepo->findAll();
         $today = strftime('%A %d %B %Y %I:%M:%S');
 
         //************formulaire
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $produitF = new Produit();
+        $familla = new FamilleProduit();
         $produitForm = $this->createForm(ProduitType::class, $produitF);
         $produitForm->handleRequest($request);
 
@@ -60,34 +53,18 @@ class ProduitsController extends AbstractController
 
 
 
-        }
 
 
-        //***************************
-        return $this->render('produits/index.html.twig', [
-            "produit"=>$produit, "familleProduit"=>$famille, "dateToday"=>$today, 'produitForm'=>$produitForm->createView(),"user"=>$user,
+
+
+
+
+
+
+
+            //****************************
+        return $this->render('famille/index.html.twig', [
+            'controller_name' => 'FamilleController',
         ]);
-
-    }
-    /**
-     * @Route("/produits/{id}", name="supprimer_produit")
-     */
-    public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
-        //****************
-        echo ($id);
-        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $prod = $produitRepo->find($id);
-        //********************
-        $em->remove($prod);
-        $em->flush();
-
-        return $this->redirectToRoute('ajouter-produits');
-
-
-
-        //***************************
-
-
-
     }
 }

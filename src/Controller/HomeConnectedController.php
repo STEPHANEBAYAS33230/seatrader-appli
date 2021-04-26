@@ -12,10 +12,11 @@ class HomeConnectedController extends AbstractController
      * @Route("/home/connected", name="home_connected")
      */
     public function index(): Response
-    {
+    {   // on récupère l'user
+        $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
         return $this->render('home_connected/homeAdmin.html.twig', [
-            'dateToday'=>$today,
+            'dateToday'=>$today,"user"=>$user,
         ]);
     }
 }

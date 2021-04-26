@@ -84,7 +84,7 @@
                             </ul>
                             <div>
 
-                                {{ dateToday|date("d/m/Y") }}
+                                {{ dateToday|date("d/m/Y") }}<p><i class="fas fa-user"></i>{{ user.nom }}</p>
 
                             </div>
 
@@ -104,5 +104,26 @@
         {% block main %}{% endblock %}
         </main>
 
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="logo">
+                                <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce  de  gros de Produits de la Mer Frais & Surgelés</p></h3>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="left-text-content">
+                            <p>© Copyright Seatrader Version 1.2021</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

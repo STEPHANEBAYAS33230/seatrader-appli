@@ -8,25 +8,28 @@
 
 {% block main %}
 
-    <div class="container">
+    <div class="container marge-container">
         <div class=row">
 
             <!--*****************************-->
-            <div class="col-2  colonne-famille" >
+            <div class="col-12  colonne-famille" >
 
-                <div class="justify-content-center" >
-                    <h5>Les familles</h5>
-                </div>
+                <div class="row justify-content-around" >
+                    <h4>Les familles</h4>
+
+               {#  <div class="justify-content-around">#}
                     {%  for famille in familleProduit %}
-                <div class="justify-content-center">
-                    <h6>{{ famille.nomFamille }}</h6>
-                </div>
+                        <div class="surCadre">
+                    <h6 class="nom-famille">{{ famille.nomFamille }}</h6>
+                        </div>
                     {% endfor %}
+                {# </div>#}
+                </div>
 
             </div>
             <!--//****************************-->
             <!--**************************-->
-            <div class="col-9 justify-content-center titre">
+            <div class="col-12 justify-content-center titre">
                 <div>
                 <h2 class="">Ajouter des  Produits <i class="fas fa-fish"></i></h2>
                 </div>
@@ -34,11 +37,11 @@
         </div>
 
         <!--//*****************************-->
-        <div class="row">
+        <div class="row justify-content-around">
             {%  for famille in familleProduit %}
 
-                <div class="col-3 justify-content-around colonne-famPdro" >
-                    <div class="justify-content-around">
+                <div class="col-3  colonne-famPdro" >
+                    <div class="">
 
                         <div>
                             <h6 style="text-align:center; color:white;">{{ famille.nomFamille }}</h6>
@@ -59,9 +62,9 @@
             <div class="col-12 justify-content-center formulaireBlue">
                 {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
                 <div class="caseform">
-                    {{ form_errors(produitForm) }}
-                {{ form_label(produitForm.nomProduit) }}{{ form_widget(produitForm.nomProduit) }}{{ form_help(produitForm.nomProduit) }}
-                {{ form_label(produitForm.famille) }}: {{ form_widget(produitForm.famille) }}
+                    {{ form_help(produitForm.nomProduit) }}{{ form_errors(produitForm.nomProduit) }}
+                    {{ form_label(produitForm.nomProduit) }}: {{ form_widget(produitForm.nomProduit) }}
+                    {{ form_label(produitForm.famille) }}: {{ form_widget(produitForm.famille) }}
                 {{ form_label(produitForm.pieceOuKg) }}: {{ form_widget(produitForm.pieceOuKg) }}
 
                     <button class="btn-grad" type="submit">valider</button>
