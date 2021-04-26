@@ -34,7 +34,7 @@ class UtilisateurType extends AbstractType
             ->add('telephone_societe')
             ->add('telephonePerso')
             //->add('etatUilisateur')
-            ->add('etatUtilisateur', EntityType::class, ['class' => EtatUtilisateur::class,'choice_value'=>'etatUtilisateur'])
+            //->add('etatUtilisateur', EntityType::class, ['class' => EtatUtilisateur::class,'choice_value'=>'etatUtilisateur'])
 
         ;
     }

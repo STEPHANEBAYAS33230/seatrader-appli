@@ -102,7 +102,7 @@ class FamilleProduit
 
     public function setNomFamille(string $nomFamille): self
     {
-        $this->nomFamille = $nomFamille;
+        $this->nomFamille = strtoupper($nomFamille);
 
         return $this;
     }

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\FamilleProduit;
+use App\Form\FamilleProduitType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,10 +15,10 @@ class FamilleController extends AbstractController
     /**
      * @Route("/famille", name="ajouter-famille")
      */
-    public function index(): Response
+    public function index(EntityManagerInterface $em, Request $request): Response
     {
         // on récupère l'user
-        $user=$this->getUser();
+        $user = $this->getUser();
         // recupere toutes les familles
         $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $famille = $familleProduitRepo->findAll();
@@ -24,47 +27,53 @@ class FamilleController extends AbstractController
         //************formulaire
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $familla = new FamilleProduit();
-        $produitForm = $this->createForm(ProduitType::class, $produitF);
-        $produitForm->handleRequest($request);
+        $familleForm = $this->createForm(FamilleProduitType::class, $familla);
+        $familleForm->handleRequest($request);
 
         // si formulaire validé
-        if ($produitForm->isSubmitted() and $produitForm->isValid()) {
-
+        if ($familleForm->isSubmitted() and $familleForm->isValid()) {
 
 
             //sauvegarder mon produit
 
 
-            $em->persist($produitF);
+            $em->persist($familla);
             $em->flush();
-            //on recupere la famille
-            // récupérer la famille à modifier
-            $familleChoisie=$produitF->getFamille();
-            $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-            $familly = $famillyRepo->find($familleChoisie);
-            $familly->addProduit($produitF);
-            $em->persist($familly);
-            $em->flush();
+
             //******************
             $this->addFlash('success', 'produit créé');
-            return $this->redirectToRoute('ajouter-produits', [
+            return $this->redirectToRoute('ajouter-famille', [
 
             ]);
-
-
-
-
-
-
-
-
-
-
-
+        }
 
             //****************************
-        return $this->render('famille/index.html.twig', [
-            'controller_name' => 'FamilleController',
-        ]);
+            return $this->render('famille/index.html.twig', [
+                "famille" => $famille, "dateToday" => $today, 'familleForm' => $familleForm->createView(), "user" => $user,
+
+            ]);
+        }
+
+
+    /**
+     * @Route("/famille/{id}", name="supprimer_famille")
+     */
+    public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
+        //****************
+
+        $familleRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+        $famille = $familleRepo->find($id);
+        //********************
+        $em->remove($famille);
+        $em->flush();
+
+        return $this->redirectToRoute('ajouter-famille');
+
+
+
+        //***************************
+
+
+
     }
-}
+    }

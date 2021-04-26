@@ -1,44 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}IDENTIFICATION|{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+ {% endblock %}
+
 {% block header %}
     <a href="{{ path('home') }}" class="logo">
-        <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce de gros de Produits de la Mer Frais & Surgelés</p></h3>
-        <!--logo seatrader-->
+        <h3 class="back-css" ><i class="far fa-arrow-alt-circle-left"></i></h3>
+        <!--retour home-->
     </a>
 {% endblock %}
 {% block main %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5 fondContainer">
+                    <div class="card-body">
+                        <a href="{{ path('home') }}" class="logo">
+                            <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER</h3>
+                            <!--logo seatrader-->
+                        </a>
+                        <h5 class="card-title text-center">Identification</h5>
+                        <form class="form-signin" method="post">
+                            <div class="form-label-group">
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                    </div>
+                                {% endif %}
+                                <input  class="form-control" type="text" value="{{ last_username }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus>
+                                <label for="inputNomDeLaSociete">Nom De La Société Identifiant</label>
+                            </div>
+
+                            <div class="form-label-group">
+
+                                <input class="form-control"  type="password" name="password" id="inputPassword" required>
+                                <label for="inputPassword">MOT DE PASSE</label>
+
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}"
+                                >
+                            </div>
+
+                            <div class="checkbox mb-3 custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" name="_remember_me">
+                                <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
+                            </div>
+                            <button class="btn btn-lg btn-light btn-block text-uppercase" type="submit">valider</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">IDENTFICATION</h1>
-    <label for="inputNomDeLaSociete">Nom De La Société</label>
-    <input type="text" value="{{ last_username }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus>
-    <label for="inputPassword">MOT DE PASSE</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> SE SOUVENIR DE MOI
-            </label>
-        </div>
-
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+    </div>
 {% endblock %}

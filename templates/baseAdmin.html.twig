@@ -30,7 +30,9 @@
 
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         {# <a class="navbar-brand" href="#">Navbar</a>#}
-                        <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce de gros de Produits de la Mer Frais & Surgelés</p></h3>
+                        {# <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce de gros de Produits de la Mer Frais & Surgelés</p></h3>#}
+                        <img class="image-bar" src="{{ asset('') }}assets/images/seatraderLOGO.png" alt="logo seatrader">
+
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -38,7 +40,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="{{ path('home_connected') }}">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,16 +49,12 @@
                                     <div class="dropdown-menu menuDeroulant" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item lienA cacheMouseOver" href="{{ path('ajouter-produits') }}">Ajouter un produit</a>
                                         <div class="dropdown-divider lienA cacheMouseOver"></div>
-                                        <a class="dropdown-item lienA cacheMouseOver" href="#">Ajouter une famille de produit</a>
-                                        <div class="dropdown-divider lienA cacheMouseOver"></div>
-                                        <a class="dropdown-item lienA" href="#">Gérer mes produits</a>
-                                        <div class="dropdown-divider lienA cacheMouseOver"></div>
-                                        <a class="dropdown-item lienA" href="#">Gérer mes famille</a>
+                                        <a class="dropdown-item lienA cacheMouseOver" href="{{ path('ajouter-famille') }}">Ajouter une famille de produit</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        CLIENT
+                                        Clients
                                     </a>
                                     <div class="dropdown-menu menuDeroulant" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item lienA" href="{{ path('creerUnUtilisateur') }}">Ajouter un client</a>
@@ -114,7 +112,9 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="logo">
-                                <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce  de  gros de Produits de la Mer Frais & Surgelés</p></h3>
+                                {# <h3 class="titrelogoseatrader" ><i class="fas fa-water logoseatrader" ></i>SEATRADER<p class="petitelignelogoseatrader">Commerce  de  gros de Produits de la Mer Frais & Surgelés</p></h3>#}
+                                <img src="{{ asset('') }}assets/images/seatraderLOGO.png" alt="logo seatrader">
+
                         </div>
                     </div>
                     <div class="col-4">

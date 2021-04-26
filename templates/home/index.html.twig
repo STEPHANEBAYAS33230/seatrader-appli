@@ -447,7 +447,7 @@
             <div class="row justify-content-around">
 
                     {%  for miseEa in miseEnAvant %}
-                        {% if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %}
+                        {# % if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %#}
                         <div  class="card-miseEn-Avant" >
                             {% if miseEa.raison.raison=="PROMOTION" or miseEa.raison.raison=="SPECIAL BARBECUE" %}
                             <div class="promotion">
@@ -478,7 +478,7 @@
                         </div>
                             <h3 class="nomProduit" >{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
                         </div>
-                            {% endif %}
+                            {# % endif %#}
 
                     {% endfor %}
 

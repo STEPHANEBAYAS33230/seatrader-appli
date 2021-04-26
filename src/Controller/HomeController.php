@@ -17,7 +17,7 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        //*********recuperer les mises avant
+        //*********recuperer les mises avant/date
         $today = new \DateTime('now');
         $dtplus = new \DateTime('now');
         $dtmoins= new \DateTime('now');
@@ -27,9 +27,6 @@ class HomeController extends AbstractController
         $dtmoins->format('Y-m-d');
         $today->format('Y-m-d');
 
-        //echo "today/////";
-        //echo $today->format('Y-m-d H:i:s');
-        //echo "today/////";
 
         for($i=1;$i<31;$i++) {
             $today->add(new DateInterval('P1D'));
@@ -44,7 +41,32 @@ class HomeController extends AbstractController
             }
 
         }
+        //**************************si miseEnavant vide ds le futur (1mois)-->passé à moins 30j
+        if (empty($miseEnAvant)){
+            $today = new \DateTime('now');
+            $dtplus = new \DateTime('now');
+            $dtmoins= new \DateTime('now');
+            $dtmoins->sub(new DateInterval('P1D'));
+            $dtplus->add(new DateInterval('P1D'));
+            $dtplus->format('Y-m-d');
+            $dtmoins->format('Y-m-d');
+            $today->format('Y-m-d');
 
+            for($i=1;$i<31;$i++) {
+                $today->sub(new DateInterval('P1D'));
+                $dtmoins->sub(new DateInterval('P1D'));
+                $dtplus->sub(new DateInterval('P1D'));
+
+                // récupère repository
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                if (!empty($miseEnAvant)){
+                    break;
+                }
+
+            }
+        //***********fin de IF
+        }
 
 
 

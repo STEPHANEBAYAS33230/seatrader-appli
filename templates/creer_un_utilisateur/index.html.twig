@@ -1,21 +1,91 @@
 {% extends 'baseAdmin.html.twig' %}
 
-{% block title %}Creer Un Utilisateur|{{ parent() }}{% endblock %}
+{% block title %}CLIENT |{{ parent() }}{% endblock %}
 
-{% block header %}
-    <h2>FORMULAIRE DE CREATION D'UTILISATEUR</h2>
-{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
 
 {% block main %}
-    <div>
-        {{ form_start(registerForm) }}
 
-        {{ form_widget(registerForm) }}
-        <div class="centre">
-            <button class="btn-grad btn-grad1" type="submit">VALIDER</button>
+    <div class="container marge-container">
+        <div class=row">
+
+
+            <!--**************************-->
+            <div class="col-12 justify-content-center titre">
+                <div>
+                    <h2 class="">Ajouter un client</h2>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <!--//*****************************-->
+
+        <!--**************************-->
+        <div class="row">
+            <!--deb colonne-->
+            <div class="col-2 justify-content-center">
+                <div class="caseform">
+
+
+
+                </div>
+            </div>
+            <!--fin colonne-->
+            <!--deb colonne-->
+            <div class="col-8 justify-content-center">
+                {{ form_start(registerForm, { 'attr' : { 'style': '', 'class': '' } }) }}
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.nomDeLaSociete) }}{{ form_widget(registerForm.nomDeLaSociete) }}
+                    {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.nom) }}{{ form_widget(registerForm.nom) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.prenom) }}{{ form_widget(registerForm.prenom) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.emailSociete) }}{{ form_widget(registerForm.emailSociete) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.emailPerso) }}{{ form_widget(registerForm.emailPerso) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.telephone_societe) }}{{ form_widget(registerForm.telephone_societe) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_label(registerForm.telephonePerso) }}{{ form_widget(registerForm.telephonePerso) }}
+                </div>
+                <div class="css-caseAjoutClient">
+                    {{ form_widget(registerForm.password) }}
+                    {{ form_help(registerForm.password) }}{{ form_errors(registerForm.password) }}
+                </div>
+                <div>
+                    <button class="btn-grad" type="submit">valider</button>
+                    {{ form_end(registerForm) }}
+                </div>
+            </div>
+            <!--fin colonne-->
+            <!--deb colonne-->
+            <div class="col-2 justify-content-center">
+
+                <div class="caseform">
+
+
+                </div>
+            </div>
+            <!--fin colonne-->
+
+
+
+
+        </div> <!--fin du row*************-->
+
+
+
+    </div><!--fin de container-->
+
 {% endblock %}
 
-{% block nav %}
-{% endblock %}

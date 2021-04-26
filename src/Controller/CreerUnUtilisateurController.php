@@ -14,10 +14,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class CreerUnUtilisateurController extends AbstractController
 {
     /**
-     * @Route("/creer/un/utilisateur", name="creerUnUtilisateur")
+     * @Route("/admin", name="creerUnUtilisateur")
      */
     public function index(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
-    {   $today = strftime('%A %d %B %Y %I:%M:%S');
+    {
+        // on récupère l'user
+        $user=$this->getUser();
+        $today = strftime('%A %d %B %Y %I:%M:%S');
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $participant = new Utilisateur();
         $registerForm = $this->createForm(UtilisateurType::class, $participant);
@@ -51,7 +54,7 @@ class CreerUnUtilisateurController extends AbstractController
 
         }
         return $this->render('creer_un_utilisateur/index.html.twig', [
-            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView(), 'dateToday'=>$today,
+            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user,
         ]);
 
     }
