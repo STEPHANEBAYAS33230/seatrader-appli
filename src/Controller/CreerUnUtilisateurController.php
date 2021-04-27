@@ -58,4 +58,32 @@ class CreerUnUtilisateurController extends AbstractController
         ]);
 
     }
+    //*******************************************************************************
+    /**
+     * @Route("/admin/clients", name="gerer_mes_clients")
+     */
+    public function clients (EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        // on récupère l'user et date du jour
+        $user=$this->getUser();
+        $today = strftime('%A %d %B %Y %I:%M:%S');
+
+
+
+
+
+
+
+
+
+
+
+
+        return $this->render('creer_un_utilisateur/index.html.twig', [
+            'dateToday'=>$today, 'user'=>$user,
+        ]);
+
+
+
+    }
 }

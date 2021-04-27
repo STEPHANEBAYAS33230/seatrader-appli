@@ -4,6 +4,9 @@
 
  {% block stylesheets %}
      <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
  {% endblock %}
 
 {% block main %}
@@ -13,7 +16,7 @@
 
 
             <!--**************************-->
-            <div class="col-12 justify-content-center titre">
+            <div class="col-md-12 justify-content-center titre">
                 <div>
                     <h2 class="">Ajouter un client</h2>
                 </div>
@@ -21,67 +24,50 @@
         </div>
 
         <!--//*****************************-->
-
         <!--**************************-->
         <div class="row">
-            <!--deb colonne-->
-            <div class="col-2 justify-content-center">
-                <div class="caseform">
 
 
-
-                </div>
-            </div>
-            <!--fin colonne-->
-            <!--deb colonne-->
-            <div class="col-8 justify-content-center">
                 {{ form_start(registerForm, { 'attr' : { 'style': '', 'class': '' } }) }}
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.nomDeLaSociete) }}{{ form_widget(registerForm.nomDeLaSociete) }}
                     {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
+
                 </div>
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.nom) }}{{ form_widget(registerForm.nom) }}
                 </div>
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.prenom) }}{{ form_widget(registerForm.prenom) }}
                 </div>
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.emailSociete) }}{{ form_widget(registerForm.emailSociete) }}
+                    {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
                 </div>
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.emailPerso) }}{{ form_widget(registerForm.emailPerso) }}
+                    {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
+
                 </div>
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.telephone_societe) }}{{ form_widget(registerForm.telephone_societe) }}
                 </div>
-                <div class="css-caseAjoutClient">
+                <div class="">
                     {{ form_label(registerForm.telephonePerso) }}{{ form_widget(registerForm.telephonePerso) }}
                 </div>
-                <div class="css-caseAjoutClient">
-                    {{ form_widget(registerForm.password) }}
+                <div class="">
+                   {{ form_widget(registerForm.password) }}
                     {{ form_help(registerForm.password) }}{{ form_errors(registerForm.password) }}
                 </div>
                 <div>
                     <button class="btn-grad" type="submit">valider</button>
                     {{ form_end(registerForm) }}
                 </div>
-            </div>
-            <!--fin colonne-->
-            <!--deb colonne-->
-            <div class="col-2 justify-content-center">
-
-                <div class="caseform">
-
-
-                </div>
-            </div>
-            <!--fin colonne-->
+        </div>
 
 
 
 
-        </div> <!--fin du row*************-->
 
 
 

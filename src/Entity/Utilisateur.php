@@ -10,6 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
+ * @UniqueEntity(
+ *     fields={"nomDeLaSociete"},
+ *     errorPath="nomDeLaSociete",
+ *     message="ce nom de société existe déjà"
+ * )
  */
 class Utilisateur implements UserInterface
 {
@@ -52,6 +57,9 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=55)
+     * @Assert\Email(
+     *     message = "Cette email '{{ value }}'est incorrecte."
+     * )
      */
     private $emailSociete;
 
@@ -62,18 +70,22 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=16)
+     *@Assert\Length(min = 8, max = 20, minMessage = "min_lenght", maxMessage = "max_lenght")
+     *@Assert\Regex(pattern="/^(0|(\+[0-9]{2}[. -]?))[1-9]([. -]?[0-9][0-9]){4}$/", message="uniquement des chiffres")
      */
     private $telephone_societe;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
+     *@Assert\Length(min = 8, max = 20, minMessage = "min_lenght", maxMessage = "max_lenght")
+     *@Assert\Regex(pattern="/^(0|(\+[0-9]{2}[. -]?))[1-9]([. -]?[0-9][0-9]){4}$/ ", message="uniquement des chiffres")
      */
     private $telephonePerso;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $etatUtilisateur;
+    private $etatUtilisateur="ACTIF";
 
     /**
      * @return mixed
