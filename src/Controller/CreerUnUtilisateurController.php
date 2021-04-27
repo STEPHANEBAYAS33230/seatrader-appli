@@ -67,8 +67,10 @@ class CreerUnUtilisateurController extends AbstractController
         // on récupère l'user et date du jour
         $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
-
-
+        // on recupere tous les utilisateurs
+        // récupérer la sortie à modifier
+        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateur = $utilisateurRepo->findAll();
 
 
 
