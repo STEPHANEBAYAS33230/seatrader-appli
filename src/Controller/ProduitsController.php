@@ -74,7 +74,6 @@ class ProduitsController extends AbstractController
      */
     public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
         //****************
-        echo ($id);
         $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $prod = $produitRepo->find($id);
         //********************

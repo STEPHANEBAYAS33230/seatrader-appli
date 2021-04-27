@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
+use Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,9 +82,59 @@ class CreerUnUtilisateurController extends AbstractController
 
 
 
-        return $this->render('creer_un_utilisateur/index.html.twig', [
-            'dateToday'=>$today, 'user'=>$user,
+
+
+
+        return $this->render('gerer_mes_clients/index.html.twig', [
+            'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur
         ]);
+
+
+
+    }
+
+
+    /**
+     * @Route("/admin/clients/{id}", name="activer_inactiver_utilisateur")
+     */
+    public function activerInactiverUtilisateur($id, EntityManagerInterface $em,Request $request){
+        //****************
+        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateur = $utilisateurRepo->find($id);
+        $etat=$utilisateur->getEtatUtilisateur();
+        //********************SI ACTIF -> INACTIF ET AUSSI LE CONTRAIRE
+        if ($etat=="ACTIF") {
+            $utilisateur->setEtatUtilisateur("INACTIF");
+        } else {
+            $utilisateur->setEtatUtilisateur("ACTIF");
+        }
+        $em->persist($utilisateur);
+        $em->flush();
+
+        return $this->redirectToRoute('gerer_mes_clients');
+
+
+
+        //***************************
+
+
+
+    }
+    /**
+     * @Route("/admin/clients/delete/{id}", name="supprimer_utilisateur")
+     */
+    public function supprimerUtilisateur($id, EntityManagerInterface $em,Request $request){
+        //****************
+        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateur = $utilisateurRepo->find($id);
+        $em->remove($utilisateur);
+        $em->flush();
+
+        return $this->redirectToRoute('gerer_mes_clients');
+
+
+
+        //***************************
 
 
 

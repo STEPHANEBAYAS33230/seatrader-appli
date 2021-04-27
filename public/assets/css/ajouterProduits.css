@@ -111,5 +111,11 @@ text-align:center;
     color:white;
 }
 
+.css-lecture-donnee{
+    style="text-align:center;
+    color:#c82333;
+}
 
+a{color: #bae3ff;}
+a:hover{color:white;}
 
