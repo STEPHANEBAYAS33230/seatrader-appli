@@ -1,0 +1,71 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}GESTION CLIENTS|{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+
+    <div class="container marge-container">
+        <div class=row">
+
+            <!--*****************************-->
+            <div class="col-12  colonne-famille" >
+
+                <div class="row justify-content-around" >
+                    <h4>GESTION DES COMPTES CLIENTS</h4>
+                </div>
+
+            </div>
+            <!--//****************************-->
+            <!--**************************-->
+            <div class="col-12 justify-content-center titre">
+                <div>
+                    <h2 class="">Mes clients<i class="fas fa-user"></i></h2>
+                </div>
+            </div>
+        </div>
+
+        <!--//*****************************-->
+        <div class="row justify-content-around">
+            {%  for utilisa in utilisateur %}
+                {% if utilisa.nomDeLaSociete!="admin" %}
+                <div class="col-3  justify-content-center colonne-famPdro" >
+                    <div class="">
+
+                        <div>
+                            <h6 class="css-lecture-donnee">{{ utilisa.nomDeLaSociete }}<i class="fas fa-user"></i><br><hr></h6>
+
+                            <h5>Détails<i class="fas fa-eye"></i></h5>
+                            <p>ETAT : {{ utilisa.etatUtilisateur }}  <a  href=" {{ path('activer_inactiver_utilisateur',{'id':utilisa.id}) }}">{% if utilisa.etatUtilisateur=="INACTIF" %}<i class="fas fa-user-lock"></i>{% else %}<i class="fas fa-user-circle"></i>{% endif %}</a></p></p>
+                            <h5 class="css-lecture-donnee">Modifier<a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer<a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}"><i class="fas fa-trash-alt"></i></a></h5>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!--fin du main*************-->
+        <!--**************************-->
+        {# <div class="row">
+            <div class="col-12 justify-content-center formulaireBlue">
+                {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                <div class="caseform">
+                    {{ form_help(produitForm.nomProduit) }}{{ form_errors(produitForm.nomProduit) }}
+                    {{ form_label(produitForm.nomProduit) }}: {{ form_widget(produitForm.nomProduit) }}
+                    {{ form_label(produitForm.famille) }}: {{ form_widget(produitForm.famille) }}
+                    {{ form_label(produitForm.pieceOuKg) }}: {{ form_widget(produitForm.pieceOuKg) }}
+
+                    <button class="btn-grad" type="submit">valider</button>
+                    {{ form_end(produitForm) }}
+                </div>
+            </div>
+        </div>#}
+        <!--fin du main*************-->
+
+
+    </div><!--fin de container-->
+
+{% endblock %}
