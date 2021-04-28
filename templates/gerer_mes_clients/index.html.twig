@@ -3,7 +3,7 @@
 {% block title %}GESTION CLIENTS|{{ parent() }}{% endblock %}
 
  {% block stylesheets %}
-     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}" xmlns="http://www.w3.org/1999/html">
  {% endblock %}
 
 {% block main %}
@@ -27,7 +27,15 @@
                 </div>
             </div>
         </div>
-
+        <!--barre de recherche-->
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline" >
+                {{ form_start(filtreSocieteForm) }}
+                {{ form_widget(filtreSocieteForm.nom) }}
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Recherche</button>
+                {{ form_end(filtreSocieteForm) }}
+            </form>
+        </nav>
         <!--//*****************************-->
         <div class="row justify-content-around">
             {%  for utilisa in utilisateur %}
@@ -38,32 +46,73 @@
                         <div>
                             <h6 class="css-lecture-donnee">{{ utilisa.nomDeLaSociete }}<i class="fas fa-user"></i><br><hr></h6>
 
-                            <h5>Détails<i class="fas fa-eye"></i></h5>
+                            <h6>Détails<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail{{ utilisa.id }}"><i class="far fa-eye" ></i></button>
+                            <!--****************************************************************************************************************************-->
+                            <!-- Modal détail-CLIENT-->
+                            <div class="modal fade bgFondModal"  id="detail{{ utilisa.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ utilisa.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header formulaireBlue">
+                                            <h5 class="modal-title text-light" id="detLabel{{ utilisa.id }}" >Détails Client: {{ utilisa.nomDeLaSociete }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="text-primary">Nom: {{ utilisa.nom }}</h4>
+                                            <h4 class="text-primary">Prenom: {{ utilisa.prenom }}</h4>
+                                            <h4 class="text-primary">Email Société: {{ utilisa.emailSociete }}</h4>
+                                            <h4 class="text-primary">Email Personnel: {{ utilisa.emailPerso }}</h4>
+                                            <h4 class="text-primary">Tel Société: {{ utilisa.telephonesociete }}</h4>
+                                            <h4 class="text-primary">Tel Personnel: {{ utilisa.telephonePerso }}</h4>
+                                            <h4 class="text-primary">Etat: {{ utilisa.etatUtilisateur }}</h4>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></h6>
+                            <!--****************************************************************************************************************************-->
+
                             <p>ETAT : {{ utilisa.etatUtilisateur }}  <a  href=" {{ path('activer_inactiver_utilisateur',{'id':utilisa.id}) }}">{% if utilisa.etatUtilisateur=="INACTIF" %}<i class="fas fa-user-lock"></i>{% else %}<i class="fas fa-user-circle"></i>{% endif %}</a></p></p>
-                            <h5 class="css-lecture-donnee">Modifier<a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer<a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}"><i class="fas fa-trash-alt"></i></a></h5>
+                            <h5 class="css-lecture-donnee">Modifier
+{#                                 <a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer<a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}"><i class="fas fa-trash-alt"></i></a></h5>#}
+                            <a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#zig{{ utilisa.id }}"><i class="fas fa-trash-alt"></i></button>
+<!--****************************************************************************************************************************-->
+                            <!-- Modal SUPPRIMER-CLIENT-->
+                            <div class="modal fade bgFondModal"  id="zig{{ utilisa.id }}" tabindex="-1" role="dialog" aria-labelledby="Label{{ utilisa.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header formulaireBlue">
+                                            <h5 class="modal-title text-light" id="Label{{ utilisa.id }}" >{{ utilisa.nomDeLaSociete }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="text-danger">Etes-vous sure de vouloir supprimez ce client ?</h4>
+                                            <p class="text-secondary h6" >(cette suppression entrainera aussi par la même occasion la suppression de ses commandes.)</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <button type="button" class="btn btn-primary" {# onclick="areyousure({{ utilisa.id }})"#}><a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}">Confimer</a></button>
+                                            {#                                 <a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer<a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}"><i class="fas fa-trash-alt"></i></a></h5>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></h5>
+<!--****************************************************************************************************************************-->
+
                         </div>
                     </div>
                 </div>
                 {% endif %}
             {% endfor %}
         </div>
-        <!--fin du main*************-->
-        <!--**************************-->
-        {# <div class="row">
-            <div class="col-12 justify-content-center formulaireBlue">
-                {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
-                <div class="caseform">
-                    {{ form_help(produitForm.nomProduit) }}{{ form_errors(produitForm.nomProduit) }}
-                    {{ form_label(produitForm.nomProduit) }}: {{ form_widget(produitForm.nomProduit) }}
-                    {{ form_label(produitForm.famille) }}: {{ form_widget(produitForm.famille) }}
-                    {{ form_label(produitForm.pieceOuKg) }}: {{ form_widget(produitForm.pieceOuKg) }}
 
-                    <button class="btn-grad" type="submit">valider</button>
-                    {{ form_end(produitForm) }}
-                </div>
-            </div>
-        </div>#}
-        <!--fin du main*************-->
 
 
     </div><!--fin de container-->

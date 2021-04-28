@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\FiltreSociete;
 use App\Entity\Utilisateur;
+use App\Form\FiltreSocieteType;
 use App\Form\UtilisateurType;
 use Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver;
 use Doctrine\ORM\EntityManagerInterface;
@@ -69,12 +71,24 @@ class CreerUnUtilisateurController extends AbstractController
         $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
         // on recupere tous les utilisateurs
-        // récupérer la sortie à modifier
+        // récupérer la liste des utilisateurs à modifier
         $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
         $utilisateur = $utilisateurRepo->findAll();
+        //***********preparation du formulaire filtreSociete
+        $filtreSociete = new FiltreSociete();
+        $filtreSociete->setNom("");
+        $filtreSocieteForm = $this->createForm(FiltreSocieteType::class, $filtreSociete);
+        $filtreSocieteForm->handleRequest($request);
+
+        // si formulaire validé
+        if ($filtreSocieteForm->isSubmitted() and $filtreSocieteForm->isValid()) {
+            //$nomfiltre=$filtreSociete->getNom();
+            $utilisateur= null;
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->filtrerSociete($filtreSociete);
 
 
-
+        }
 
 
 
@@ -86,7 +100,7 @@ class CreerUnUtilisateurController extends AbstractController
 
 
         return $this->render('gerer_mes_clients/index.html.twig', [
-            'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur
+            'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur,"filtreSocieteForm"=>$filtreSocieteForm->createView(), 'filtreSociete'=>$filtreSociete,
         ]);
 
 

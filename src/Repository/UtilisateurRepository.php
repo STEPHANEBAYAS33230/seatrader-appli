@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\FiltreSociete;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,6 +37,18 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->_em->flush();
     }
 
+    public function filtrerSociete(FiltreSociete $nom) {
+
+
+        $result = $this->createQueryBuilder('s')
+            ->where('locate(:s.nomDeLaSociete, nom.nom)!=0 ') // recherche de nom ds nomdelasociete
+            ->setParameter('nom', $nom)
+            ->getQuery()
+            ->getResult();
+
+
+        return $result;
+    }
     // /**
     //  * @return Utilisateur[] Returns an array of Utilisateur objects
     //  */

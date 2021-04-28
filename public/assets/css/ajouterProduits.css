@@ -112,10 +112,17 @@ text-align:center;
 }
 
 .css-lecture-donnee{
-    style="text-align:center;
-    color:#c82333;
+    text-align:center;
+
 }
 
-a{color: #bae3ff;}
-a:hover{color:white;}
+a{color: #bae3ff;
+text-decoration: none;
+}
+a:hover{color: white;}
+
+.bgFondModal{
+    background-color: rgba(0,10,60,0.3);
+}
+
 
