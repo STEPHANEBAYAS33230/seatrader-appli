@@ -37,6 +37,7 @@
             </div>
         </nav>
         <!--//*****************************-->
+        {% if utilisateur|length()>0 %}
         <div class="row justify-content-around">
             {%  for utilisa in utilisateur %}
                 {% if utilisa.nomDeLaSociete!="admin" %} {# and "su" in utilisa.nomDeLaSociete #}
@@ -112,9 +113,16 @@
                 {% endif %}
             {% endfor %}
         </div>
-
-
+    {% else %}
+    <div class="row">
+        <div class="col-12 justify-content-center">
+            <div class="margeNoResultat">
+        <h2 class="text-primary text-center align-middle">AUCUN RESULTAT TROUVE</h2>
+            </div>
+        </div>
+    </div>
 
     </div><!--fin de container-->
 
+    {% endif %}
 {% endblock %}

@@ -125,4 +125,13 @@ a:hover{color: white;}
     background-color: rgba(0,10,60,0.3);
 }
 
+.margeNoResultat{
+    margin-top: 150px;
+    margin-bottom: 150px;
 
+}
+
+.fondContainer{
+    background: #007bff;
+    background: linear-gradient(to right, #0062E6, #33AEFF);
+}

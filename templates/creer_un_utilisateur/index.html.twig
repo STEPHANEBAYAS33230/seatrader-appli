@@ -16,7 +16,7 @@
 
 
             <!--**************************-->
-            <div class="col-md-12 justify-content-center titre">
+            <div class="col-12 justify-content-center titre">
                 <div>
                     <h2 class="">Ajouter un client</h2>
                 </div>
@@ -25,51 +25,67 @@
 
         <!--//*****************************-->
         <!--**************************-->
+        <div class="row fondContainer form-group text-light mt-3">
+                    <div class="col-xl-3 justify-content-start mt-5">
+                        <div>
+                            {{ form_start(registerForm, { 'attr' : { 'style': '', 'class': '' } }) }}
+                            {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
+                            <p>{{ form_label(registerForm.nomDeLaSociete) }}</p>
+                        </div>
+                        <div>
+                            <p>{{ form_label(registerForm.nom) }}</p>
+                        </div>
+                        <div>
+                            <p>{{ form_label(registerForm.prenom) }}</p>
+                        </div>
+                        <div>
+                            {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
+                            <p>{{ form_label(registerForm.emailSociete) }}</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 justify-content-end mt-5">
+                        <div><p>{{ form_widget(registerForm.nomDeLaSociete) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.nom) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.prenom) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.emailSociete) }}</p></div>
+
+                    </div>
+                    <div class="col-xl-3 justify-content-end mt-5">
+                        <div>
+                            {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
+                            <p>{{ form_label(registerForm.emailPerso) }}</p>
+                        </div>
+                        <div>
+                            {{ form_help(registerForm.telephone_societe) }}{{ form_errors(registerForm.telephone_societe) }}
+                            <p>{{ form_label(registerForm.telephone_societe) }}</p>
+                        </div>
+                        <div>
+                            {{ form_help(registerForm.telephonePerso) }}{{ form_errors(registerForm.telephonePerso) }}
+                            <p>{{ form_label(registerForm.telephonePerso) }}</p>
+                        </div>
+                        <div>
+                            {{ form_help(registerForm.password) }}{{ form_errors(registerForm.password) }}
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 justify-content-end mt-5">
+                        <div><p>{{ form_widget(registerForm.emailPerso) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.telephone_societe) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.telephonePerso) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.password) }}</p></div>
+
+                    </div>
+        </div> <!--fin row********************************-->
         <div class="row">
+            <div class="col-xl-12 justify-content-center mt-6 text-center">
 
+                 <div>
+                    <button class="btn btn-outline-primary" type="submit">valider</button>
+                </div>
+                {{ form_end(registerForm) }}
 
-                {{ form_start(registerForm, { 'attr' : { 'style': '', 'class': '' } }) }}
-                <div class="">
-                    {{ form_label(registerForm.nomDeLaSociete) }}{{ form_widget(registerForm.nomDeLaSociete) }}
-                    {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
-
-                </div>
-                <div class="">
-                    {{ form_label(registerForm.nom) }}{{ form_widget(registerForm.nom) }}
-                </div>
-                <div class="">
-                    {{ form_label(registerForm.prenom) }}{{ form_widget(registerForm.prenom) }}
-                </div>
-                <div class="">
-                    {{ form_label(registerForm.emailSociete) }}{{ form_widget(registerForm.emailSociete) }}
-                    {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
-                </div>
-                <div class="">
-                    {{ form_label(registerForm.emailPerso) }}{{ form_widget(registerForm.emailPerso) }}
-                    {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
-
-                </div>
-                <div class="">
-                    {{ form_label(registerForm.telephone_societe) }}{{ form_widget(registerForm.telephone_societe) }}
-                </div>
-                <div class="">
-                    {{ form_label(registerForm.telephonePerso) }}{{ form_widget(registerForm.telephonePerso) }}
-                </div>
-                <div class="">
-                   {{ form_widget(registerForm.password) }}
-                    {{ form_help(registerForm.password) }}{{ form_errors(registerForm.password) }}
-                </div>
-                <div>
-                    <button class="btn-grad" type="submit">valider</button>
-                    {{ form_end(registerForm) }}
-                </div>
+            </div>
         </div>
-
-
-
-
-
-
 
     </div><!--fin de container-->
 
