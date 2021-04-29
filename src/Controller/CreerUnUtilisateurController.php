@@ -66,7 +66,7 @@ class CreerUnUtilisateurController extends AbstractController
      * @Route("/admin/clients", name="gerer_mes_clients")
      */
     public function clients (EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
-    {
+    {   $nomfiltre="";
         // on récupère l'user et date du jour
         $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
@@ -76,20 +76,22 @@ class CreerUnUtilisateurController extends AbstractController
         $utilisateur = $utilisateurRepo->findAll();
         //***********preparation du formulaire filtreSociete
         $filtreSociete = new FiltreSociete();
-        $filtreSociete->setNom("");
         $filtreSocieteForm = $this->createForm(FiltreSocieteType::class, $filtreSociete);
         $filtreSocieteForm->handleRequest($request);
 
         // si formulaire validé
         if ($filtreSocieteForm->isSubmitted() and $filtreSocieteForm->isValid()) {
-            //$nomfiltre=$filtreSociete->getNom();
             $utilisateur= null;
-            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-            $utilisateur = $utilisateurRepo->filtrerSociete($filtreSociete);
+            $utilisateurRepo=null;
+
+                $nomfiltre=$filtreSociete->getNom();
+                $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+                $utilisateur = $utilisateurRepo->filtrerSociete($filtreSociete);
+
 
 
         }
-
+       
 
 
 
@@ -100,7 +102,7 @@ class CreerUnUtilisateurController extends AbstractController
 
 
         return $this->render('gerer_mes_clients/index.html.twig', [
-            'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur,"filtreSocieteForm"=>$filtreSocieteForm->createView(), 'filtreSociete'=>$filtreSociete,
+            'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur,"filtreSocieteForm"=>$filtreSocieteForm->createView(), 'filtreSociete'=>$filtreSociete, 'filtrenom'=>$nomfiltre,
         ]);
 
 

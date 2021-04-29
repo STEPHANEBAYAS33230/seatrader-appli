@@ -117,7 +117,7 @@ class Utilisateur implements UserInterface
 
     public function setNomDeLaSociete(string $nomDeLaSociete): self
     {
-        $this->nomDeLaSociete = $nomDeLaSociete;
+        $this->nomDeLaSociete = $nomDeLaSociete." ";
 
         return $this;
     }

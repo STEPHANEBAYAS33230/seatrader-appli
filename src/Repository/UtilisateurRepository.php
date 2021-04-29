@@ -37,12 +37,15 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         $this->_em->flush();
     }
 
-    public function filtrerSociete(FiltreSociete $nom) {
+    public function filtrerSociete(FiltreSociete $filtre) {
+        if ($filtre!=null){
+        $search=$filtre->getNom();}
+        if (empty($search)) { $search="";}
 
 
-        $result = $this->createQueryBuilder('s')
-            ->where('locate(:s.nomDeLaSociete, nom.nom)!=0 ') // recherche de nom ds nomdelasociete
-            ->setParameter('nom', $nom)
+        $result = $this->createQueryBuilder('u')
+            ->where('locate(:nom, u.nomDeLaSociete)!=0 ') // recherche de nom ds nomdelasociete ('locate(:search, s.nom)!=0 ')
+            ->setParameter('nom', $search)
             ->getQuery()
             ->getResult();
 

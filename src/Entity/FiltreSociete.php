@@ -18,9 +18,10 @@ class FiltreSociete
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=180, nullable=true)
      */
     private $nom;
+
 
     public function getId(): ?int
     {
@@ -38,4 +39,6 @@ class FiltreSociete
 
         return $this;
     }
+
+
 }
