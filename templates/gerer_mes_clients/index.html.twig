@@ -80,7 +80,7 @@
                             <p>ETAT : {{ utilisa.etatUtilisateur }}  <a  href=" {{ path('activer_inactiver_utilisateur',{'id':utilisa.id}) }}">{% if utilisa.etatUtilisateur=="INACTIF" %}<i class="fas fa-user-lock"></i>{% else %}<i class="fas fa-user-circle"></i>{% endif %}</a></p></p>
                             <h5 class="css-lecture-donnee">Modifier
 {#                                 <a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer<a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}"><i class="fas fa-trash-alt"></i></a></h5>#}
-                            <a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer
+                            <a href="{{ path('modifier_UnUtilisateur',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#zig{{ utilisa.id }}"><i class="fas fa-trash-alt"></i></button>
 <!--****************************************************************************************************************************-->
                             <!-- Modal SUPPRIMER-CLIENT-->

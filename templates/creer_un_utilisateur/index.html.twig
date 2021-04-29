@@ -18,7 +18,7 @@
             <!--**************************-->
             <div class="col-12 justify-content-center titre">
                 <div>
-                    <h2 class="">Ajouter un client</h2>
+                    <h2 class="">{{ titrePage }}</h2>
                 </div>
             </div>
         </div>
@@ -81,6 +81,7 @@
 
                  <div>
                     <button class="btn btn-outline-primary" type="submit">valider</button>
+                     <a class="btn btn-outline-primary" href=javascript:history.go(-1)>Retour</a>
                 </div>
                 {{ form_end(registerForm) }}
 

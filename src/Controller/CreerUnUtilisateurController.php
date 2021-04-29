@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\FiltreSociete;
 use App\Entity\Utilisateur;
 use App\Form\FiltreSocieteType;
+use App\Form\ModifUtilisateurType;
 use App\Form\UtilisateurType;
 use Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,8 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        // titre de la page
+        $titrePage="Nouveau Client";
         // on récupère l'user
         $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
@@ -57,7 +60,7 @@ class CreerUnUtilisateurController extends AbstractController
 
         }
         return $this->render('creer_un_utilisateur/index.html.twig', [
-            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user,
+            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user,  'titrePage'=>$titrePage,
         ]);
 
     }
@@ -91,15 +94,6 @@ class CreerUnUtilisateurController extends AbstractController
 
 
         }
-       
-
-
-
-
-
-
-
-
 
         return $this->render('gerer_mes_clients/index.html.twig', [
             'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur,"filtreSocieteForm"=>$filtreSocieteForm->createView(), 'filtreSociete'=>$filtreSociete, 'filtrenom'=>$nomfiltre,
@@ -148,11 +142,51 @@ class CreerUnUtilisateurController extends AbstractController
 
         return $this->redirectToRoute('gerer_mes_clients');
 
+    }
+
+    //***********************************************************************************************
+    /**
+     * @Route("/admin/{id}", name="modifier_UnUtilisateur")
+     */
+    public function modifierUtilisateur($id,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $titrePage="Modifier Compte Client";
+        // on récupère l'user
+        $user=$this->getUser();
+        $today = strftime('%A %d %B %Y %I:%M:%S');
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //*********on recupere le compte de l'utilisateur à modifier
+        //****************
+        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateur = $utilisateurRepo->find($id);
 
 
-        //***************************
+        $registerForm = $this->createForm(ModifUtilisateurType::class, $utilisateur);
+        $registerForm->handleRequest($request);
+
+        // si formulaire validé
+        if ($registerForm->isSubmitted() and $registerForm->isValid()) {
+
+            //hasher le mot de passe avec class passwordEncoderInterface
+            $hashed=$encoder->encodePassword($utilisateur,$utilisateur->getPassword());
+            $utilisateur->setPassword($hashed);
+
+            //sauvegarder mon utilsateur
+            //try{
+
+            $em->persist($utilisateur);
+            $em->flush();
+            $this->addFlash('success', 'le compte a été créé avec succès (veuillez-vous connecter maintenant)');
+            return $this->redirectToRoute('home_connected', [
+
+            ]);
 
 
+
+        }
+        return $this->render('creer_un_utilisateur/index.html.twig', [
+            "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage,
+        ]);
 
     }
 }

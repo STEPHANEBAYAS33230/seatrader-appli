@@ -120,14 +120,16 @@ text-align:center;
 a{color: #bae3ff;
 text-decoration: none;
 }
-a:hover{color: white;}
+a:hover{color: white;
+    text-decoration: none;
+}
 
 .bgFondModal{
     background-color: rgba(0,10,60,0.3);
 }
 
 .margeNoResultat{
-    margin-top: 150px;
+    margin-top: 95px;
     margin-bottom: 150px;
 
 }
