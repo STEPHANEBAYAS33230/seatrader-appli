@@ -22,7 +22,7 @@ class UtilisateurType extends AbstractType
             //->add('roles')
             ->add('password', RepeatedType::class,[
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'le mot de passe est incorrecte.',
                  'options' => ['attr' => ['class' => 'password-field form-control text-primary', 'value'=> '', 'placeholder'=>'mot de passe', 'style'=>'background-color: #fffcc8; border-radius: 15px;']],
                 'required' => true,
                 'first_options'  => ['label' => 'Password'],

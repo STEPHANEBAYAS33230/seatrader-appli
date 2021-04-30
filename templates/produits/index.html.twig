@@ -12,7 +12,7 @@
         <div class=row">
 
             <!--*****************************-->
-            <div class="col-12  colonne-famille" >
+            <div class="col-xl-12  colonne-famille m-6" >
 
                 <div class="row justify-content-around" >
                     <h4>Les familles</h4>
@@ -29,7 +29,7 @@
             </div>
             <!--//****************************-->
             <!--**************************-->
-            <div class="col-12 justify-content-center titre">
+            <div class="col-xl-12 justify-content-center titre">
                 <div>
                 <h2 class="">Ajouter des  Produits <i class="fas fa-fish"></i></h2>
                 </div>
@@ -40,15 +40,38 @@
         <div class="row justify-content-around">
             {%  for famille in familleProduit %}
 
-                <div class="col-3  colonne-famPdro" >
+                <div class="col-xl-3  colonne-famPdro" >
                     <div class="">
 
                         <div>
                             <h6 style="text-align:center; color:white;">{{ famille.nomFamille }}</h6>
                             {%  for prod in famille.listingProduits %}
-
-                                <p class="colonne-prod">{{ prod.nomProduit }}  <a  href=" {{ path('supprimer_produit',{'id':prod.id}) }}"><i class="fas fa-trash"></i></a></p>
-
+                                <div class="colonne-prod">
+                                <p class="text-center">{{ prod.nomProduit }}  <a  href=" {{ path('supprimer_produit',{'id':prod.id}) }}"><i class="fas fa-trash"></i></a>
+                                    <Détails<button type="button" class="btn btn-primary tailleI" data-toggle="modal" data-target="#detail{{ prod.id }}"><i class="far fa-eye" ></i></button>
+                                        <!--****************************************************************************************************************************-->
+                                        <!-- Modal détail-CLIENT-->
+                                        <div class="modal fade bgFondModal"  id="detail{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ prod.id }}" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header formulaireBlue">
+                                                        <h5 class="modal-title text-light" id="detLabel{{ prod.id }}" >Détails Produit: {{ prod.nomProduit }}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h4 class="text-primary">unité: {{ prod.pieceOuKg }}</h4>
+                                                        <h4 class="text-primary">famille: {{ prod.famille }}</h4>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div></p>
+                                    <!--****************************************************************************************************************************-->
+                                </div>
 
                                 {% endfor %}
                         </div>
@@ -59,7 +82,7 @@
         <!--fin du main*************-->
         <!--**************************-->
         <div class="row">
-            <div class="col-12 justify-content-center formulaireBlue">
+            <div class="col-xl-12 justify-content-center formulaireBlue">
                 {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
                 <div class="caseform">
                     {{ form_help(produitForm.nomProduit) }}{{ form_errors(produitForm.nomProduit) }}

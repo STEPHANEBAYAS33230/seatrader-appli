@@ -13,7 +13,7 @@
 
 
             <!--**************************-->
-            <div class="col-12 justify-content-center titre">
+            <div class="col-xl-12 justify-content-center titre">
                 <div>
                     <h2 class="">Ajouter des  Familles <i class="fas fa-fish"></i></h2>
                 </div>
@@ -24,7 +24,7 @@
         <div class="row justify-content-around">
             {%  for familly in famille %}
 
-                <div class="col-3  colonne-famPdro" >
+                <div class="col-xl-3  colonne-famPdro" >
                     <div class="">
 
                         <div>
@@ -43,7 +43,7 @@
         <!--fin du main*************-->
         <!--**************************-->
         <div class="row">
-            <div class="col-12 justify-content-center formulaireBlue">
+            <div class="col-xl-12 justify-content-center formulaireBlue">
                 {{ form_start(familleForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
                 <div class="caseform">
                     {{ form_help(familleForm.nomFamille) }}{{ form_errors(familleForm.nomFamille) }}

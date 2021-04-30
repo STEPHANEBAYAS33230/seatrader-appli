@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
@@ -24,7 +25,7 @@ class Produit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=15)
      */
     private $nomProduit;
 
@@ -42,6 +43,14 @@ class Produit
      * @ORM\Column(type="string", length=15)
      */
     private $pieceOuKg;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank(message="Please, upload the product brochure as a PNG file.")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg", "image/jpg", "image/gif"})
+     */
+    private $brochureFilename;
 
     /**
      * @return mixed
@@ -104,6 +113,18 @@ class Produit
     public function setQuantite(?string $quantite): self
     {
         $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    public function getBrochureFilename(): ?string
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename(?string $brochureFilename): self
+    {
+        $this->brochureFilename = $brochureFilename;
 
         return $this;
     }

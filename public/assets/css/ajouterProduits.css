@@ -1,7 +1,8 @@
 .marge-container{
-    margin-top: 15px;
-    margin-bottom: 50px;
+    margin-top: 145px;
+    padding-bottom: 150px;
 }
+
 .titre{
     text-align: center;
     background-image: url('../images/reservation-bg.jpg');
@@ -35,7 +36,8 @@
     font-weight: bold;
     width: 250px;
     margin: 20px;
-    background-image: url('../images/reservation-bg.jpg');
+    background-color: #918c8c;
+    /*background-image: url('../images/reservation-bg.jpg');*/
     border-color:blue;
     border-style: wave;
     border-width: 3px 3px 3px 3px;
@@ -44,12 +46,15 @@
 }
 
 .colonne-prod{
+    padding: 4px;
+    margin: 5px;
     background-color: #7abaff;
     border-color:blue;
     border-style: solid;
     border-width: 1px 1px 1px 1px;
     border-radius: 5px;
     text-align: center;
+
 }
 
 .formulaireBlue{
@@ -137,4 +142,14 @@ a:hover{color: white;
 .fondContainer{
     background: #007bff;
     background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+.tailleI{
+    /*width: 10px;
+    height: 10px;*/
+    font-size: 12px;
+}
+
+.bgWave{
+    background-image: url('../images/reservation-bg.jpg');
+
 }

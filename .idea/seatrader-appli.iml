@@ -115,5 +115,6 @@
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="bootstrap-sweetalert" level="application" />
+    <orderEntry type="library" name="aos" level="application" />
   </component>
 </module>
