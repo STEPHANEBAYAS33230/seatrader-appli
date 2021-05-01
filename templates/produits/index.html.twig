@@ -50,7 +50,7 @@
                                 <p class="text-center">{{ prod.nomProduit }}  <a  href=" {{ path('supprimer_produit',{'id':prod.id}) }}"><i class="fas fa-trash"></i></a>
                                     <Détails<button type="button" class="btn btn-primary tailleI" data-toggle="modal" data-target="#detail{{ prod.id }}"><i class="far fa-eye" ></i></button>
                                         <!--****************************************************************************************************************************-->
-                                        <!-- Modal détail-CLIENT-->
+                                        <!-- Modal détail-Produit-->
                                         <div class="modal fade bgFondModal"  id="detail{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ prod.id }}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -66,6 +66,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                        {# <button type="button" class="btn btn-secondary" data-dismiss="modal"> #}<a  class="btn btn-secondary" href="{{ path('telecharger-photo_produit',{'id':prod.id}) }}">Télécharger une photo</a>{# </button>#}
                                                     </div>
                                                 </div>
                                             </div>

@@ -47,8 +47,6 @@ class Produit
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank(message="Please, upload the product brochure as a PNG file.")
-     * @Assert\File(mimeTypes={ "image/png", "image/jpeg", "image/jpg", "image/gif"})
      */
     private $brochureFilename;
 
@@ -128,4 +126,5 @@ class Produit
 
         return $this;
     }
+
 }
