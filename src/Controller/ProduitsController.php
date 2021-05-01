@@ -67,7 +67,7 @@ class ProduitsController extends AbstractController
         }
 
 
-        //***************************
+        //***************************direction
         return $this->render('produits/index.html.twig', [
             "produit"=>$produit, "familleProduit"=>$famille, "dateToday"=>$today, 'produitForm'=>$produitForm->createView(),"user"=>$user,
         ]);
@@ -76,7 +76,7 @@ class ProduitsController extends AbstractController
     /**
      * @Route("/produits/{id}", name="supprimer_produit")
      */
-    public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
+    public function supprimerProduit($id, EntityManagerInterface $em){
         //****************on recupere le produit
         $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $prod = $produitRepo->find($id);
@@ -162,7 +162,68 @@ class ProduitsController extends AbstractController
 
     }
 
+    /**
+     * @Route("/m-produits/{id}", name="modifier_produit")
+     */
+    public function modifierProduit($id, EntityManagerInterface $em,Request $request){
+        // recupere toutes les familles
+        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+        $famille = $familleProduitRepo->findAll();
+        // recupere tous les produits
+        $ProduitRepo = $this->getDoctrine()->getRepository(Produit::class);
+        $produit = $ProduitRepo->findAll();
+        //****************on recupere le produit
+        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+        $prodf = $produitRepo->find($id);
+        // on recupere la famille actuelle
+        $familleActuel=$prodf->getFamille();
+        // on récupère l'user
+        $user=$this->getUser();
+        //  on recupere la date
+        $today = strftime('%A %d %B %Y %I:%M:%S');
+        //************formulaire
 
+        $produitForm = $this->createForm(ProduitType::class, $prodf);
+        $produitForm->handleRequest($request);
+
+        // si formulaire validé
+        if ($produitForm->isSubmitted() and $produitForm->isValid()) {
+
+
+
+            //sauvegarder mon produit
+
+
+            $em->persist($prodf);
+            $em->flush();
+            // on retrouve l'ancienne famille avant modif
+            $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $famillie = $famillyRepo->find($familleActuel);
+            $famillie->removeProduit($prodf);
+            $em->persist($famillie);
+            $em->flush();
+            //on recupere la famille
+            // récupérer la famille à modifier
+            $familleChoisie=$prodf->getFamille();
+            $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $familly = $famillyRepo->find($familleChoisie);
+            $familly->addProduit($prodf);
+            $em->persist($familly);
+            $em->flush();
+            //******************
+            $this->addFlash('success', 'produit modifié');
+            return $this->redirectToRoute('ajouter-produits', [
+
+            ]);
+        }
+
+        //***************************direction
+        return $this->render('produits/index-modif.html.twig', [
+            "produit"=>$produit, "familleProduit"=>$famille, "dateToday"=>$today, 'produitForm'=>$produitForm->createView(),"user"=>$user,
+        ]);
+
+
+    }
 
 
     }

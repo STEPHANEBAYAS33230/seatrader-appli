@@ -47,7 +47,7 @@
                         <div>
                             <h6 class="css-lecture-donnee">{{ utilisa.nomDeLaSociete }}<i class="fas fa-user"></i><br><hr></h6>
 
-                            <h6>Détails<button type="button" class="btn btn-primary tailleI" data-toggle="modal" data-target="#detail{{ utilisa.id }}"><i class="far fa-eye" ></i></button>
+                            <h6>Détails<button type="button" class="btn btn-primary tailleI" data-toggle="modal" data-target="#detail{{ utilisa.id }}"><i class="far fa-eye" ></i></button></h6>
                             <!--****************************************************************************************************************************-->
                             <!-- Modal détail-CLIENT-->
                             <div class="modal fade bgFondModal"  id="detail{{ utilisa.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ utilisa.id }}" aria-hidden="true">
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div></h6>
+                            </div>
                             <!--****************************************************************************************************************************-->
 
                             <p>ETAT : {{ utilisa.etatUtilisateur }}  <a   href=" {{ path('activer_inactiver_utilisateur',{'id':utilisa.id}) }}">{% if utilisa.etatUtilisateur=="INACTIF" %}<i class="fas fa-user-lock tailleI"></i>{% else %}<i class="fas fa-user-circle"></i>{% endif %}</a></p></p>

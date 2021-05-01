@@ -34,8 +34,8 @@
 .colonne-famPdro{
     color: white;
     font-weight: bold;
-    width: 250px;
-    margin: 20px;
+    /*width: 250px;*/
+    margin: 10px;
     background-color: #918c8c;
     /*background-image: url('../images/reservation-bg.jpg');*/
     border-color:blue;
@@ -98,7 +98,7 @@ input:focus{
     text-decoration: none;
 }
 .nom-famille{
-    margin: 10px;
+    margin: 5px;
     color:#86cfda;
     border-color:#5eb5e0;
     border-style: solid;
@@ -143,13 +143,15 @@ a:hover{color: white;
     background: #007bff;
     background: linear-gradient(to right, #0062E6, #33AEFF);
 }
-.tailleI{
-    /*width: 10px;
-    height: 10px;*/
-    font-size: 12px;
-}
+
 
 .bgWave{
     background-image: url('../images/reservation-bg.jpg');
 
 }
+
+i{
+    font-size: 12px;
+
+}
+

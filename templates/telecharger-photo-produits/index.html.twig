@@ -7,20 +7,24 @@
  {% endblock %}
 
 {% block main %}
+    <script type="text/javascript">
+        var nb = 60;
 
+        timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
+    </script>
     <div class="container marge-container">
         <div class="row">
             <!--**************************-->
             <div class="col-xl-12 justify-content-center titre">
                 <div>
-                    <h3 class="">Télécharger une photo du produit <i class="fas fa-camera"></i></h3>
+                    <h3>Télécharger une photo du produit <i class="fas fa-camera"></i></h3>
                 </div>
             </div>
         </div>
         <div class="row">
             <!--**************************-->
              <!--**************************-->
-            <div class="col-xl-9 justify-content-center titre">
+            <div class="col-xl-9 justify-content-center " style="height: 150px;">
                 <div>
                     <h3 class="">{{ prod.nomProduit }}<i class="fas fa-fish"></i></h3>
                 </div>
@@ -31,11 +35,9 @@
                     <p>Unité de vente: {{ prod.pieceOuKg }}</p>
                 </div>
             </div>
-            <div class="col-xl-3 justify-content-lg-start ">
+            <div class="col-xl-3 justify-content-lg-start" style="width: 270px; height: 150px">
                     {% if prod.brochureFilename!=null or prod.brochureFilename!="" %}
-                <div style="width: 270px; height: 150px">
-                        <img class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
-                </div>
+                        <img style="width: 270px; height: 150px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
                     {% else %}
                       <div style="width: 270px; height: 150px" class="bg-secondary"></div>
                     {% endif %}
@@ -52,6 +54,7 @@
                     {{ form_label(produitForm.brochureFilename) }}: {{ form_widget(produitForm.brochureFilename) }}
 
                     <button class="btn-grad" type="submit">valider</button>
+                    <a class="btn-grad" href=javascript:history.go(-1)>Retour</a>
                     {{ form_end(produitForm) }}
                 </div>
             </div>
