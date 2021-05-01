@@ -7,11 +7,7 @@
  {% endblock %}
 
 {% block main %}
-    <script type="text/javascript">
-        var nb = 60;
 
-        timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
-    </script>
     <div class="container marge-container">
         <div class="row">
             <!--**************************-->
@@ -24,7 +20,7 @@
         <div class="row">
             <!--**************************-->
              <!--**************************-->
-            <div class="col-xl-9 justify-content-center " style="height: 150px;">
+            <div class="col-xl-6 justify-content-center " style="height: 150px;">
                 <div>
                     <h3 class="">{{ prod.nomProduit }}<i class="fas fa-fish"></i></h3>
                 </div>
@@ -35,11 +31,14 @@
                     <p>Unité de vente: {{ prod.pieceOuKg }}</p>
                 </div>
             </div>
-            <div class="col-xl-3 justify-content-lg-start" style="width: 270px; height: 150px">
+            <div class="col-xl-3 justify-content-lg-start tailleImage">
+                <div><img id="imagerie" ></div>
+            </div>
+            <div class="col-xl-3 justify-content-lg-start tailleImage">
                     {% if prod.brochureFilename!=null or prod.brochureFilename!="" %}
-                        <img style="width: 270px; height: 150px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                        <img class="tailleImage m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
                     {% else %}
-                      <div style="width: 270px; height: 150px" class="bg-secondary"></div>
+                      <div class="tailleImage bg-secondary"></div>
                     {% endif %}
             </div>
 
@@ -48,7 +47,7 @@
         <!--**************************-->
         <div class="row">
             <div class="col-xl-12 justify-content-center formulaireBlue">
-                {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                {{ form_start(produitForm, { 'attr' : { 'style': '', } }) }}
                 <div class="caseform">
                     {{ form_help(produitForm.brochureFilename) }}{{ form_errors(produitForm.brochureFilename) }}
                     {{ form_label(produitForm.brochureFilename) }}: {{ form_widget(produitForm.brochureFilename) }}
@@ -63,5 +62,19 @@
 
 
     </div><!--fin de container-->
+    <script type="text/javascript">
+        var nb = 2;
+        timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
+        document.getElementById("photo_produit_brochureFilename").onchange = function () {
+            var reader = new FileReader();
 
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                document.getElementById("imagerie").src = e.target.result;
+            };
+
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        };
+    </script>
 {% endblock %}
