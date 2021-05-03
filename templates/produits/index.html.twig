@@ -31,7 +31,7 @@
             <!--**************************-->
             <div class="col-xl-12 justify-content-center titre">
                 <div>
-                <h2 class="">Ajouter/Modifier des  Produits <i class="fas fa-fish"></i></h2>
+                <h3 class="">Ajouter/Modifier des  Produits <i class="fas fa-fish"></i></h3>
                     {{ form_start(filtrefamilleForm) }}
                     {{ form_widget(filtrefamilleForm.nom) }}
                     <button class="btn-grad" type="submit" >Filtrer les familles</button>
@@ -44,20 +44,24 @@
         <div class="row justify-content-around">
             {%  for famille in familleProduit %}
                 {% if (familleProduit|length)>1 %}
-                <div class="col-xl-4 colonne-famPdro" >
+                <div  class="col-xl-4 colonne-famPdro" >
                     {% else %}
-                        <div class="col-xl-12 colonne-famPdro " >
+                        <div id="colonne-famPdro" class="col-xl-12 colonne-famPdro row justify-content-around" >
                         {% endif %}
-                        <div class="justify-content-start">
 
-                            <div>
+
+
                                 <h6 class="text-center text-white">{{ famille.nomFamille }} </h6>
                                 {%  for prod in famille.listingProduits %}
-                                <div class="colonne-prod " >
-                                <p class="text-center">{{ prod.nomProduit }}
-                                    <a type="button" class="btn btn-primary" title="modifier" href="{{ path('modifier_produit',{'id':prod.id}) }}"><i class="fas fa-address-card" ></i></a>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SupprProduit{{ prod.id }}"><i class="fas fa-trash"></i></button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera"></i></button>
+                                    {% if (familleProduit|length)>1 %}
+                                    <div  class="colonne-prod" >
+                                    {% else %}
+                                    <div id="colonne-prod" class="colonne-prod col-3" >
+                                     {% endif %}
+                                <p class="text-center mt-2">{{ prod.nomProduit }}
+                                    <a type="button" class="btn btn-primary mt-2" title="modifier" href="{{ path('modifier_produit',{'id':prod.id}) }}"><i class="fas fa-address-card" ></i></a>
+                                    <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#SupprProduit{{ prod.id }}"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera"></i></button>
                                 </p>
                                     <!--****************************************************************************************-->
                                     <!-- Modal détail-Produit-->
@@ -106,8 +110,8 @@
                                 </div>
 
                                 {% endfor %}
-                        </div>
-                    </div>
+
+
                 </div>
             {% endfor %}
         </div>
@@ -131,5 +135,19 @@
 
 
     </div><!--fin de container-->
+    <script>
+        var nb = 2;
+        timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
 
+        setInterval("ecran()",1000)
+        function ecran() {
+            window.refresh();
+            if ((screen.width)<500 ) {
+                document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
+                document.getElementById("colonne-prod").class="colonne-prod";
+
+            }
+
+        }
+    </script>
 {% endblock %}
