@@ -17,7 +17,7 @@ class ProduitType extends AbstractType
         $builder
             ->add('nomProduit')
             //->add('quantite')
-            ->add('famille', EntityType::class,['class' =>FamilleProduit::class,'choice_value'=>'id', 'required'=>'true', 'placeholder'=>false, 'attr' => ['value'=>'GROS POISSONS']])
+            ->add('famille', EntityType::class,['class' =>FamilleProduit::class,'choice_value'=>'nomFamille', 'required'=>'true', 'attr' => ['value'=>'GROS POISSONS']])
             ->add('pieceOuKg', EntityType::class, ['class' => PieceOuKg::class,'choice_value'=>'id'])
 
         ;

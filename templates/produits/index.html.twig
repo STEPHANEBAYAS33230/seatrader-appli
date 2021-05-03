@@ -43,20 +43,23 @@
         <!--//*****************************-->
         <div class="row justify-content-around">
             {%  for famille in familleProduit %}
-
+                {% if (familleProduit|length)>1 %}
                 <div class="col-xl-4 colonne-famPdro" >
-                    <div class="">
+                    {% else %}
+                        <div class="col-xl-12 colonne-famPdro " >
+                        {% endif %}
+                        <div class="justify-content-start">
 
-                        <div>
-                            <h6 class="text-center text-white">{{ famille.nomFamille }}</h6>
-                            {%  for prod in famille.listingProduits %}
-                                <div class="colonne-prod">
+                            <div>
+                                <h6 class="text-center text-white">{{ famille.nomFamille }} </h6>
+                                {%  for prod in famille.listingProduits %}
+                                <div class="colonne-prod " >
                                 <p class="text-center">{{ prod.nomProduit }}
                                     <a type="button" class="btn btn-primary" title="modifier" href="{{ path('modifier_produit',{'id':prod.id}) }}"><i class="fas fa-address-card" ></i></a>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SupprProduit{{ prod.id }}"><i class="fas fa-trash"></i></button>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera"></i></button>
                                 </p>
-                                    <!--****************************************************************************************************************************-->
+                                    <!--****************************************************************************************-->
                                     <!-- Modal détail-Produit-->
                                     <div class="modal fade bgFondModal"  id="SupprProduit{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="SupprProduitLabel{{ prod.id }}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">

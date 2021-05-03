@@ -40,6 +40,7 @@ class ProduitsController extends AbstractController
         $produitForm->handleRequest($request);
 
         //************formulaire
+
         $filtrefamille = new FiltreFamilleProduit();
         $filtrefamilleForm = $this->createForm(FiltreFamilleProduitType::class, $filtrefamille);
         $filtrefamilleForm->handleRequest($request);
@@ -72,11 +73,17 @@ class ProduitsController extends AbstractController
             $familly->addProduit($produitF);
             $em->persist($familly);
             $em->flush();
+            // recupere toutes les familles
+            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $famille = $familleProduitRepo->findAll();
+            $filtrefamille = new FiltreFamilleProduit();
+            $filtrefamille->setNom($familleChoisie);
+            $famille=$familleProduitRepo->filtrerFamille($filtrefamille);
             //******************
-            $this->addFlash('success', 'produit créé');
+            /*$this->addFlash('success', 'produit créé');
             return $this->redirectToRoute('ajouter-produits', [
 
-            ]);
+            ]);*/
 
 
 
