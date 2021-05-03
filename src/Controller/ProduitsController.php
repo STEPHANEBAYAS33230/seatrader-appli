@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\FamilleProduit;
+use App\Entity\FiltreFamilleProduit;
 use App\Entity\Produit;
+use App\Form\FiltreFamilleProduitType;
 use App\Form\PhotoProduitType;
 use App\Form\ProduitType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,10 +35,24 @@ class ProduitsController extends AbstractController
         $today = strftime('%A %d %B %Y %I:%M:%S');
 
         //************formulaire
-        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $produitF = new Produit();
         $produitForm = $this->createForm(ProduitType::class, $produitF);
         $produitForm->handleRequest($request);
+
+        //************formulaire
+        $filtrefamille = new FiltreFamilleProduit();
+        $filtrefamilleForm = $this->createForm(FiltreFamilleProduitType::class, $filtrefamille);
+        $filtrefamilleForm->handleRequest($request);
+
+        //******************************si filtre hydraté
+        if ($filtrefamilleForm->isSubmitted() and $filtrefamilleForm->isValid()) {
+
+            $famille = $familleProduitRepo->filtrerFamille($filtrefamille);
+
+
+
+
+        }
 
         // si formulaire validé
         if ($produitForm->isSubmitted() and $produitForm->isValid()) {
@@ -70,6 +86,7 @@ class ProduitsController extends AbstractController
         //***************************direction
         return $this->render('produits/index.html.twig', [
             "produit"=>$produit, "familleProduit"=>$famille, "dateToday"=>$today, 'produitForm'=>$produitForm->createView(),"user"=>$user,
+            "filtrefamilleForm"=>$filtrefamilleForm->createView(),
         ]);
 
     }
@@ -181,7 +198,7 @@ class ProduitsController extends AbstractController
         $user=$this->getUser();
         //  on recupere la date
         $today = strftime('%A %d %B %Y %I:%M:%S');
-        //************formulaire
+        //************formulaire pour Produit Entity
 
         $produitForm = $this->createForm(ProduitType::class, $prodf);
         $produitForm->handleRequest($request);

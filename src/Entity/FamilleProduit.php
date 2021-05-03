@@ -85,7 +85,7 @@ class FamilleProduit
 
     public function __toString()
     {
-        return $this->id.' - '.$this->nomFamille;
+        return $this->nomFamille;
 
     }
 

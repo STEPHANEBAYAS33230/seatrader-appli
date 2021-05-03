@@ -32,6 +32,10 @@
             <div class="col-xl-12 justify-content-center titre">
                 <div>
                 <h2 class="">Ajouter/Modifier des  Produits <i class="fas fa-fish"></i></h2>
+                    {{ form_start(filtrefamilleForm) }}
+                    {{ form_widget(filtrefamilleForm.nom) }}
+                    <button class="btn-grad" type="submit" >Filtrer les familles</button>
+                    {{ form_end(filtrefamilleForm) }}
                 </div>
             </div>
         </div>
@@ -46,7 +50,7 @@
                         <div>
                             <h6 class="text-center text-white">{{ famille.nomFamille }}</h6>
                             {%  for prod in famille.listingProduits %}
-                                <div class="colonne-prod bg-gradient">
+                                <div class="colonne-prod">
                                 <p class="text-center">{{ prod.nomProduit }}
                                     <a type="button" class="btn btn-primary" title="modifier" href="{{ path('modifier_produit',{'id':prod.id}) }}"><i class="fas fa-address-card" ></i></a>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SupprProduit{{ prod.id }}"><i class="fas fa-trash"></i></button>

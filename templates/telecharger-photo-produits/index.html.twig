@@ -32,11 +32,13 @@
                 </div>
             </div>
             <div class="col-xl-3 justify-content-lg-start tailleImage">
-                <div><img id="imagerie" ></div>
+                <div><img id="imagerie" class="taileImage m-0 p-0"></div>
             </div>
-            <div class="col-xl-3 justify-content-lg-start tailleImage">
+            <div class="col-xl-3 justify-content-lg-start">
                     {% if prod.brochureFilename!=null or prod.brochureFilename!="" %}
-                        <img class="tailleImage m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                        <div class="taileImage">
+                            <img class="tailleImage m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                        </div>
                     {% else %}
                       <div class="tailleImage bg-secondary"></div>
                     {% endif %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\FamilleProduit;
+use App\Entity\FiltreFamilleProduit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,7 +19,22 @@ class FamilleProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, FamilleProduit::class);
     }
+    public function filtrerFamille(FiltreFamilleProduit $filtre) {
+        $search=$filtre->getNom();
+        $rien="";
+        if (empty($search)) { $search="";}
 
+
+        $result = $this->createQueryBuilder('f')
+            ->where('f.nomFamille = :nomf or :nomf = :rien') // filtre famille identique
+            ->setParameter('nomf', $search)
+            ->setParameter('rien', $rien)
+            ->getQuery()
+            ->getResult();
+
+
+        return $result;
+    }
     // /**
     //  * @return FamilleProduit[] Returns an array of FamilleProduit objects
     //  */
