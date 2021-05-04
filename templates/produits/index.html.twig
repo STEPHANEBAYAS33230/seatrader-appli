@@ -7,7 +7,17 @@
  {% endblock %}
 
 {% block main %}
+    <script type="text/javascript">
 
+
+            if ((screen.width)<500 ) {
+                document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
+                document.getElementById("colonne-prod").class="colonne-prod";
+
+            }
+
+
+    </script>
     <div class="container marge-container">
         <div class=row">
 
@@ -141,7 +151,7 @@
 
         setInterval("ecran()",1000)
         function ecran() {
-            window.refresh();
+
             if ((screen.width)<500 ) {
                 document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
                 document.getElementById("colonne-prod").class="colonne-prod";
