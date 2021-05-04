@@ -44,7 +44,9 @@
                 <div class="">
                     <h4 class="prix" >prix: {{ miseEnAvantSubmit.prix }} €/kg</h4>
                 </div>
-                <h3 class="nomProduit" >{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
+                <h3 class="text-center">{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
+                <p class="text-center">{{ miseEnAvantSubmit.origine }}</p>
+                <p class="text-center">colis par {{ miseEnAvantSubmit.colisage }} {{ miseEnAvantSubmit.produitMiseEnAvant.pieceOuKg }}</p>
             </div>
         </div>
         <!--*****fin row*********************-->
@@ -81,7 +83,7 @@
                         {{ form_end(miseEnAvantDeuxForm) }}
                         <div>
                             <a class="btn btn-secondary" href=javascript:history.go(-1)>Retour</a>
-                            <a class="btn btn-secondary" href="href="{{ path('creer_mise_en_avant') }}">Annuler</a>
+                            <a class="btn btn-secondary" href="{{ path('creer_mise_en_avant') }}">Annuler</a>
 
                         </div>
                     </div>

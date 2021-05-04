@@ -46,7 +46,9 @@
                     <div class="align-items-center">
                         <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
                     </div>
-                    <h3 class="nomProduit" >{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                    <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                    <p class="text-center">{{ miseEa.origine }}</p>
+                    <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
                 </div>
             {% endfor %}
             <div class="justify-content-center col-xl-12"><h6>Mise(s) en Avant affichée(s) la plus récente(s) ou en cours</h6></div>
