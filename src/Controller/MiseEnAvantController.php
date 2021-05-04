@@ -4,19 +4,20 @@ namespace App\Controller;
 
 use App\Entity\MiseEnAvant;
 use DateInterval;
-use DatePeriod;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function Sodium\add;
 
-class HomeController extends AbstractController
+class MiseEnAvantController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/mise/en/avant", name="creer_mise_en_avant")
      */
     public function index(): Response
     {
+        // on récupère l'user
+        $user=$this->getUser();
+        // les dates
         //*********recuperer les mises avant/date
         $today = new \DateTime('now');
         $dtplus = new \DateTime('now');
@@ -51,7 +52,7 @@ class HomeController extends AbstractController
             $dtplus->format('Y-m-d');
             $dtmoins->format('Y-m-d');
             $today->format('Y-m-d');
-        //****************mise ds le passé
+            //****************mise ds le passé
             for($i=1;$i<31;$i++) {
                 $today->sub(new DateInterval('P1D'));
                 $dtmoins->sub(new DateInterval('P1D'));
@@ -65,17 +66,12 @@ class HomeController extends AbstractController
                 }
 
             }
-        //***********fin de IF
+            //***********fin de IF
         }
 
-
-
-
-
-        //****************************************************************
-        return $this->render('home/index.html.twig', [
-            "miseEnAvant" => $miseEnAvant, "today"=>$today,
-
+        //**********route**********************************************************
+        return $this->render('mise_en_avant/creerMiseEnAvant.html.twig', [
+            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant,
         ]);
     }
 }

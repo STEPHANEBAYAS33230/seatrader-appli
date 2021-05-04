@@ -79,7 +79,6 @@
 
                             <p>ETAT : {{ utilisa.etatUtilisateur }}  <a   href=" {{ path('activer_inactiver_utilisateur',{'id':utilisa.id}) }}">{% if utilisa.etatUtilisateur=="INACTIF" %}<i class="fas fa-user-lock tailleI"></i>{% else %}<i class="fas fa-user-circle"></i>{% endif %}</a></p></p>
                             <h5 class="css-lecture-donnee text-center text-sm-left">Modifier
-{#                                 <a href="{{ path('supprimer_produit',{'id':utilisa.id}) }}"><i class="fas fa-address-card"></i></a> Supprimer<a href="{{ path('supprimer_utilisateur',{'id':utilisa.id}) }}"><i class="fas fa-trash-alt"></i></a></h5>#}
                                 <a href="{{ path('modifier_UnUtilisateur',{'id':utilisa.id}) }}" ><i class="fas fa-address-card" ></i></a></h5><h5>Supprimer
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#zig{{ utilisa.id }}"><i class="fas fa-trash-alt tailleI"></i></button></h5>
 <!--****************************************************************************************************************************-->

@@ -33,7 +33,7 @@ class MiseEnAvant
     private $prix;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $niveau;
 
@@ -56,6 +56,11 @@ class MiseEnAvant
      * @ORM\ManyToOne (targetEntity="App\Entity\RaisonMiseEnAvant")
      */
     private $raison;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $couleur;
 
     /**
      * @return mixed
@@ -178,6 +183,18 @@ class MiseEnAvant
     public function setNiveau(int $niveau): self
     {
         $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(string $couleur): self
+    {
+        $this->couleur = $couleur;
 
         return $this;
     }

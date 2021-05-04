@@ -25,7 +25,7 @@ class Produit
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=30)
      */
     private $nomProduit;
 

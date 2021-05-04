@@ -1,0 +1,83 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Mises en Avant |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+    <div class="container marge-container">
+        <div class=row">
+                <div class="col-xl-12 justify-content-center titre">
+                    <div>
+                         <h3 class="">Créer des mises en avant de produits/opportunités<i class="fas fa-fish"></i></h3>
+                    </div>
+                </div>
+        </div>
+        <!--//*****************************-->
+        <div class="row">
+
+
+                    <div class="col-xl-12 justify-content-center titre bg-secondary">
+                        <div>
+                            <h4 class="">Sélectionnez le jour de livraison et la famille du produit<i class="fas fa-fish"></i></h4>
+                            //***********formulaire date et famille
+                            // bouton select
+                        </div>
+                    </div><!--fin colonne*************-->
+        </div>
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <div class="row col-xl-12 justify-content-around">
+                                        {%  for miseEa in miseEnAvant %}
+                                        <div  class="card-miseEn-Avant" >
+                                            <div style="background-color: {{ miseEa.couleur }}">
+
+                                                <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
+                                            </div>
+                                            <div class="leproduit">
+                                                {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
+                                                <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+                                            </div>
+                                            <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                                            <div class="align-items-center">
+                                                <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
+                                            </div>
+                                            <h3 class="nomProduit" >{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                                        </div>
+                                        {% endfor %}
+                                        <div class="justify-content-center col-xl-12"><h6>Mise(s) en Avant affichée(s) la plus récente(s) ou en cours</h6></div>
+
+
+        </div>
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <div class="row">
+
+
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h4 class="">Sélectionnez le produit, le prix, le slogan, la couleur<i class="fas fa-fish"></i></h4>
+                    //***********formulaire prduit prix slogan couleur
+                    // bouton voir le rendu
+                </div>
+            </div><!--fin colonne*************-->
+        </div>
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <div class="row">
+
+
+            <div class="col-xl-12 justify-content-center ">
+                <div>
+
+                </div>
+            </div><!--fin colonne*************-->
+        </div>
+        <!--*****fin row*********************-->
+
+    </div><!--fin de container-->
+
+{% endblock %}

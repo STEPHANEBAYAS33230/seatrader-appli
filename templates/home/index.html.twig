@@ -449,7 +449,7 @@
                     {%  for miseEa in miseEnAvant %}
                         {# % if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %#}
                         <div  class="card-miseEn-Avant" >
-                            {% if miseEa.raison.raison=="PROMOTION" or miseEa.raison.raison=="SPECIAL BARBECUE" %}
+                            {# {% if miseEa.raison.raison=="PROMOTION" or miseEa.raison.raison=="SPECIAL BARBECUE" %}
                             <div class="promotion">
                                 {% elseif miseEa.raison.raison=="OFFRE DU JOUR"%}
                                     <div class="offre-du-jour">
@@ -466,8 +466,10 @@
                                                             {% elseif miseEa.raison.raison=="SUPER PRIX"%}
                                                             <div class="super-prix">
 
-                                {% endif %}
-                                    <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
+                                {% endif %} #}
+                            <div style="background-color: {{ miseEa.couleur }}">
+
+                            <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
                             </div>
                             <div class="leproduit">
                             {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
