@@ -1,0 +1,95 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Mises en Avant |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h3 class="">Créer des mises en avant de produits/opportunités<i class="fas fa-fish"></i></h3>
+                </div>
+            </div>
+        </div>
+        <!--//*****************************-->
+        <div class="row">
+
+
+            <div class="col-xl-12 justify-content-center p-2 titre">
+                <div>
+                    <h4 class="">Jour de livraison<i class="fas fa-fish"></i></h4>
+                    {{ form_start(miseEnAvantDeuxForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                    {{ form_help(miseEnAvantDeuxForm.dateLivraisonMiseEnAvant) }}{{ form_errors(miseEnAvantDeuxForm.dateLivraisonMiseEnAvant) }}
+                    {{ form_label(miseEnAvantDeuxForm.dateLivraisonMiseEnAvant) }}: {{ form_widget(miseEnAvantDeuxForm.dateLivraisonMiseEnAvant) }}
+                </div>
+            </div><!--fin colonne*************-->
+        </div>
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <div class="row col-xl-12 justify-content-around">
+            <div  class="card-miseEn-Avant mb-0" >
+                <div style="background-color: {{ miseEnAvantSubmit.couleur }}">
+
+                    <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
+                </div>
+                <div class="leproduit">
+                    <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+                </div>
+                <p class="livraisonProduit">livraison prévue le {{ miseEnAvantSubmit.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                <div class="">
+                    <h4 class="prix" >prix: {{ miseEnAvantSubmit.prix }} €/kg</h4>
+                </div>
+                <h3 class="nomProduit" >{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
+            </div>
+        </div>
+        <!--*****fin row*********************-->
+            <div class="justify-content-center col-xl-12"><h6>Affichage du modèle</h6></div>
+
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <div class="row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <div>
+                        {{ form_help(miseEnAvantDeuxForm.produitMiseEnAvant) }}{{ form_errors(miseEnAvantDeuxForm.produitMiseEnAvant) }}
+                        {{ form_label(miseEnAvantDeuxForm.produitMiseEnAvant) }}: {{ form_widget(miseEnAvantDeuxForm.produitMiseEnAvant) }}
+                    </div>
+                    <div>
+                        {{ form_help(miseEnAvantDeuxForm.origine) }}{{ form_errors(miseEnAvantDeuxForm.origine) }}
+                        {{ form_label(miseEnAvantDeuxForm.origine) }}: {{ form_widget(miseEnAvantDeuxForm.origine) }}
+
+                        {{ form_help(miseEnAvantDeuxForm.colisage) }}{{ form_errors(miseEnAvantDeuxForm.colisage) }}
+                        {{ form_label(miseEnAvantDeuxForm.colisage) }}: {{ form_widget(miseEnAvantDeuxForm.colisage) }}
+                    </div>
+                    <div>
+                        {{ form_help(miseEnAvantDeuxForm.prix) }}{{ form_errors(miseEnAvantDeuxForm.prix) }}
+                        {{ form_label(miseEnAvantDeuxForm.prix) }}: {{ form_widget(miseEnAvantDeuxForm.prix) }}
+
+                        {{ form_help(miseEnAvantDeuxForm.raison) }}{{ form_errors(miseEnAvantDeuxForm.raison) }}
+                        {{ form_label(miseEnAvantDeuxForm.raison) }}: {{ form_widget(miseEnAvantDeuxForm.raison) }}
+                    </div>
+                    <div>
+                        {{ form_help(miseEnAvantDeuxForm.couleur) }}{{ form_errors(miseEnAvantDeuxForm.couleur) }}
+                        {{ form_label(miseEnAvantDeuxForm.couleur) }}: {{ form_widget(miseEnAvantDeuxForm.couleur) }}
+
+                        <button class="btn-grad" type="submit">Enregister</button>
+                        {{ form_end(miseEnAvantDeuxForm) }}
+                        <div>
+                            <a class="btn btn-secondary" href=javascript:history.go(-1)>Retour</a>
+                            <a class="btn btn-secondary" href="href="{{ path('creer_mise_en_avant') }}">Annuler</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div><!--fin colonne*************-->
+        </div>
+        <!--*****fin row*********************-->
+
+    </div><!--fin de container-->
+
+{% endblock %}

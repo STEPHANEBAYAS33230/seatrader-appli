@@ -175,17 +175,23 @@ class MiseEnAvant
         return $this;
     }
 
-    public function getNiveau(): ?int
+    /**
+     * @return mixed
+     */
+    public function getNiveau()
     {
         return $this->niveau;
     }
 
-    public function setNiveau(int $niveau): self
+    /**
+     * @param mixed $niveau
+     */
+    public function setNiveau($niveau): void
     {
         $this->niveau = $niveau;
-
-        return $this;
     }
+
+
 
     public function getCouleur(): ?string
     {
@@ -198,4 +204,5 @@ class MiseEnAvant
 
         return $this;
     }
+
 }

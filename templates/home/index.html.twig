@@ -447,26 +447,7 @@
             <div class="row justify-content-around">
 
                     {%  for miseEa in miseEnAvant %}
-                        {# % if((miseEa.dateLivraisonMiseEnAvant |date('d')==( today | date('d')))) %#}
                         <div  class="card-miseEn-Avant" >
-                            {# {% if miseEa.raison.raison=="PROMOTION" or miseEa.raison.raison=="SPECIAL BARBECUE" %}
-                            <div class="promotion">
-                                {% elseif miseEa.raison.raison=="OFFRE DU JOUR"%}
-                                    <div class="offre-du-jour">
-                                        {% elseif miseEa.raison.raison=="POISSON SAUVAGE"%}
-                                        <div class="poisson-sauvage">
-                                            {% elseif miseEa.raison.raison=="PRODUIT BIO"%}
-                                            <div class="produit-bio">
-                                                {% elseif miseEa.raison.raison=="PAVILLON FRANCE"%}
-                                                <div class="pavillon-france">
-                                                    {% elseif miseEa.raison.raison=="PÊCHE MSC"%}
-                                                    <div class="peche-msc">
-                                                        {% elseif miseEa.raison.raison=="prix cassé"%}
-                                                        <div class="prix-casse">
-                                                            {% elseif miseEa.raison.raison=="SUPER PRIX"%}
-                                                            <div class="super-prix">
-
-                                {% endif %} #}
                             <div style="background-color: {{ miseEa.couleur }}">
 
                             <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
@@ -480,7 +461,9 @@
                         <div class="align-items-center">
                         <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
                         </div>
-                            <h3 class="nomProduit" >{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                            <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                            <p class="text-center">{{ miseEa.origine }}</p>
+                            <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
                         </div>
                             {# % endif %#}
 
