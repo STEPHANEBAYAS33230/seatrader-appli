@@ -11,31 +11,19 @@
         <div class=row">
             <div class="col-xl-12 justify-content-center titre">
                 <div>
-                    <h3 class="">Créer des mises en avant de produits/opportunités<i class="fas fa-fish"></i></h3>
+                    <h3 class="">Créer des mises en avant des opportunités<i class="fas fa-fish"></i></h3>
                 </div>
             </div>
         </div>
         <!--//*****************************-->
-        <div class="row">
 
-
-            <div class="col-xl-12 justify-content-center p-2 titre">
-                <div>
-                    <h4 class="">Sélectionnez le jour de livraison<i class="fas fa-fish"></i></h4>
-                    {{ form_start(miseEnAvantForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
-                        {{ form_help(miseEnAvantForm.dateLivraisonMiseEnAvant) }}{{ form_errors(miseEnAvantForm.dateLivraisonMiseEnAvant) }}
-                        {{ form_label(miseEnAvantForm.dateLivraisonMiseEnAvant) }}: {{ form_widget(miseEnAvantForm.dateLivraisonMiseEnAvant) }}
-                </div>
-            </div><!--fin colonne*************-->
-        </div>
         <!--*****fin row*********************-->
         <!--//*****************************-->
         <div class="row col-xl-12 justify-content-around">
             {%  for miseEa in miseEnAvant %}
                 <div  class="card-miseEn-Avant" >
-                    <div style="background-color: {{ miseEa.couleur }}">
-
-                        <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
+                    {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEa.couleur }}">{% endif %}
+                            <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
                     </div>
                     <div class="leproduit">
                         {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
@@ -57,12 +45,26 @@
         </div>
         <!--*****fin row*********************-->
         <!--//*****************************-->
+        <!--//*****************************-->
+        <div class="row">
+
+
+            <div class="col-xl-12 justify-content-center p-2 titre">
+                <div>
+                    <h4 class="">Sélectionnez le jour de livraison<i class="fas fa-fish"></i></h4>
+                    {{ form_start(miseEnAvantForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                    {{ form_help(miseEnAvantForm.dateLivraisonMiseEnAvant) }}{{ form_errors(miseEnAvantForm.dateLivraisonMiseEnAvant) }}
+                    {{ form_label(miseEnAvantForm.dateLivraisonMiseEnAvant) }}: {{ form_widget(miseEnAvantForm.dateLivraisonMiseEnAvant) }}
+                </div>
+            </div><!--fin colonne*************-->
+        </div>
+        <!--*****fin row*********************-->
         <div class="row">
 
 
             <div class="col-xl-12 justify-content-center titre">
                 <div>
-                    <h4 class="">Sélectionnez le produit, le prix, le slogan, la couleur<i class="fas fa-fish"></i></h4>
+                    <h4 class="">Sélectionnez le produit, le prix, le thème, la couleur<i class="fas fa-fish"></i></h4>
                     <!--//***********formulaire prduit prix slogan couleur
                     // bouton voir le rendu-->
                     <div>
@@ -81,7 +83,7 @@
                     {{ form_label(miseEnAvantForm.prix) }}: {{ form_widget(miseEnAvantForm.prix) }}
 
                     {{ form_help(miseEnAvantForm.raison) }}{{ form_errors(miseEnAvantForm.raison) }}
-                    {{ form_label(miseEnAvantForm.raison) }}: {{ form_widget(miseEnAvantForm.raison) }}
+                    Thème: {{ form_widget(miseEnAvantForm.raison) }}
                     </div>
                     <div>
                     {{ form_help(miseEnAvantForm.couleur) }}{{ form_errors(miseEnAvantForm.couleur) }}

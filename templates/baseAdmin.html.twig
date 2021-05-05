@@ -41,7 +41,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="{{ path('home_connected') }}">Home <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="{{ path('home_connected') }}" title="Accueil">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item dropdown" >
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,7 +65,17 @@
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Mise en Avant Produit
+                                        Mise en Avant
+                                    </a>
+                                    <div class="dropdown-menu menuDeroulant" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item lienA" href="{{ path('gérer_mise_en_avant') }}">Gérer Mes Mises en Avant de Produit</a>
+                                        <div class="dropdown-divider lienA"></div>
+                                        <a class="dropdown-item lienA" href="{{ path('creer_mise_en_avant') }}">Créer des mises en avant</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Commandes
                                     </a>
                                     <div class="dropdown-menu menuDeroulant" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item lienA" href="{{ path('gérer_mise_en_avant') }}">Gérer Mes Mises en Avant de Produit</a>
@@ -74,7 +84,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link " href="{{ path('app_logout') }}">Se deconnecter</a>
+                                    <a class="nav-link " href="{{ path('app_logout') }}" title="Se déconnecter"><i class="fas fa-power-off"></i></a>
                                 </li>
                             </ul>
                             <div>

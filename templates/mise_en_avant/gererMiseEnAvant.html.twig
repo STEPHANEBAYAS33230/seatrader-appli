@@ -64,8 +64,8 @@
                     <!--modal photos*********************************************************-->
                         <td>{{ miseEa.origine }}</td>
                         <td>{{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}<br><h6 class="text-danger">{{ miseEa.prix }}€</h6></td>
-                    <td style="background-color: {{ miseEa.couleur }};">{{ miseEa.raison.raison }}</td>
-                    <td>{{ miseEa.dateCreation |date('d-m-Y') }}</td>
+                        {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<td style="background: linear-gradient(to left,blue, white,red);">{% else %}<td style="background-color: {{ miseEa.couleur }};">{% endif %}{{ miseEa.raison.raison }}</td>
+                                <td>{{ miseEa.dateCreation |date('d-m-Y') }}</td>
                         <td><a class="btn btn-primary" data-toggle="modal" data-target="#SupprMiseEa{{ miseEa.id }}" ><i class="fas fa-trash-alt"></i></a></td>
                         <!--****************************************************************************************-->
                         <!-- Modal détail-Produit-->

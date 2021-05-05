@@ -32,9 +32,8 @@
         <!--//*****************************-->
         <div class="row col-xl-12 justify-content-around">
             <div  class="card-miseEn-Avant mb-0" >
-                <div style="background-color: {{ miseEnAvantSubmit.couleur }}">
-
-                    <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
+                {% if miseEnAvantSubmit.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEnAvantSubmit.couleur }}">{% endif %}
+                        <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
                 </div>
                 <div class="leproduit">
                     <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
