@@ -192,9 +192,115 @@ class MiseEnAvantController extends AbstractController
 
 
 
-        return $this->render('mise_en_avant/gérerMiseEnAvant.html.twig', [
-            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant,
+        return $this->render('mise_en_avant/gererMiseEnAvant.html.twig', [
+            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, 'dtplus'=>$dtplus, 'dtmoins'=>$dtmoins,
         ]);
     }
+
+    /**
+     * @Route("/gestion-mise-en-avant/{id}", name="supprimer-misEa")
+     */
+    public function supprimerMiseEnAvant($id, EntityManagerInterface $em){
+        //****************on recupere la miseEnAvant
+        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+        $miseEnAvant = $miseEnAvantRepo->find($id);
+
+        //********************
+        $em->remove($miseEnAvant);
+        $em->flush();
+        return $this->redirectToRoute('gérer_mise_en_avant');
+    }
+//**************************modifier miseEnAvant
+
+    /**
+     * @Route("/mise-en-avant/modifier/{id}", name="modifier_mise_en_avant")
+     */
+    public function modifierMise($id ,EntityManagerInterface $em, Request $request): Response
+    {    // on récupère l'user
+        $user=$this->getUser();
+        //****************on recupere la miseEnAvant
+        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+        $miseEnAvantSelect = $miseEnAvantRepo->find($id);
+        //*********creation du formulaire
+        $miseEnAvantDeuxForm = $this->createForm(MiseEnAvantDeuxType::class, $miseEnAvantSelect);
+        $miseEnAvantDeuxForm->handleRequest($request);
+        //**********route**********************************************************
+
+
+            //************
+            if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())
+            {
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $em->persist($miseEnAvantSelect);
+                $em->flush();
+                return $this->redirectToRoute('gérer_mise_en_avant', [
+
+                ]);
+            }
+            //*********recuperer les mises avant/date en cours
+            $today = new \DateTime('now');
+            $dtplus = new \DateTime('now');
+            $dtmoins= new \DateTime('now');
+            $dtmoins->sub(new DateInterval('P1D'));
+            $dtplus->add(new DateInterval('P1D'));
+            $dtplus->format('Y-m-d');
+            $dtmoins->format('Y-m-d');
+            $today->format('Y-m-d');
+
+
+            for($i=1;$i<31;$i++) {
+                $today->add(new DateInterval('P1D'));
+                $dtmoins->add(new DateInterval('P1D'));
+                $dtplus->add(new DateInterval('P1D'));
+
+                // récupère repository
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                if (!empty($miseEnAvant)){
+                    break;
+                }
+
+            }
+            //**************************si miseEnavant vide ds le futur (1mois)-->passé à moins 30j
+            if (empty($miseEnAvant)){
+                $today = new \DateTime('now');
+                $dtplus = new \DateTime('now');
+                $dtmoins= new \DateTime('now');
+                $dtmoins->sub(new DateInterval('P1D'));
+                $dtplus->add(new DateInterval('P1D'));
+                $dtplus->format('Y-m-d');
+                $dtmoins->format('Y-m-d');
+                $today->format('Y-m-d');
+                //****************mise ds le passé
+                for($i=1;$i<31;$i++) {
+                    $today->sub(new DateInterval('P1D'));
+                    $dtmoins->sub(new DateInterval('P1D'));
+                    $dtplus->sub(new DateInterval('P1D'));
+
+                    // récupère repository
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                    if (!empty($miseEnAvant)){
+                        break;
+                    }
+
+                }
+                //***********fin de IF
+            }
+            $today = new \DateTime('now');
+            $todayPlus = new \DateTime('now');
+            $todayPlus->add(new DateInterval('P1D'));
+            //*************************************fin mise en avant en cours ou passée
+
+
+            return $this->render('mise_en_avant/voirMiseEnAvant.html.twig', [
+                'miseEnAvantDeuxForm'=>$miseEnAvantDeuxForm->createView(), "user"=>$user, "dateToday"=>$today, 'miseEnAvantSubmit'=>$miseEnAvantSelect,
+                'miseEnAvant'=>$miseEnAvant,
+            ]);
+
+
+
+    }
+
 
 }
