@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MiseEnAvantController extends AbstractController
 {
     /**
-     * @Route("/mise/en/avant", name="creer_mise_en_avant")
+     * @Route("/mise-en-avant", name="creer_mise_en_avant")
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
@@ -167,4 +167,34 @@ class MiseEnAvantController extends AbstractController
             "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, "miseEnAvantForm"=>$miseEnAvantForm->createView()
         ]);
     }
+
+    //***********gerer les mises en avant
+    /**
+     * @Route("/gestion-mise-en-avant", name="gérer_mise_en_avant")
+     */
+    public function gestionMiseEnAvan(EntityManagerInterface $em, Request $request): Response
+    {
+       //recuperer toutes les mises en avant
+        // on récupère l'user
+        $user = $this->getUser();
+        // recupere toutes les familles
+        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+        // on tri par date-1mois entre +1mois
+        $today = strftime('%A %d %B %Y %I:%M:%S');//date du jour
+        $dtplus = new \DateTime('now');
+        $dtmoins= new \DateTime('now');
+        $dtmoins->sub(new DateInterval('P30D'));
+        $dtplus->add(new DateInterval('P30D'));
+        $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+
+
+
+
+
+
+        return $this->render('mise_en_avant/gérerMiseEnAvant.html.twig', [
+            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant,
+        ]);
+    }
+
 }

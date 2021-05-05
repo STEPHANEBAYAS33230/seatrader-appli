@@ -104,6 +104,13 @@ class ProduitsController extends AbstractController
         //****************on recupere le produit
         $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $prod = $produitRepo->find($id);
+        $nameImage=$this->getParameter("brochures_directory")."/".$prod->getBrochureFilename();
+        //********************
+        if (file_exists($nameImage)) {
+            unlink($nameImage);
+        }
+
+
         //********************
         $em->remove($prod);
         $em->flush();

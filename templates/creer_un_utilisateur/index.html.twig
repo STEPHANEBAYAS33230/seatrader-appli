@@ -32,13 +32,13 @@
                             {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
                             <p>{{ form_label(registerForm.nomDeLaSociete) }}</p>
                         </div>
-                        <div>
+                        <div class="mt-4">
                             <p>{{ form_label(registerForm.nom) }}</p>
                         </div>
-                        <div>
+                        <div class="mt-5">
                             <p>{{ form_label(registerForm.prenom) }}</p>
                         </div>
-                        <div>
+                        <div class="mt-4">
                             {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
                             <p>{{ form_label(registerForm.emailSociete) }}</p>
                         </div>
@@ -55,11 +55,11 @@
                             {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
                             <p>{{ form_label(registerForm.emailPerso) }}</p>
                         </div>
-                        <div>
+                        <div class="mt-4">
                             {{ form_help(registerForm.telephone_societe) }}{{ form_errors(registerForm.telephone_societe) }}
                             <p>{{ form_label(registerForm.telephone_societe) }}</p>
                         </div>
-                        <div>
+                        <div class="mt-5">
                             {{ form_help(registerForm.telephonePerso) }}{{ form_errors(registerForm.telephonePerso) }}
                             <p>{{ form_label(registerForm.telephonePerso) }}</p>
                         </div>
@@ -69,9 +69,9 @@
                         </div>
                     </div>
                     <div class="col-xl-3 justify-content-end mt-5">
-                        <div><p>{{ form_widget(registerForm.emailPerso) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.emailPerso, { 'required': false }) }}</p></div>
                         <div><p>{{ form_widget(registerForm.telephone_societe) }}</p></div>
-                        <div><p>{{ form_widget(registerForm.telephonePerso) }}</p></div>
+                        <div><p>{{ form_widget(registerForm.telephonePerso, { 'required': false }) }}</p></div>
                         <div><p>{{ form_widget(registerForm.password) }}</p></div>
 
                     </div>
