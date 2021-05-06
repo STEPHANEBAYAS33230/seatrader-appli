@@ -1,0 +1,66 @@
+
+{% extends 'baseUser.html.twig' %}
+
+{% block title %}home |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+<div class="container marge-container">
+    <div class="row">
+        <div class="col-xl-12 justify-content-center">
+            <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card-header">Passez vos commandes avant 11h</div>
+                <div class="card-body">
+                    <p class="card-title">Jour de commande->Jour de livraison</p>
+                    <p class="card-text">Lun->Mar Mar->Mer Mer->Jeu Ven->Sam</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class=row">
+        <div class="col-xl-12 justify-content-center titre">
+            <div>
+                <h3>Retrouvez nos opportunités chaque jour<i class="fas fa-fish"></i></h3>
+            </div>
+        </div>
+    </div>
+    <!--//*****************************-->
+
+    <!--*****fin row*********************-->
+    <!--//*****************************-->
+    <div class="row col-xl-12 justify-content-around">
+        {%  for miseEa in miseEnAvant %}
+        <div  class="card-miseEn-Avant" >
+            {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEa.couleur }}">{% endif %}
+                    <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
+                </div>
+                <div class="leproduit">
+                    {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
+                    <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+                </div>
+                <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                <div class="align-items-center">
+                    <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
+                </div>
+                <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                <p class="text-center">{{ miseEa.origine }}</p>
+                <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
+            </div>
+            {% endfor %}
+            <div class="justify-content-center col-xl-12"><h6>Mise(s) en Avant affichée(s) la plus récente(s) ou en cours</h6></div>
+
+
+        </div>
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <!--//*****************************-->
+
+
+    </div><!--fin de container-->
+
+    {% endblock %}

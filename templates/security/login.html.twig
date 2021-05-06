@@ -27,8 +27,17 @@
                         <h5 class="card-title text-center">Identification</h5>
                         <form class="form-signin" method="post">
                             <div class="form-label-group">
+                                {# read and display all flash messages #}
+                                {% for label, messages in app.flashes %}
+                                    {% for message in messages %}
+                                        <div class="bg-danger text-danger">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
                                 {% if error %}
                                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'error') }}</div>
                                 {% endif %}
 
                                 {% if app.user %}

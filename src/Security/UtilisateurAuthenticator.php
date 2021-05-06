@@ -95,7 +95,6 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator implements
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-
         return new RedirectResponse($this->urlGenerator->generate('home_connected'));
     }
 

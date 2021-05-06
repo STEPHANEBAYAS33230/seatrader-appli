@@ -23,7 +23,8 @@ class MiseEnAvantController extends AbstractController
         // on récupère l'user
         $user=$this->getUser();
         // les dates
-        //*********recuperer les mises avant/date en cours
+
+
         $today = new \DateTime('now');
         $dtplus = new \DateTime('now');
         $dtmoins= new \DateTime('now');
@@ -32,6 +33,8 @@ class MiseEnAvantController extends AbstractController
         $dtplus->format('Y-m-d');
         $dtmoins->format('Y-m-d');
         $today->format('Y-m-d');
+
+
 
 
         for($i=1;$i<31;$i++) {
@@ -126,7 +129,8 @@ class MiseEnAvantController extends AbstractController
         }
 
             return $this->render('mise_en_avant/creerMiseEnAvant.html.twig', [
-            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, "miseEnAvantForm"=>$miseEnAvantForm->createView()
+            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, "miseEnAvantForm"=>$miseEnAvantForm->createView(),
+
         ]);
     }
 

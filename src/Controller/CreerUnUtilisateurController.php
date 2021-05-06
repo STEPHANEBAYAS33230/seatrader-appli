@@ -60,7 +60,7 @@ class CreerUnUtilisateurController extends AbstractController
 
         }
         return $this->render('creer_un_utilisateur/index.html.twig', [
-            'controller_name' => 'UserController', "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user,  'titrePage'=>$titrePage,
+             "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user,  'titrePage'=>$titrePage,
         ]);
 
     }

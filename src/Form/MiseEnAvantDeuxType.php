@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\MiseEnAvant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,7 @@ class MiseEnAvantDeuxType extends AbstractType
             ->add('dateLivraisonMiseEnAvant', DateType::class,[
                 'label' => 'livraison le ',
                 'format' => 'dd-MM-yyyy'])
-            ->add('prix')
+            ->add('prix', NumberType::class,['scale'=> 2])
             //->add('niveau')
             ->add('couleur')
             ->add('produitMiseEnAvant')
