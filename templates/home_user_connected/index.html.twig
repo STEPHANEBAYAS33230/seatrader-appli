@@ -10,7 +10,7 @@
 {% block main %}
 <div class="container marge-container">
     <div class="row">
-        <div class="col-xl-12 justify-content-center">
+        <div class="col-xl-3 justify-content-center mt-5">
             <div class="card bg-light mb-3" style="max-width: 18rem;">
                 <div class="card-header">Passez vos commandes avant 11h</div>
                 <div class="card-body">
@@ -20,13 +20,18 @@
             </div>
 
         </div>
-    </div>
-    <div class=row">
-        <div class="col-xl-12 justify-content-center titre">
+
+
+        <div class="col-xl-9 justify-content-center titre">
             <div>
+                <div>
                 <h3>Retrouvez nos opportunités chaque jour<i class="fas fa-fish"></i></h3>
+                {{ form_start(filtreDateMiseEnAvantForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                    sélectionnez la période choisie: {{ form_widget(filtreDateMiseEnAvantForm.dateMeA) }} entre {{ form_widget(filtreDateMiseEnAvantForm.datePlus) }}
+                    <button class="btn-grad" type="submit">Rechercher</button>
+                    {{ form_end(filtreDateMiseEnAvantForm) }}
+                </div>
             </div>
-        </div>
     </div>
     <!--//*****************************-->
 

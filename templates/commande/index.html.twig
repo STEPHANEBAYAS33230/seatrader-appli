@@ -1,0 +1,86 @@
+
+{% extends 'baseUser.html.twig' %}
+
+{% block title %}Commande |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+    <div class="container marge-container">
+    <div class="row">
+    <div class="col-xl-3 justify-content-center mt-5">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">Passez vos commandes avant 11h</div>
+            <div class="card-body">
+                <p class="card-title">Jour de commande->Jour de livraison</p>
+                <p class="card-text">Lun->Mar Mar->Mer Mer->Jeu Ven->Sam</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-9 justify-content-center titre">
+        <div>
+            <div>
+                <h3>Commande{% if cde!=null %}{{ cde.id }}{% for fg in cde.listeProduits %}{{ fg.nomProduit }}--quantite:{{ fg.quantite }}{% endfor %}{% endif %}<i class="fas fa-fish"></i></h3>
+                {{ form_start(commandeForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                sélectionnez le jour de la livraison:
+                {{ form_widget(commandeForm.jourDeLivraison) }}
+                note: {{ form_widget(commandeForm.note) }}
+
+            </div>
+        </div>
+    </div>
+    <!--//*****************************-->
+        <div class="row col-xl-12 justify-content-around">
+                {%  for famille in familleProduit %}
+
+
+
+
+
+                <h6 class="text-center text-dark">{{ famille.nomFamille }} </h6>
+
+            <table class="table table-striped table-secondary">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Produit</th>
+                    <th scope="col">Unité</th>
+                    <th scope="col">quantité cdée en colis</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                    {%  for prod in produits %}
+                        {% if famille.nomFamille==prod.famille %}
+                        <tbody>
+                    <tr>
+                    <th>{{ prod.id }}</th>
+                    <td>{{ prod.nomProduit }}</td>
+                    <td>{{ prod.pieceOuKg }}</td>
+                        <td><label for="prod{{ prod.id }}">quantité:</label><input name="prod{{ prod.id }}" type="number"></td>
+                    </tr>
+                </tbody>
+
+                        {% endif %}
+                    {% endfor %}
+
+            </table>
+
+
+
+
+
+
+
+
+            {% endfor %}
+            </div>
+        <button class="btn-grad" type="submit">ajouter</button>
+        {{ form_end(commandeForm) }}
+    </div><!--fin de container-->
+
+{% endblock %}

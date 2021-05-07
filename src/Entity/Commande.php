@@ -46,9 +46,14 @@ class Commande
     private $utilisateur;
 
     /**
-     * @ORM\ManyToMany (targetEntity="App\Entity\Produit")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", mappedBy="commande")
      */
     private $listeProduits;
+
+    /**
+     * @ORM\Column(type="object", nullable=true)
+     */
+    private $object;
 
     /**
      * Commande constructor.
@@ -77,6 +82,16 @@ class Commande
         $this->listeProduits = $listeProduits;
     }
 
+
+    //ajouter un produit
+    public function add (Produit $listeProduits): self
+    {
+        if (!$this->listeProduits->contains($listeProduits)) {
+            $this->listeProduits[] = $listeProduits;
+            //$listingProduits->addSortie($this);
+        }
+        return $this;
+    }
 
 
     /**
@@ -152,6 +167,18 @@ class Commande
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    public function setObject($object): self
+    {
+        $this->object = $object;
 
         return $this;
     }

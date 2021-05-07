@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,7 +32,7 @@ class Produit
     private $nomProduit;
 
     /**
-     * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $quantite=0;
 
@@ -49,6 +51,50 @@ class Produit
      *
      */
     private $brochureFilename;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Commande", inversedBy="listeProduits")
+     */
+    private $commande;
+
+    //ajouter un produit
+    public function addcommande (Commande $commande): self
+    {
+        if (!$this->commande->contains($commande)) {
+            $this->commande[] = $commande;
+            //$listingProduits->addSortie($this);
+        }
+        return $this;
+    }
+
+    /**
+     * Produit constructor.
+     * @param $commande
+     */
+    public function __construct()
+    {
+
+        $this->commande = new ArrayCollection();
+
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommande(): Collection
+    {
+        return $this->commande;
+    }
+
+    /**
+     * @param ArrayCollection $commande
+     */
+    public function setCommande(ArrayCollection $commande): void
+    {
+        $this->commande = $commande;
+    }
+
+
 
     /**
      * @return mixed

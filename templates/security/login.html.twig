@@ -25,6 +25,13 @@
                             <!--logo seatrader-->
                         </a>
                         <h5 class="card-title text-center">Identification</h5>
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="flash flash-{{ label }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
                         <form class="form-signin" method="post">
                             <div class="form-label-group">
                                 {# read and display all flash messages #}
