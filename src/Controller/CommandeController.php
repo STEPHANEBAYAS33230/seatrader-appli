@@ -51,8 +51,8 @@ class CommandeController extends AbstractController
             $produits = $produitRepo->findAll();
             foreach( $produits as $prd ) {
                 $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
-            $commande->add($prd);
-            $prd->addcommande($commande);
+            //$commande->add($prd);
+            //$prd->addcommande($commande);
             $commande->setObject($produits);
                 $em->persist($prd);
             }
@@ -64,7 +64,7 @@ class CommandeController extends AbstractController
             $em->persist($commande);
             $em->flush();
             $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-            $cde = $cdeRepo->find(28);
+            $cde = $cdeRepo->find(35);
 
             /*var_dump($cde->getListeProduits(),null);
             $produit=$cde->getListeProduits();
