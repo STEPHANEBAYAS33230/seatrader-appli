@@ -30,6 +30,14 @@
                     sélectionnez le jour de la livraison:
                     {{ form_widget(commandeForm.jourDeLivraison) }}
                     note: {{ form_widget(commandeForm.note) }}
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-warning">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
 
                 </div>
             </div>
