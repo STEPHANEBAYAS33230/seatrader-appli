@@ -1,0 +1,101 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Mises en Avant |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h3 class="">GESTION DES ORIGINES (zone de pêches OU élevage)<i class="fas fa-fish"></i></h3>
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-warning">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-12 justify-content-center">
+                <table class="table table-striped table-secondary">
+                    <thead class="bg-warning">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">origine (zone de pêche/élevage)</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for origin in origine %}
+                                <tr>
+                                    <th scope="row">{{ origin.id }}</th>
+                                    <td>{{ origin.lieu }}</td>
+                                    <td><button type="button" class="btn btn-primary" title="Supprimer" data-toggle="modal" data-target="#zig{{ origin.id }}"><i class="fas fa-trash-alt"></i></button></td>
+
+                                    <!--modal *********************************************************-->
+                                    <!-- Modal EFFACER ORIGINE-->
+                                    <div class="modal fade bgFondModal"  id="zig{{ origin.id }}" tabindex="-1" role="dialog" aria-labelledby="Label{{ origin.id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header formulaireBlue">
+                                                    <h5 class="modal-title text-light" id="Label{{ origin.id }}" >{{ origin.lieu }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <a  class="btn btn-primary"href="{{ path('supprimer-origine',{'id':origin.id }) }}">Supprimer</a>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--modal photos*********************************************************-->
+
+                                </tr>
+
+                        {% endfor %}
+
+                    <tr>
+                        <th scope="row">Nouvelle origine</th>
+                        <td scope="col">
+                            {{ form_start(origineForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                           {{ form_widget(origineForm.lieu,{'attr':{'placeholder':'origine pêché/élevé...'}}) }}
+
+
+
+                        </td>
+                        <td scope="col"><button type="submit" class="btn btn-primary" title="Ajouter"><i class="fas fa-plus"></i></button></td>
+                        {{ form_end(origineForm) }}
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            {#       <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
+                </div>
+                <div class="leproduit">
+                    <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+                </div>
+                <p class="livraisonProduit">livraison prévue le {{ miseEnAvantSubmit.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                <div class="">
+                    <h4 class="prix" >prix: {{ miseEnAvantSubmit.prix }} €/kg</h4>
+                </div>
+                <h3 class="text-center">{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
+                <p class="text-center">{{ miseEnAvantSubmit.origine }}</p>
+                <p class="text-center">colis par {{ miseEnAvantSubmit.colisage }} {{ miseEnAvantSubmit.produitMiseEnAvant.pieceOuKg }}</p>
+            </div> #}
+
+        </div>
+        <!--//*****************************-->
+    </div><!--fin container***********************************-->
+{% endblock %}

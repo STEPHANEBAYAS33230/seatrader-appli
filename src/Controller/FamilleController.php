@@ -41,7 +41,7 @@ class FamilleController extends AbstractController
             $em->flush();
 
             //******************
-            $this->addFlash('success', 'produit créé');
+
             return $this->redirectToRoute('ajouter-famille', [
 
             ]);

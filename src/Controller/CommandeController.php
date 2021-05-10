@@ -7,6 +7,7 @@ use App\Entity\FamilleProduit;
 use App\Entity\Produit;
 use App\Form\CommandeType;
 use DateInterval;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,8 +51,12 @@ class CommandeController extends AbstractController
         if ($commandeForm->isSubmitted() and $commandeForm->isValid()) {
             //*******verif des dates et ouverture des cde
             $dateVoulue=($commande->getJourDeLivraison());
+            $dateVoulue2=($commande->getJourDeLivraison());
+
             //******************** jour en francais
             $dtt=date_format($dateVoulue,"d/m/Y");
+            $dtt2=date_format($dateVoulue2,"Y-m-d");
+
             //$dtt=$dateVoulue;
             // tableau des jours de la semaine date_format($date,"Y/m/d H:i:s");
             //$dtt=date("d/m/Y");
@@ -61,45 +66,139 @@ class CommandeController extends AbstractController
 // calcul du timestamp
             $timestamp = mktime (0, 0, 0, $mois, $jour, $annee);
 // affichage du jour de la semaine
-            $jour= $joursem[date("w",$timestamp)];
+            $jourSem= $joursem[date("w",$timestamp)];
             //*********si jour livraison egale à dim ou lundi pas de cde possible
-            if ($jour=="dim" or $jour=="lun") {
+            if ($jourSem=="dim" or $jourSem=="lun") {
                 $this->addFlash('error', "La livraison n'est pas ouverte pour ce jour là.");
-                return $this->redirectToRoute('faire_cde');
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
             }
             //**********controle si date du jour <24h date de liv
             $dttjour=date("d");
             $dttmois=date("m");
             $dttan=date("Y");
+            $dtjour=date("d/m/Y");
+            $dtjour2=new \DateTime('now');
+            $dtjour2=date_format($dtjour2,"Y-m-d");
+            //$diff = round((strtotime($dtt) - strtotime($dtjour))/(60*60*24)-1);
+            $heure=date('H');
+            //calcul de la diff
+            // jour mois annee date de liv choisie
+            $start = new DateTimeImmutable($dtjour2);//date de départ
+            $end = new DateTimeImmutable($dtt2);//date de départ
+            $interval = $start->diff($end);//on récupère la différence entre ces 2 dates
+            $diff=$interval->format('%a');//affiche : en jours
+            if(intval($jour)<intval($dttjour) and intval($mois)==intval($dttmois) and intval($annee)==intval($dttan)){
+                $diff=$diff*-1;
+            } else  if( intval($mois)<intval($dttmois) and intval($annee)==intval($dttan)) { $diff=$diff*-1;}
+            else  if( intval($annee)<intval($dttan)) { $diff=$diff*-1;}
+            /*var_dump($dttjour);
+            var_dump($dttmois);
+            var_dump($dttan);
+            var_dump($dtjour);
+            var_dump($diff);
+            var_dump($jourSem);
+            var_dump($jour);
+            var_dump($mois);
+            var_dump($annee);
+            var_dump($heure);*/
 
+            //*******************************
+            if ($diff<=0) {
+                $this->addFlash('error', "Erreur Date de livraison.");
+
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
+            }
+            //**************erreur si livraison sup à 1mois
+
+            if ($diff>31) {
+                $this->addFlash('error', "Date de livraison >à 1mois.");
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
+            }
+            //*********erreur si livraison j+1 et apres 11h
+            if ($diff==1 and  intval($heure)>11) {
+                $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
+            }
             //********erreur de date inf à la date du jour
             if (intval($dttjour)>=intval($jour) and intval($dttmois)==intval($mois) and intval($dttan)==intval($annee) ) {
                 $this->addFlash('error', "Problème de date de livraison.");
-                return $this->redirectToRoute('faire_cde');
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
             }
             if (intval($dttmois)>intval($mois) and intval($dttan)==intval($annee) ) {
                 $this->addFlash('error', "Problème de date de livraison.");
-                return $this->redirectToRoute('faire_cde');
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
             }
             if (intval($dttan)>intval($annee) ) {
                 $this->addFlash('error', "Problème de date de livraison.");
-                return $this->redirectToRoute('faire_cde');
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
             }
 
-            //**************erreur si livraison sup à 1mois
-            $dtjour=date("d/m/Y");
-            $diff = round((strtotime($dtt) - strtotime($dtjour))/(60*60*24)-1);
-            if ($diff>31) {
-                $this->addFlash('error', "Date de livraison >à 1mois.");
-                return $this->redirectToRoute('faire_cde');
-            }
-            //*********erreur si livraison j+1 et apres 11h
-            if ($diff==1 and  (intval(date('H')))>11) {
-                $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
-                return $this->redirectToRoute('faire_cde');
-            }
+
             //******************************
-            //** MANQUE VOIR SI DATE OUVERTE PAR ADMIN
+            //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
             //******************************
             // recupere toutes les produits
             $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
@@ -108,6 +207,7 @@ class CommandeController extends AbstractController
                 $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
             //$commande->add($prd);
             //$prd->addcommande($commande);
+                $commande->setEtatCommande("envoyée");
             $commande->setObject($produits);
                 $em->persist($prd);
             }
@@ -117,13 +217,7 @@ class CommandeController extends AbstractController
             $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
             $cde = $cdeRepo->find(35);
 
-            /*var_dump($cde->getListeProduits(),null);
-            $produit=$cde->getListeProduits();
-            foreach( $produit as $prd ) {
-            var_dump($prd->getId());
-            var_dump($prd->getQuantite());}
-
-            exit;*/
+            //***********redirection vers voir mes commandes
         }
 
 

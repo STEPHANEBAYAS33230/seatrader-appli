@@ -34,7 +34,7 @@ class Origine
 
     public function setLieu(string $lieu): self
     {
-        $this->lieu = $lieu;
+        $this->lieu = strtoupper($lieu);
 
         return $this;
     }

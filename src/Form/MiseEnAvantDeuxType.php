@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\MiseEnAvant;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +21,8 @@ class MiseEnAvantDeuxType extends AbstractType
                 'format' => 'dd-MM-yyyy'])
             ->add('prix', NumberType::class,['scale'=> 2])
             //->add('niveau')
-            ->add('couleur')
+            ->add('couleur', ChoiceType::class,['choices'=>['Bleu'=>'blue', 'Bleu clair'=>'aqua', 'Bisque'=>'bisque', 'Violet'=>'violet'
+                ,'Rose'=>'pink','Vert'=>'green', 'Rouge'=>'red', 'Orange'=>'orange', 'Jaune'=>'yellow', 'Vert lime'=>'lime', 'Tomate'=>'tomato', 'Saumon'=>'salmon','Argent'=>'silver', 'Marron'=>'peru']])
             ->add('produitMiseEnAvant')
             ->add('origine')
             ->add('colisage')
