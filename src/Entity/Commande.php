@@ -93,7 +93,6 @@ class Commande
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -182,4 +181,8 @@ class Commande
 
         return $this;
     }
+
+
+
+
 }

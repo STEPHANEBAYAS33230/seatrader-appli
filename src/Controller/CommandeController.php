@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\EtatCommande;
+use App\Entity\EtatUtilisateur;
 use App\Entity\FamilleProduit;
 use App\Entity\Produit;
 use App\Form\CommandeType;
@@ -68,6 +70,9 @@ class CommandeController extends AbstractController
 // affichage du jour de la semaine
             $jourSem= $joursem[date("w",$timestamp)];
             //*********si jour livraison egale à dim ou lundi pas de cde possible
+            //******************************
+            //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
+            //******************************
             if ($jourSem=="dim" or $jourSem=="lun") {
                 $this->addFlash('error', "La livraison n'est pas ouverte pour ce jour là.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -197,32 +202,63 @@ class CommandeController extends AbstractController
             }
 
 
-            //******************************
-            //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
-            //******************************
+
             // recupere toutes les produits
             $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $produitRepo->findAll();
             foreach( $produits as $prd ) {
                 $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
-            //$commande->add($prd);
-            //$prd->addcommande($commande);
-                $commande->setEtatCommande("envoyée");
-            $commande->setObject($produits);
+                //$commande->add($prd);
+                //$prd->addcommande($commande);
+                // recupere l etat envoyee
+                $etatRepo = $this->getDoctrine()->getRepository(EtatCommande::class);
+                $etat = $etatRepo->find(2);
+
+                $commande->setEtatCommande($etat);
+                $commande->setObject($produits);
                 $em->persist($prd);
             }
-            //***on enregistre la cde
-            $em->persist($commande);
-            $em->flush();
-            $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-            $cde = $cdeRepo->find(35);
+            //****************************
+            //*********controle securité si user connecté est egal à l auteur de la commande
+            $utilisateur=$commande->getUtilisateur();
+            $idUtilisateur=$utilisateur->getId();
+            if ($idUtilisateur=$user->getId()){
 
-            //***********redirection vers voir mes commandes
+                //**************************
+                //***on enregistre la cde
+                $em->persist($commande);
+                $em->flush();
+
+
+                //***********redirection vers voir mes commandes
+
+            } else {
+                $this->addFlash('error', "Un problème a été détecté. La commande n'a pas été enregistré.");
+            }
         }
 
 
-            return $this->render('commande/index.html.twig', [ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+        return $this->render('commande/index.html.twig', [ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
             "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
         ]);
+    }
+
+    //*****************voir mes cdes
+    /**
+     * @Route("/commande/cde", name="voir_cde")
+     */
+    public function voirCde() :Response
+    {
+
+        // on récupère l'user
+        $user=$this->getUser();
+        $today = new \DateTime('now');
+        // recupere les commandes
+        $commandeRepo = $this->getDoctrine()->getRepository(Commande::class);
+        $commandeApresJour = $commandeRepo->filtrerLesCdes($user,$today); //filter cde avec date livraison apres date du jour/du user conecté aussi
+        // recuperer les cdee avant la date du jour 30jours
+
+
+        //***************************
     }
 }

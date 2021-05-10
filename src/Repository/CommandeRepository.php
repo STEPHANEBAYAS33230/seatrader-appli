@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,21 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+
+    public function filtrerLesCdes($user, $today)
+    {
+        $today->add(new DateInterval('P1D'));
+        $id=$user->getId();
+
+        $result = $this->createQueryBuilder('c')
+            ->where('c.datelivraison >= : today') // gestion date
+            ->setParameter('today', $today)
+            ->andWhere('c.utilisateur.id = :id') //gsestion campus
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
