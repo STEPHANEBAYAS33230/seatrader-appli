@@ -1,0 +1,82 @@
+{% extends 'baseUser.html.twig' %}
+
+{% block title %}Commandes |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h3 class="">Mes Commandes<i class="fas fa-fish"></i></h3>
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-warning">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-12 justify-content-center">
+                <table class="table table-striped table-secondary">
+                    <thead class="bg-warning">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Date de livraison</th>
+                        <th scope="col">Date de création</th>
+                        <th scope="col">Etat commande</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cdeAJ in commandeApresJour %}
+                        <tr>
+                            <th scope="row">{{ cdeAJ.id }}</th>
+                            <td>{{ cdeAJ.jourDeLivraison }}</td>
+                            <td>{{  cdeAJ.etatCommande }}</td>
+                            <td>modifier-supprimer</td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    <!--<tr>
+                        <th scope="row">Nouvelle origine</th>
+                        <td scope="col">
+                            {{ form_start(origineForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                            {{ form_widget(origineForm.lieu,{'attr':{'placeholder':'origine pêché/élevé...'}}) }}
+
+
+
+                        </td>
+                        <td scope="col"><button type="submit" class="btn btn-primary" title="Ajouter"><i class="fas fa-plus"></i></button></td>
+                        {{ form_end(origineForm) }}
+                    </tr>-->
+                    </tbody>
+                </table>
+
+            </div>
+            {#       <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
+                </div>
+                <div class="leproduit">
+                    <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+                </div>
+                <p class="livraisonProduit">livraison prévue le {{ miseEnAvantSubmit.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                <div class="">
+                    <h4 class="prix" >prix: {{ miseEnAvantSubmit.prix }} €/kg</h4>
+                </div>
+                <h3 class="text-center">{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
+                <p class="text-center">{{ miseEnAvantSubmit.origine }}</p>
+                <p class="text-center">colis par {{ miseEnAvantSubmit.colisage }} {{ miseEnAvantSubmit.produitMiseEnAvant.pieceOuKg }}</p>
+            </div> #}
+
+        </div>
+        <!--//*****************************-->
+    </div><!--fin container***********************************-->
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use App\Entity\Utilisateur;
 use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,16 +22,18 @@ class CommandeRepository extends ServiceEntityRepository
     }
 
 
-    public function filtrerLesCdes($user, $today)
+    public function filtrerLesCdes(Utilisateur $user, $today)
     {
-        $today->add(new DateInterval('P1D'));
-        $id=$user->getId();
+       // $today->add(new DateInterval('P1D'));
+        $today=date('YYYY-mm-dd');
+        $idi=$user->getId();
+
 
         $result = $this->createQueryBuilder('c')
-            ->where('c.datelivraison >= : today') // gestion date
+            ->where('c.jourDeLivraison >= : today') // gestion date
             ->setParameter('today', $today)
-            ->andWhere('c.utilisateur.id = :id') //gsestion campus
-            ->setParameter('id', $id)
+            ->andWhere('c.utilisateur.id = :idi') //gsestion user
+            ->setParameter('idi', $idi)
             ->getQuery()
             ->getResult();
         return $result;

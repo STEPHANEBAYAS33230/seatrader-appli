@@ -260,5 +260,8 @@ class CommandeController extends AbstractController
 
 
         //***************************
+        return $this->render('commande/voir_cde.html.twig', [ "dateToday"=>$today,"user"=>$user,
+            "commandeApresJour"=>$commandeApresJour,
+        ]);
     }
 }
