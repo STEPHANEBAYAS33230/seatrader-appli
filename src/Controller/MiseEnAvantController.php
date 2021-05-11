@@ -162,7 +162,7 @@ class MiseEnAvantController extends AbstractController
             "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, 'dtplus'=>$dtplus, 'dtmoins'=>$dtmoins,
         ]);
     }
-
+//********************supprimer mise en avant
     /**
      * @Route("/gestion-mise-en-avant/{id}", name="supprimer-misEa")
      */

@@ -27,36 +27,103 @@
                     <thead class="bg-warning">
                     <tr>
                         <th scope="col">N°</th>
+                        <th scope="col"></th>
                         <th scope="col">Date de livraison</th>
                         <th scope="col">Date de création</th>
-                        <th scope="col">Etat commande</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Ligne(s)</th>
+                        <th scope="col">Colis</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for cdeAJ in commandeApresJour %}
+                    <!--//************************cde apres jour modifiable supprimable-->
+                    {% for cdeAJ in commandeAvantJour %}
                         <tr>
                             <th scope="row">{{ cdeAJ.id }}</th>
-                            <td>{{ cdeAJ.jourDeLivraison }}</td>
+                            <td scope="col">{{ cdeAJ.utilisateur.nom }}-{{ cdeAJ.utilisateur.nomDeLaSociete }}</td>
+                            <td>{{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</td>
+                            <td>{{ cdeAJ.dateCreationCommande |date('d/m/Y') }}</td>
                             <td>{{  cdeAJ.etatCommande }}</td>
-                            <td>modifier-supprimer</td>
+                            {% set nbreLigne=0 %}{% set nbreColis=0 %}
+                            {% for ligne in cdeAJ.object %}
+                                {% if ligne.quantite>0 %} {% set nbreLigne=nbreLigne+1 %} {% set nbreColis=nbreColis+ligne.quantite %}{% endif %}
+                            {% endfor %}
+                            <td>{{ nbreLigne }}</td>
+                            <td>{{ nbreColis }}</td>
+                            <td><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detailCde{{ cdeAJ.id }}">voir</button></td>
+                            <!--****************************************************************************************-->
+                            <!-- Modal détail-commande-->
+                            <div class="modal fade bgFondModal"  id="detailCde{{ cdeAJ.id }}" tabindex="-1" role="dialog" aria-labelledby="detailCdeLabel{{ cdeAJ.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header formulaireBlue">
+                                            <h5 class="modal-title text-light" id="detLabel{{ cdeAJ.id }}" >Commande à livrer le {{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</h5>
+
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true" class="text-white">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% for ligne in cdeAJ.object %}
+
+                                                <h6 class="text-black">{{ ligne.nomProduit }}_____quantité en colis:{{ ligne.quantite }}</h6>
+                                                <hr>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--****************************************************************************************************************************-->
+                            <td>-</td>
 
                         </tr>
 
                     {% endfor %}
+                    <!--//************************fin cde avant jour-->
+                    <!--//************************cde apres jour modifiable supprimable-->
+                    {% for cdeAJ in commandeApresJour %}
+                        <tr>
+                            <th scope="row">{{ cdeAJ.id }}</th>
+                            <td scope="col">{{ cdeAJ.utilisateur.nom }}-{{ cdeAJ.utilisateur.nomDeLaSociete }}</td>
+                            <td>{{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</td>
+                            <td>{{ cdeAJ.dateCreationCommande |date('d/m/Y') }}</td>
+                            <td>{{  cdeAJ.etatCommande }}</td>
+                            {% set nbreLigne=0 %}{% set nbreColis=0 %}
+                            {% for ligne in cdeAJ.object %}
+                                {% if ligne.quantite>0 %} {% set nbreLigne=nbreLigne+1 %} {% set nbreColis=nbreColis+ligne.quantite %}{% endif %}
+                            {% endfor %}
+                            <td>{{ nbreLigne }}</td>
+                            <td>{{ nbreColis }}</td>
+                            <td><a class="btn btn-primary" data-toggle="modal" data-target="#SupprCde{{ cdeAJ.id }}" ><i class="fas fa-trash-alt"></i></a></td>
+                            <td>modifier</td>
+                            <!--****************************************************************************************-->
+                            <!-- Modal supprimer cde-->
+                            <div class="modal fade bgFondModal"  id="SupprCde{{ cdeAJ.id }}" tabindex="-1" role="dialog" aria-labelledby="SupprCdeLabel{{ cdeAJ.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header formulaireBlue">
+                                            <h5 class="modal-title text-light" id="detLabel{{ cdeAJ.id }}" >Voulez-vous vraiment supprimer cette commande ?</h5>
+                                            <h5 class="modal-title text-light">N°{{ cdeAJ.id }}-livraison le {{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</h5>
+                                            <p></p>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <a  class="btn btn-secondary" href="{{ path('supprimer-cde',{'id': cdeAJ.id }) }}">Supprimer</a>{# </button>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--****************************************************************************************************************************-->
 
-                    <!--<tr>
-                        <th scope="row">Nouvelle origine</th>
-                        <td scope="col">
-                            {{ form_start(origineForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
-                            {{ form_widget(origineForm.lieu,{'attr':{'placeholder':'origine pêché/élevé...'}}) }}
+                        </tr>
 
-
-
-                        </td>
-                        <td scope="col"><button type="submit" class="btn btn-primary" title="Ajouter"><i class="fas fa-plus"></i></button></td>
-                        {{ form_end(origineForm) }}
-                    </tr>-->
+                    {% endfor %}
+                    <!--//************************ fin cde apres jour-->
                     </tbody>
                 </table>
 

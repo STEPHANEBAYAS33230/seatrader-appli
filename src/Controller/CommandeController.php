@@ -29,6 +29,13 @@ class CommandeController extends AbstractController
         $familleProduit = $familleProduitRepo->findAll();
         $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $produits = $produitRepo->findAll();
+        //***********mettre les quantité à zero pour les produits
+        foreach( $produits as $prd ) {
+            $prd->setQuantite(0);
+        }
+        //********************************
+
+
         // creer une formulaire
         //************formulaire
         $cde=new Commande();;
@@ -95,6 +102,7 @@ class CommandeController extends AbstractController
             $dtjour2=date_format($dtjour2,"Y-m-d");
             //$diff = round((strtotime($dtt) - strtotime($dtjour))/(60*60*24)-1);
             $heure=date('H');
+
             //calcul de la diff
             // jour mois annee date de liv choisie
             $start = new DateTimeImmutable($dtjour2);//date de départ
@@ -114,8 +122,8 @@ class CommandeController extends AbstractController
             var_dump($jour);
             var_dump($mois);
             var_dump($annee);
-            var_dump($heure);*/
-
+            var_dump($heure);
+            die();*/
             //*******************************
             if ($diff<=0) {
                 $this->addFlash('error', "Erreur Date de livraison.");
@@ -147,7 +155,7 @@ class CommandeController extends AbstractController
                 ]);
             }
             //*********erreur si livraison j+1 et apres 11h
-            if ($diff==1 and  intval($heure)>11) {
+            if ($diff==1 and  intval($heure)>10) {
                 $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -206,8 +214,10 @@ class CommandeController extends AbstractController
             // recupere toutes les produits
             $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $produitRepo->findAll();
-            foreach( $produits as $prd ) {
+
+            foreach( $produits as $prd ) {//recupere les valeurs des input en formulaire pour les produits
                 $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+                //voir si tout produit quantite egal à 0 pour ne pas enregistrer
                 //$commande->add($prd);
                 //$prd->addcommande($commande);
                 // recupere l etat envoyee
@@ -216,7 +226,26 @@ class CommandeController extends AbstractController
 
                 $commande->setEtatCommande($etat);
                 $commande->setObject($produits);
-                $em->persist($prd);
+                //$em->persist($prd); pâs d'enregistrement de la quantite ds l'entity produit (doit toujours etre egal à zero)
+            }
+            $pasVide=false;//****voir si cde vide en quantite
+            foreach ($commande->getObject() as $lobjet)
+            {
+                if ($lobjet->getQuantite()>0){$pasVide=true;}
+            }
+            //*****si cde vide retour en page de cde
+            if ( $pasVide==false ) {
+                $this->addFlash('error', "La commande est vide.");
+                $commandeForm = $this->createForm(CommandeType::class, $commande);
+                $commandeForm->handleRequest($request);
+                foreach( $produits as $prd ) {
+                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
+
+                }
+                return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+
+                ]);
             }
             //****************************
             //*********controle securité si user connecté est egal à l auteur de la commande
@@ -231,6 +260,9 @@ class CommandeController extends AbstractController
 
 
                 //***********redirection vers voir mes commandes
+                $this->addFlash('success', "Commande enregistrée et envoyée");
+
+                return $this->redirectToRoute('voir_cde');
 
             } else {
                 $this->addFlash('error', "Un problème a été détecté. La commande n'a pas été enregistré.");
@@ -255,13 +287,28 @@ class CommandeController extends AbstractController
         $today = new \DateTime('now');
         // recupere les commandes
         $commandeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        $commandeApresJour = $commandeRepo->filtrerLesCdes($user,$today); //filter cde avec date livraison apres date du jour/du user conecté aussi
+        $commandeApresJour = $commandeRepo->filtrerLesCdes($user); //filter cde avec date livraison apres date du jour/du user conecté aussi
         // recuperer les cdee avant la date du jour 30jours
-
+        $commandeAvantJour= $commandeRepo->filtrerLesAnciennesCdes($user);
 
         //***************************
         return $this->render('commande/voir_cde.html.twig', [ "dateToday"=>$today,"user"=>$user,
-            "commandeApresJour"=>$commandeApresJour,
+            "commandeApresJour"=>$commandeApresJour,  "commandeAvantJour"=>$commandeAvantJour,
         ]);
+    }
+
+    //********************supprimer mise en avant
+    /**
+     * @Route("/commande-/{id}", name="supprimer-cde")
+     */
+    public function supprimerMiseEnAvant($id, EntityManagerInterface $em){
+        //****************on recupere la miseEnAvant
+        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+        $cde = $cdeRepo->find($id);
+
+        //********************
+        $em->remove($cde);
+        $em->flush();
+        return $this->redirectToRoute('voir_cde');
     }
 }

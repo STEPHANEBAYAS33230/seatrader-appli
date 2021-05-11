@@ -22,18 +22,41 @@ class CommandeRepository extends ServiceEntityRepository
     }
 
 
-    public function filtrerLesCdes(Utilisateur $user, $today)
-    {
+    public function filtrerLesCdes(Utilisateur $user)
+    {   //pour les users simple
        // $today->add(new DateInterval('P1D'));
-        $today=date('YYYY-mm-dd');
-        $idi=$user->getId();
+        $today = new \DateTime('now');
+        //$today->add(new DateInterval('P1D'));
+        //$idi=$user->getId();
 
 
         $result = $this->createQueryBuilder('c')
-            ->where('c.jourDeLivraison >= : today') // gestion date
+            ->where('c.jourDeLivraison > :today') // gestion date
             ->setParameter('today', $today)
-            ->andWhere('c.utilisateur.id = :idi') //gsestion user
-            ->setParameter('idi', $idi)
+            ->andWhere('c.utilisateur = :user') //gsestion user
+           ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
+
+    //***********filtrer les anciennes cdes -1mois en arriere max(<datejour non modifiable et non supprimable)
+
+    public function filtrerLesAnciennesCdes(Utilisateur $user)
+    {   //pour les users simple
+        // $today->add(new DateInterval('P1D'));
+        $today = new \DateTime('now');
+        //$today->add(new DateInterval('P1D'));
+        //$idi=$user->getId();
+        $dateLimiteAncienne=new \DateTime('now');
+        $dateLimiteAncienne->sub(new DateInterval('P31D'));
+        $result = $this->createQueryBuilder('c')
+            ->where('c.jourDeLivraison <= :today') // gestion date
+            ->setParameter('today', $today)
+            ->andWhere('c.jourDeLivraison > :dla') // gestion date
+            ->setParameter('dla', $dateLimiteAncienne)
+            ->andWhere('c.utilisateur = :user') //gsestion user
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
         return $result;
