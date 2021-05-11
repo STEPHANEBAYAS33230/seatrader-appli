@@ -60,10 +60,12 @@ class CommandeController extends AbstractController
         //foreach( $produits as $prd ) {
         //$commande->add($prd);}
         //************toutes les miseENavant apres la date du jour
+        $todey=new \DateTime('now');
+        $todey->add(new DateInterval('P1D'));
         $todayTrente = new \DateTime('now');
         $todayTrente->add(new DateInterval('P30D'));
         $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-        $miseEnAvant = $miseEnAvantRepo->filtrer($today, $todayTrente );//filtre ds le repository
+        $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
         //******************************************
         $commandeForm = $this->createForm(CommandeType::class, $commande);
         $commandeForm->handleRequest($request);
@@ -92,6 +94,14 @@ class CommandeController extends AbstractController
             //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
             //******************************
             if ($jourSem=="dim" or $jourSem=="lun") {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "La livraison n'est pas ouverte pour ce jour là.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -100,7 +110,7 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
@@ -137,6 +147,14 @@ class CommandeController extends AbstractController
             die();*/
             //*******************************
             if ($diff<=0) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Erreur Date de livraison.");
 
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -146,13 +164,21 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             //**************erreur si livraison sup à 1mois
 
             if ($diff>31) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Date de livraison >à 1mois.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -161,12 +187,20 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             //*********erreur si livraison j+1 et apres 11h
             if ($diff==1 and  intval($heure)>10) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -175,12 +209,20 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             //********erreur de date inf à la date du jour
             if (intval($dttjour)>=intval($jour) and intval($dttmois)==intval($mois) and intval($dttan)==intval($annee) ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -189,11 +231,19 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             if (intval($dttmois)>intval($mois) and intval($dttan)==intval($annee) ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -202,11 +252,19 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             if (intval($dttan)>intval($annee) ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -215,7 +273,7 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
@@ -246,6 +304,14 @@ class CommandeController extends AbstractController
             }
             //*****si cde vide retour en page de cde
             if ( $pasVide==false ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "La commande est vide.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -254,7 +320,7 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
@@ -282,7 +348,7 @@ class CommandeController extends AbstractController
 
 
         return $this->render('commande/index.html.twig', [ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-            "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,
+            "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
         ]);
     }
 
@@ -344,6 +410,14 @@ class CommandeController extends AbstractController
         $this->addFlash('error', "Vous pouvez modifier cette commande.");
         $commandeForm = $this->createForm(CommandeType::class, $commande);
         $commandeForm->handleRequest($request);
+        //************toutes les miseENavant apres la date du jour
+        $todey=new \DateTime('now');
+        $todey->add(new DateInterval('P1D'));
+        $todayTrente = new \DateTime('now');
+        $todayTrente->add(new DateInterval('P30D'));
+        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+        $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+        //******************************************
         //***********************************soumission du formulaire
         if ($commandeForm->isSubmitted() and $commandeForm->isValid()) {
             //*******verif des dates et ouverture des cde
@@ -370,6 +444,14 @@ class CommandeController extends AbstractController
             //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
             //******************************
             if ($jourSem=="dim" or $jourSem=="lun") {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "La livraison n'est pas ouverte pour ce jour là.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -378,7 +460,7 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
@@ -415,6 +497,14 @@ class CommandeController extends AbstractController
             die();*/
             //*******************************
             if ($diff<=0) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Erreur Date de livraison.");
 
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -424,13 +514,21 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             //**************erreur si livraison sup à 1mois
 
             if ($diff>31) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Date de livraison >à 1mois.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -439,12 +537,20 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             //*********erreur si livraison j+1 et apres 11h
             if ($diff==1 and  intval($heure)>10) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -453,12 +559,20 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             //********erreur de date inf à la date du jour
             if (intval($dttjour)>=intval($jour) and intval($dttmois)==intval($mois) and intval($dttan)==intval($annee) ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -467,11 +581,19 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             if (intval($dttmois)>intval($mois) and intval($dttan)==intval($annee) ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -480,11 +602,19 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
             if (intval($dttan)>intval($annee) ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -493,7 +623,7 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
@@ -524,6 +654,14 @@ class CommandeController extends AbstractController
             }
             //*****si cde vide retour en page de cde
             if ( $pasVide==false ) {
+                //************toutes les miseENavant apres la date du jour
+                $todey=new \DateTime('now');
+                $todey->add(new DateInterval('P1D'));
+                $todayTrente = new \DateTime('now');
+                $todayTrente->add(new DateInterval('P30D'));
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                //******************************************
                 $this->addFlash('error', "La commande est vide.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
@@ -532,7 +670,7 @@ class CommandeController extends AbstractController
 
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+                    "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
                 ]);
             }
@@ -560,7 +698,7 @@ class CommandeController extends AbstractController
 
         //***********************************
         return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-            "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$commande,
+            "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$commande, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
 
         ]);
 

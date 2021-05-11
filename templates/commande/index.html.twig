@@ -61,6 +61,7 @@
                         <th scope="col"></th>
                         <th scope="col"><h4 class="text-left text-dark">{{ famille.nomFamille }}</h4></th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <thead>
@@ -68,6 +69,7 @@
                         <th scope="col"></th>
                         <th scope="col">Produit</th>
                         <th scope="col">Unité</th>
+                        <th scope="col"></th>
                         <th scope="col">quantité(colis)</th>
 
                     </tr>
@@ -79,7 +81,16 @@
                                 <th>{{ prod.id }}</th>
                                 <td>{{ prod.nomProduit }}</td>
                                 <td>{{ prod.pieceOuKg }}</td>
-                                <td><label for="prod{{ prod.id }}">quantité:</label><input name="prod{{ prod.id }}" type="number" size="3" min="0" max="999" value="{{ prod.quantite }}"></td>
+                                <td>
+                                    {% for miseav in miseEnAvant %}
+{% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(cde.jourDeLivraison|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
+
+    {% if miseav.raison=="PAVILLON FRANCE" %}<h5 style="background: linear-gradient(to left,blue, white,red);">{% else %}<h5 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}/{{ prod.pieceOuKg }} {{ miseav.raison}} </h5>
+    {% endif %}
+                                    {% endfor %}
+</td>
+
+                                <td><label for="prod{{ prod.id }}">quantité:</label><input id="prod{{ prod.id }}" name="prod{{ prod.id }}" type="number" size="3" min="0" max="999" value="{{ prod.quantite }}"></td>
                             </tr>
                             </tbody>
 
