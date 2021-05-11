@@ -6,6 +6,7 @@ use App\Entity\Commande;
 use App\Entity\EtatCommande;
 use App\Entity\EtatUtilisateur;
 use App\Entity\FamilleProduit;
+use App\Entity\MiseEnAvant;
 use App\Entity\Produit;
 use App\Form\CommandeType;
 use DateInterval;
@@ -24,11 +25,12 @@ class CommandeController extends AbstractController
     public function index(EntityManagerInterface $em, Request $request): Response
     {
 
-        // recupere toutes les familles
+        // recupere toutes les familles/produits
         $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $familleProduit = $familleProduitRepo->findAll();
         $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $produits = $produitRepo->findAll();
+
         //***********mettre les quantité à zero pour les produits
         foreach( $produits as $prd ) {
             $prd->setQuantite(0);
@@ -45,6 +47,8 @@ class CommandeController extends AbstractController
         // on récupère l'user
         $user=$this->getUser();
         $today = new \DateTime('now');
+
+
         $JLiv = new \DateTime('now');
         $JLiv->add(new DateInterval('P1D'));
 
@@ -55,6 +59,12 @@ class CommandeController extends AbstractController
         $commande->setUtilisateur($user);
         //foreach( $produits as $prd ) {
         //$commande->add($prd);}
+        //************toutes les miseENavant apres la date du jour
+        $todayTrente = new \DateTime('now');
+        $todayTrente->add(new DateInterval('P30D'));
+        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+        $miseEnAvant = $miseEnAvantRepo->filtrer($today, $todayTrente );//filtre ds le repository
+        //******************************************
         $commandeForm = $this->createForm(CommandeType::class, $commande);
         $commandeForm->handleRequest($request);
         if ($commandeForm->isSubmitted() and $commandeForm->isValid()) {
@@ -272,7 +282,7 @@ class CommandeController extends AbstractController
 
 
         return $this->render('commande/index.html.twig', [ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
-            "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde,
+            "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,
         ]);
     }
 
