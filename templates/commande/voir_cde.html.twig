@@ -97,7 +97,8 @@
                             <td>{{ nbreLigne }}</td>
                             <td>{{ nbreColis }}</td>
                             <td><a class="btn btn-primary" data-toggle="modal" data-target="#SupprCde{{ cdeAJ.id }}" ><i class="fas fa-trash-alt"></i></a></td>
-                            <td>modifier</td>
+                            <td><a class="btn btn-primary" href="{{ path('modifier-cde',{'id': cdeAJ.id }) }}">modifier</a></td>
+
                             <!--****************************************************************************************-->
                             <!-- Modal supprimer cde-->
                             <div class="modal fade bgFondModal"  id="SupprCde{{ cdeAJ.id }}" tabindex="-1" role="dialog" aria-labelledby="SupprCdeLabel{{ cdeAJ.id }}" aria-hidden="true">

@@ -25,7 +25,7 @@
         <div class="col-xl-9 justify-content-center titre">
             <div>
                 <div>
-                    <h3>Commande {% if cde!=null %}{{ cde.id }}{% for fg in cde.object %}{{ fg.nomProduit }}--quantite:{{ fg.quantite }}{% endfor %}{% endif %}<i class="fas fa-fish"></i></h3>
+                    <h3>Commande<i class="fas fa-fish"></i></h3>
                     {{ form_start(commandeForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
                     sélectionnez le jour de la livraison:
                     {{ form_widget(commandeForm.jourDeLivraison) }}
