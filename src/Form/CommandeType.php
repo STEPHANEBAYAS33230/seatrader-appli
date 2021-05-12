@@ -18,7 +18,7 @@ class CommandeType extends AbstractType
                 'format' => 'dd-MM-yyyy',
             ])
             //->add('dateCreationCommande')
-            ->add('note',TextareaType::class,['attr'=>['row'=>8, 'column'=>60]])
+            ->add('note',TextareaType::class,['attr'=>['row'=>18, 'column'=>60]])
             //->add('etatCommande')
             //->add('utilisateur')
             //->add('listeProduits')

@@ -26,7 +26,7 @@ class CommandeRepository extends ServiceEntityRepository
     {   //pour les users simple
        // $today->add(new DateInterval('P1D'));
         $today = new \DateTime('now');
-        //$today->add(new DateInterval('P1D'));
+        $today->add(new DateInterval('P1D'));
         //$idi=$user->getId();
 
 
@@ -55,6 +55,53 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('today', $today)
             ->andWhere('c.jourDeLivraison > :dla') // gestion date
             ->setParameter('dla', $dateLimiteAncienne)
+            ->andWhere('c.utilisateur = :user') //gsestion user
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
+    public function filtrerLesCdesEgalToday(Utilisateur $user)
+    {   //pour les users simple ceux qui st encore modifiable et supprimable
+        $today = new \DateTime('now');
+        //$today->add(new DateInterval('P1D'));
+        $today2 = new \DateTime('now');
+        $today2->add(new DateInterval('P2D'));
+        $heure=Date( 'H');
+        //$idi=$user->getId();
+
+
+        $result = $this->createQueryBuilder('c')
+            ->where('c.jourDeLivraison > :today') // gestion date
+            ->setParameter('today', $today)
+            ->andWhere('c.jourDeLivraison < :todayw') // gestion date
+            ->setParameter('todayw', $today2)
+            ->andWhere(':heure < 11')
+            ->setParameter('heure', $heure)
+            ->andWhere('c.utilisateur = :user') //gsestion user
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
+
+    public function filtrerLesCdesNonEgalToday(Utilisateur $user)
+    {   //pour les users simple ceux qui st encore modifiable et supprimable
+        $today = new \DateTime('now');
+        //$today->add(new DateInterval('P1D'));
+        $today2 = new \DateTime('now');
+        $today2->add(new DateInterval('P2D'));
+        $heure=Date( 'H');
+        //$idi=$user->getId();
+
+
+        $result = $this->createQueryBuilder('c')
+            ->where('c.jourDeLivraison > :today') // gestion date
+            ->setParameter('today', $today)
+            ->andWhere('c.jourDeLivraison < :todayw') // gestion date
+            ->setParameter('todayw', $today2)
+            ->andWhere(':heure > 10')
+            ->setParameter('heure', $heure)
             ->andWhere('c.utilisateur = :user') //gsestion user
             ->setParameter('user', $user)
             ->getQuery()

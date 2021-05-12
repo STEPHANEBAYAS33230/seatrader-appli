@@ -28,8 +28,8 @@
                     <h3>Commande<i class="fas fa-fish"></i></h3>
                     {{ form_start(commandeForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
                     sélectionnez le jour de la livraison:
-                    {{ form_widget(commandeForm.jourDeLivraison) }}
-                    note: {{ form_widget(commandeForm.note) }}
+                    {{ form_widget(commandeForm.jourDeLivraison,{'attr' :{'onchange': 'funcTodey()'}}) }}
+
                     {# read and display all flash messages #}
                     {% for label, messages in app.flashes %}
                         {% for message in messages %}
@@ -74,6 +74,7 @@
 
                     </tr>
                     </thead>
+
                     {%  for prod in produits %}
                         {% if famille.nomFamille==prod.famille %}
                             <tbody>
@@ -83,9 +84,9 @@
                                 <td>{{ prod.pieceOuKg }}</td>
                                 <td>
                                     {% for miseav in miseEnAvant %}
-{% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(cde.jourDeLivraison|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
+{% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
 
-    {% if miseav.raison=="PAVILLON FRANCE" %}<h5 style="background: linear-gradient(to left,blue, white,red);">{% else %}<h5 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}/{{ prod.pieceOuKg }} {{ miseav.raison}} </h5>
+    {% if miseav.raison=="PAVILLON FRANCE" %}<h5 style="background: linear-gradient(to left,blue, white,red);">{% else %}<h6 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} colis de{{ miseav.colisage }}{{ prod.pieceOuKg }}</h6>
     {% endif %}
                                     {% endfor %}
 </td>
@@ -99,12 +100,21 @@
                 {% endfor %}
             </table>
         </div>
-        <button class="btn btn-outline-primary" type="submit">Enregistrer ma Commande</button>
+        <div class="row col-xl-12">
+        note: {{ form_widget(commandeForm.note,{'value': 'message à remplir juste avant envoi (impératif)'}) }}
+        </div>
+        <div class="row col-xl-12 mt-2">
+        <button class="btn btn-outline-primary" type="submit">Enregistrer et Envoyer ma Commande</button>
         {{ form_end(commandeForm) }}
-
-    </div><!--fin de container-->
+        </div>
+    </div>{# <!--fin de container-->#}
     <div>
         <br>
-        <a class="btn btn-secondary" href=javascript:history.go(-1)>Annuler</a>
+        <a class="btn btn-secondary" href="{{ path('voir_cde' ) }}">Annuler</a>
     </div>
+    <script>
+        function funcTodey() {
+            document.commande.submit();
+        }
+    </script>
 {% endblock %}
