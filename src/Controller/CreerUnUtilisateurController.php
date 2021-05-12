@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\FiltreSociete;
 use App\Entity\Utilisateur;
 use App\Form\FiltreSocieteType;
+use App\Form\ModifUserUtilisateurType;
 use App\Form\ModifUtilisateurType;
 use App\Form\UtilisateurType;
 use Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver;
@@ -185,6 +186,53 @@ class CreerUnUtilisateurController extends AbstractController
 
         }
         return $this->render('creer_un_utilisateur/index.html.twig', [
+            "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage,
+        ]);
+
+    }
+
+    //***********************************************************************************************
+    /**
+     * @Route("/compte", name="modifier_monprofilUser")
+     */
+    public function modifierUtilisateurUser(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $titrePage="Modifier mon Compte";
+        // on récupère l'user
+        $user=$this->getUser();
+        $id=$user->getId();
+        $today = strftime('%A %d %B %Y %I:%M:%S');
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //*********on recupere le compte de l'utilisateur à modifier
+        //****************
+        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateur = $utilisateurRepo->find($id);
+
+
+        $registerForm = $this->createForm(ModifUserUtilisateurType::class, $utilisateur);
+        $registerForm->handleRequest($request);
+
+        // si formulaire validé
+        if ($registerForm->isSubmitted() and $registerForm->isValid()) {
+            /*
+            //hasher le mot de passe avec class passwordEncoderInterface
+            $hashed=$encoder->encodePassword($utilisateur,$utilisateur->getPassword());
+            $utilisateur->setPassword($hashed);*/
+
+            //sauvegarder mon utilsateur
+            //try{
+
+            $em->persist($utilisateur);
+            $em->flush();
+            $this->addFlash('success', 'le compte a été modifié avec succès (veuillez-vous connecter');
+            return $this->redirectToRoute('home_connected_user', [
+
+            ]);
+
+
+
+        }
+        return $this->render('creer_un_utilisateur/modifUserUtilisateur.html.twig', [
             "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage,
         ]);
 
