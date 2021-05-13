@@ -1,13 +1,59 @@
 {% extends 'baseAdmin.html.twig' %}
 
-{% block title %}User|{{ parent() }}{% endblock %}
+{% block title %}Admin Réception Commande |{{ parent() }}{% endblock %}
 
-
-
-
-
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
 
 {% block main %}
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h4 class="">CENTRE DE RECEPTIONS DES COMMANDES<i class="fas fa-fish"></i></h4>
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-warning">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-danger">
 
+                 <h3>ALERTE</h3>
+                <h4>Nouvelle(s) commande(s) envoyée(s): {{ commandesEnvoyees|length }}</h4>
+
+            </div>
+            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-warning">
+
+                    <h3>Commande(s) déjà réceptionnée(s) mais non traitée(s)</h3>
+                    <h4>nombre de commandes: </h4>
+            </div>
+
+            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-success">
+
+                <h3>Commande(s) réceptionnée(s) et traitée(s)</h3>
+                <h4>nombre de commandes: </h4>
+            </div>
+            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-secondary">
+
+                <h3>Commande(s) archivées</h3>
+                <h4>nombre de commandes: </h4>
+            </div>
+        </div>
+
+
+        <!--//*****************************-->
+    </div><!--fin container***********************************-->
+
+    <script type="text/javascript">
+        setInterval( Raffraichir(), 10000);
+        function Raffraichir() {
+            setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/home/connected";},20000);
+        }
+    </script>
 {% endblock %}
-

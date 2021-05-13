@@ -26,7 +26,7 @@ class CommandeRepository extends ServiceEntityRepository
     {   //pour les users simple
        // $today->add(new DateInterval('P1D'));
         $today = new \DateTime('now');
-        $today->add(new DateInterval('P1D'));
+        $today->add(new DateInterval('P2D'));
         //$idi=$user->getId();
 
 
@@ -67,8 +67,8 @@ class CommandeRepository extends ServiceEntityRepository
         //$today->add(new DateInterval('P1D'));
         $today2 = new \DateTime('now');
         $today2->add(new DateInterval('P2D'));
-        $heure=Date( 'H');
-        //$idi=$user->getId();
+        $heure=intval(Date( 'H'));
+        $onze=11;
 
 
         $result = $this->createQueryBuilder('c')
@@ -76,7 +76,8 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('today', $today)
             ->andWhere('c.jourDeLivraison < :todayw') // gestion date
             ->setParameter('todayw', $today2)
-            ->andWhere(':heure < 11')
+            ->andWhere(':heure < :onze')
+            ->setParameter('onze', $onze)
             ->setParameter('heure', $heure)
             ->andWhere('c.utilisateur = :user') //gsestion user
             ->setParameter('user', $user)
@@ -91,7 +92,7 @@ class CommandeRepository extends ServiceEntityRepository
         //$today->add(new DateInterval('P1D'));
         $today2 = new \DateTime('now');
         $today2->add(new DateInterval('P2D'));
-        $heure=Date( 'H');
+        $heure=intval(Date( 'H'));
         //$idi=$user->getId();
 
 
@@ -104,6 +105,25 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('heure', $heure)
             ->andWhere('c.utilisateur = :user') //gsestion user
             ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
+
+    public function filtreCdeStatutEnvoyee()
+    {   //pour admin pour recuperer cde à l'etat envoyée 2
+        //$today = new \DateTime('now');
+        //$today->add(new DateInterval('P1D'));
+        //$today2 = new \DateTime('now');
+        //$today2->add(new DateInterval('P2D'));
+        //$heure=intval(Date( 'H'));
+        //$idi=$user->getId();
+        $etat=2;
+
+
+        $result = $this->createQueryBuilder('c')
+            ->where('c.etatCommande = :etat') // gestion date
+            ->setParameter('etat', $etat)
             ->getQuery()
             ->getResult();
         return $result;
