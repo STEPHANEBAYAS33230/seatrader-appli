@@ -34,9 +34,14 @@ class HomeConnectedController extends AbstractController
         //******recuperer les cdes envoyée
         //****************on recupere la cde
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        $commandesEnvoyees = $cdeRepo->filtreCdeStatutEnvoyee();
+        $commandesEnvoyees = $cdeRepo->filtreCdeStatut(2);
+        $commandesReceptionnee = $cdeRepo->filtreCdeStatut(3);
+        $commandesTraitee = $cdeRepo->filtreCdeStatut(4);
+        $commandesArchivee = $cdeRepo->filtreCdeStatut(1);
+
         return $this->render('home_connected/homeAdmin.html.twig', [
-            'dateToday'=>$today,"user"=>$user, 'commandesEnvoyees'=>$commandesEnvoyees,
+            'dateToday'=>$today,"user"=>$user, 'commandesEnvoyees'=>$commandesEnvoyees, 'commandesReceptionnee'=>$commandesReceptionnee,
+            'commandesTraitee'=>$commandesTraitee, 'commandesArchivee'=>$commandesArchivee,
         ]);
     }
 }

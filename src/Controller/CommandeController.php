@@ -710,7 +710,8 @@ class CommandeController extends AbstractController
             //*********controle securité si user connecté est egal à l auteur de la commande
             $utilisateur=$commande->getUtilisateur();
             $idUtilisateur=$utilisateur->getId();
-            if ($idUtilisateur=$user->getId()){
+            $role=$user->getRoles();
+            if ($idUtilisateur==$user->getId() or $role=['ROLE_ADMIN']){
 
                 //**************************
                 //***on enregistre la cde
@@ -720,7 +721,9 @@ class CommandeController extends AbstractController
 
                 //***********redirection vers voir mes commandes
                 $this->addFlash('success', "Commande enregistrée et envoyée");
-
+                if ($role==['ROLE_ADMIN']){
+                    return $this->redirectToRoute('home_connected');
+                }
                 return $this->redirectToRoute('voir_cde');
 
             } else {
@@ -736,4 +739,53 @@ class CommandeController extends AbstractController
 
 
     }
+
+
+
+    //********************voir les cde envoyee/recept/traité/archivé pour admin
+    /**
+     * @Route("/commandes/{statut}", name="voir-cde-admin")
+     */
+    public function voirCdeAdmin($statut, Request $request, EntityManagerInterface $em)
+    {    // on récupère l'user/ date today
+        $user=$this->getUser();
+        $today = new \DateTime('now');
+        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+        if ($statut=="commandesEnvoyee") {
+            $etat=2;
+            $cde = $cdeRepo->filtreCdeStatut($etat);
+        }
+        elseif  ($statut=="commandesReceptionnee") {
+            $etat=3;
+            $cde = $cdeRepo->filtreCdeStatut($etat);
+        }
+        elseif ($statut=="commandesTraitee") {
+            $etat=4;
+            $cde = $cdeRepo->filtreCdeStatut($etat);
+        }
+        elseif ($statut=="commandesArchivee") {
+            $etat=1;
+            $cde = $cdeRepo->filtreCdeStatut($etat);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        //***********************************
+        return $this->render('commande/voir-cde-admin.html.twig',[ "dateToday"=>$today,"user"=>$user,
+            'cde'=>$cde, 'statut'=>$statut,
+
+        ]);
+
+
+    }
+    //**************************************************************
 }

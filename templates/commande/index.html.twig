@@ -110,7 +110,12 @@
     </div>{# <!--fin de container-->#}
     <div>
         <br>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-secondary" href=javascript:history.go(-1)>Retour</a>
+        {% elseif is_granted('ROLE_USER') %}
         <a class="btn btn-secondary" href="{{ path('voir_cde' ) }}">Annuler</a>
+        {% endif %}
+
     </div>
     <script>
         function funcTodey() {

@@ -110,17 +110,8 @@ class CommandeRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function filtreCdeStatutEnvoyee()
-    {   //pour admin pour recuperer cde à l'etat envoyée 2
-        //$today = new \DateTime('now');
-        //$today->add(new DateInterval('P1D'));
-        //$today2 = new \DateTime('now');
-        //$today2->add(new DateInterval('P2D'));
-        //$heure=intval(Date( 'H'));
-        //$idi=$user->getId();
-        $etat=2;
-
-
+    public function filtreCdeStatut($etat)
+    {
         $result = $this->createQueryBuilder('c')
             ->where('c.etatCommande = :etat') // gestion date
             ->setParameter('etat', $etat)
@@ -128,6 +119,8 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult();
         return $result;
     }
+
+
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */

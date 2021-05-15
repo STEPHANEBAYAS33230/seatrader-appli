@@ -38,7 +38,7 @@
         </nav>
         <!--//*****************************-->
         {% if utilisateur|length()>0 %}
-        <div class="row justify-content-around ">
+        <div class="row justify-content-around col-xl-12">
             {%  for utilisa in utilisateur %}
                 {% if utilisa.nomDeLaSociete!="admin" %} {# and "su" in utilisa.nomDeLaSociete #}
                 <div class="col-xl-3  justify-content-center p-1 bgWave m-1 rounded" >

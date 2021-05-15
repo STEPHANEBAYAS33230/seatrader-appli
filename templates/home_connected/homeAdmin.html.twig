@@ -4,14 +4,15 @@
 
  {% block stylesheets %}
      <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
  {% endblock %}
 
 {% block main %}
     <div class="container marge-container">
         <div class=row">
-            <div class="col-xl-12 justify-content-center titre">
+            <div class="col-xl-12 justify-content-center titre" data-aos="flip-left">
                 <div>
-                    <h4 class="">CENTRE DE RECEPTIONS DES COMMANDES<i class="fas fa-fish"></i></h4>
+                    <h4 class="">GESTION DES COMMANDES<i class="fas fa-fish"></i></h4>
                     {# read and display all flash messages #}
                     {% for label, messages in app.flashes %}
                         {% for message in messages %}
@@ -22,36 +23,102 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-danger">
+        </div>
+        {% if commandesEnvoyees|length>0 %}
+        <div class="row">
+            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 ">
+                <!--si il y a des commandes-->
+                <div class="jumbotron bg-danger col-xl-12">
+                    <h1 class="ml1">
+                        <span class="text-wrapper">
+                        <span class="line line1"></span>
+                        <span class="letters">-ALERTE-</span>
+                        <span class="line line2"></span>
+                        </span>
+                    </h1>
+                    <p class="lead">Vous avez reçu de nouvelles commandes.</p>
+                    <hr class="my-4">
+                    <p></p>
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="{{ path('voir-cde-admin',{'statut': 'commandesEnvoyee' }) }}" role="button">Voir les commandes({{ commandesEnvoyees|length }}) ...</a>
+                    </p>
+                </div>
+                <!--************************-->
 
-                 <h3>ALERTE</h3>
-                <h4>Nouvelle(s) commande(s) envoyée(s): {{ commandesEnvoyees|length }}</h4>
-
-            </div>
-            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-warning">
-
-                    <h3>Commande(s) déjà réceptionnée(s) mais non traitée(s)</h3>
-                    <h4>nombre de commandes: </h4>
-            </div>
-
-            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-success">
-
-                <h3>Commande(s) réceptionnée(s) et traitée(s)</h3>
-                <h4>nombre de commandes: </h4>
-            </div>
-            <div class="col-xl-12 justify-content-center text-center mt-3 p-6 bg-secondary">
-
-                <h3>Commande(s) archivées</h3>
-                <h4>nombre de commandes: </h4>
             </div>
         </div>
+        {% endif %}
+        <div class="row justify-content-around mt-3 p-6 ">
+            {% if commandesEnvoyees|length==0 %}
+                <div class="card col-xl-4 mt-1" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('assets/images/calmePlat.jpg') }}" alt="photo d'ocean plat">
+                    <div class="card-body bg-danger">
+                        <h4 class="card-text text-center">pas de nouvelles commandes</h4>
+                    </div>
+                </div>
+            {% endif %}
+                <a href="{{ path('voir-cde-admin',{'statut': 'commandesReceptionnee' }) }}">
+                <div class="card col-xl-4 mt-1" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('assets/images/cdeVue.jpg') }}" alt="photo debarque pêche">
+                    <div class="card-body bg-warning">
+                        <h6 class="card-text text-center">Commande(s) réceptionnée(s) et vues</h6>
+                        <a class=" btn-primary" href="{{ path('voir-cde-admin',{'statut': 'commandesEnvoyees' }) }}" role="button">
+                            <p class="card-text text-center">nombre de commandes: {{ commandesReceptionnee|length }}</p>
+                        </a>
+                    </div>
+                </div></a>
+                    <!--*****************************-->
+                <a href="{{ path('voir-cde-admin',{'statut': 'commandesTraitee' }) }}">
+                <div class="card col-xl-4 mt-1" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('assets/images/cdeVueTraitee.jpg') }}" alt="photo">
+                    <div class="card-body bg-success">
+                        <h6 class="card-text text-center">Commande(s) réceptionnée(s) et traitée(s)</h6>
+                        <h5 class="card-text text-center">nombre de commandes: {{ commandesTraitee|length }}</h5>
+                    </div>
+                </div></a>
+                    <!--*****************************-->
+            <a href="{{ path('voir-cde-admin',{'statut': 'commandesArchivee' }) }}">
+            <div class="card col-xl-4 mt-1" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('assets/images/archives.jpg') }}" alt="photo">
+                    <div class="card-body bg-secondary">
+                        <h5 class="card-text text-center">Commande(s) archivée(s): {{ commandesArchivee|length }}</h5>
+                    </div>
+            </div></a>
+        </div>
+        <!--//***********row******************-->
 
-
-        <!--//*****************************-->
     </div><!--fin container***********************************-->
 
     <script type="text/javascript">
         setInterval( Raffraichir(), 10000);
+        // Wrap every letter in a span
+        var textWrapper = document.querySelector('.ml1 .letters');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml1 .letter',
+                scale: [0.3,1],
+                opacity: [0,1],
+                translateZ: 0,
+                easing: "easeOutExpo",
+                duration: 600,
+                delay: (el, i) => 70 * (i+1)
+            }).add({
+            targets: '.ml1 .line',
+            scaleX: [0,1],
+            opacity: [0.5,1],
+            easing: "easeOutExpo",
+            duration: 700,
+            offset: '-=875',
+            delay: (el, i, l) => 80 * (l - i)
+        }).add({
+            targets: '.ml1',
+            opacity: 0,
+            duration: 1000,
+            easing: "easeOutExpo",
+            delay: 1000
+        });
         function Raffraichir() {
             setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/home/connected";},20000);
         }
