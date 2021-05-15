@@ -57,7 +57,7 @@
                             <td>{{ nbreLigne }}</td>
                             <td>{{ nbreColis }}</td>
                             <td><a class="btn btn-primary" data-toggle="modal" data-target="#SupprCde{{ cdeAJ.id }}" ><i class="fas fa-trash-alt"></i></a></td>
-                            <td>{% if cdeAJ.jourDeLivraison|date('d/m/Y')>dateToday|date('d/m/Y') %} <a class="btn btn-primary" href="{{ path('modifier-cde',{'id': cdeAJ.id }) }}">modifier</a>{% endif %}</td>
+                            <td>{# if cdeAJ.jourDeLivraison|date('d/m/Y')>dateToday|date('d/m/Y') #} <a class="btn btn-primary" href="{{ path('modifier-cde',{'id': cdeAJ.id }) }}">modifier</a>{# endif #}</td>
 
                             <!--****************************************************************************************-->
                             <!-- Modal supprimer cde-->

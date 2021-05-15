@@ -416,6 +416,7 @@ class CommandeController extends AbstractController
     public function modifierCde($id, Request $request, EntityManagerInterface $em)
     {    // on récupère l'user/ date today
         $user=$this->getUser();
+        $role=$user->getRoles();
         $today = new \DateTime('now');
         // recupere toutes les familles
         $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
@@ -439,6 +440,8 @@ class CommandeController extends AbstractController
         //******************************************
         //***********************************soumission du formulaire
         if ($commandeForm->isSubmitted() and $commandeForm->isValid()) {
+            $user=$this->getUser();
+            $role=$user->getRoles();
             //*******verif des dates et ouverture des cde
             $dateVoulue=($commande->getJourDeLivraison());
             $dateVoulue2=($commande->getJourDeLivraison());
@@ -483,7 +486,7 @@ class CommandeController extends AbstractController
             //******************************
             //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
             //******************************
-            if ($jourSem=="dim" or $jourSem=="lun") {
+            if ($jourSem=="dim" or $jourSem=="lun" and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -519,7 +522,7 @@ class CommandeController extends AbstractController
             $end = new DateTimeImmutable($dtt2);//date de départ
             $interval = $start->diff($end);//on récupère la différence entre ces 2 dates
             $diff=$interval->format('%a');//affiche : en jours
-            if(intval($jour)<intval($dttjour) and intval($mois)==intval($dttmois) and intval($annee)==intval($dttan)){
+            if(intval($jour)<intval($dttjour) and intval($mois)==intval($dttmois) and intval($annee)==intval($dttan) and $role!=['ROLE_ADMIN']){
                 $diff=$diff*-1;
             } else  if( intval($mois)<intval($dttmois) and intval($annee)==intval($dttan)) { $diff=$diff*-1;}
             else  if( intval($annee)<intval($dttan)) { $diff=$diff*-1;}
@@ -535,7 +538,7 @@ class CommandeController extends AbstractController
             var_dump($heure);
             die();*/
             //*******************************
-            if ($diff<=0) {
+            if ($diff<=0 and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -579,7 +582,8 @@ class CommandeController extends AbstractController
                 ]);
             }
             //*********erreur si livraison j+1 et apres 11h
-            if ($diff==1 and  intval($heure)>10) {
+            if (($diff==1 and  intval($heure)>10) and $role!=['ROLE_ADMIN','ROLE_USER']) {
+
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -600,7 +604,7 @@ class CommandeController extends AbstractController
                 ]);
             }
             //********erreur de date inf à la date du jour
-            if (intval($dttjour)>=intval($jour) and intval($dttmois)==intval($mois) and intval($dttan)==intval($annee) ) {
+            if (intval($dttjour)>=intval($jour) and intval($dttmois)==intval($mois) and intval($dttan)==intval($annee) and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -620,7 +624,7 @@ class CommandeController extends AbstractController
 
                 ]);
             }
-            if (intval($dttmois)>intval($mois) and intval($dttan)==intval($annee) ) {
+            if (intval($dttmois)>intval($mois) and intval($dttan)==intval($annee) and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -640,7 +644,7 @@ class CommandeController extends AbstractController
 
                 ]);
             }
-            if (intval($dttan)>intval($annee) ) {
+            if (intval($dttan)>intval($annee) and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -686,7 +690,7 @@ class CommandeController extends AbstractController
                 if ($lobjet->getQuantite()>0){$pasVide=true;}
             }
             //*****si cde vide retour en page de cde
-            if ( $pasVide==false ) {
+            if ( $pasVide==false or $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -711,7 +715,7 @@ class CommandeController extends AbstractController
             $utilisateur=$commande->getUtilisateur();
             $idUtilisateur=$utilisateur->getId();
             $role=$user->getRoles();
-            if ($idUtilisateur==$user->getId() or $role=['ROLE_ADMIN']){
+            if ( $idUtilisateur==$user->getId() or $role==['ROLE_ADMIN','ROLE_USER']){
 
                 //**************************
                 //***on enregistre la cde
@@ -721,7 +725,7 @@ class CommandeController extends AbstractController
 
                 //***********redirection vers voir mes commandes
                 $this->addFlash('success', "Commande enregistrée et envoyée");
-                if ($role==['ROLE_ADMIN']){
+                if ($role==['ROLE_ADMIN','ROLE_USER']){
                     return $this->redirectToRoute('home_connected');
                 }
                 return $this->redirectToRoute('voir_cde');
