@@ -61,9 +61,13 @@
                     <img class="card-img-top" src="{{ asset('assets/images/cdeVue.jpg') }}" alt="photo debarque pêche">
                     <div class="card-body bg-warning text-center">
                         <h6 class="card-text">Commande(s) réceptionnée(s) et vues</h6>
-                        <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesReceptionnee' }) }}" role="button">
+                            {% if commandesReceptionnee|length!=0 %}
+                            <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesReceptionnee' }) }}" role="button">
+                            {% endif %}
                             <h5 class="card-text">nombre de commande(s): {{ commandesReceptionnee|length }}</h5>
-                        </a>
+                            {% if commandesReceptionnee|length!=0 %}
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
                     <!--*****************************-->
@@ -71,9 +75,13 @@
                     <img class="card-img-top" src="{{ asset('assets/images/cdeVueTraitee.jpg') }}" alt="photo">
                     <div class="card-body bg-success text-center">
                         <h6 class="card-text">Commande(s) réceptionnée(s) et traitée(s)</h6>
-                        <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesTraitee' }) }}">
+                            {% if commandesTraitee|length!=0 %}
+                            <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesTraitee' }) }}">
+                            {% endif %}
                             <h5 class="card-text">nombre de commande(s): {{ commandesTraitee|length }}</h5>
-                        </a>
+                            {% if commandesTraitee|length!=0 %}
+                             </a>
+                            {% endif %}
                     </div>
                 </div>
                     <!--*****************************-->
@@ -81,9 +89,13 @@
                     <img class="card-img-top" src="{{ asset('assets/images/archives.jpg') }}" alt="photo">
                     <div class="card-body bg-secondary text-center">
                         <h6 class="card-text">Commande(s) Archivée(s)</h6>
+                        {% if commandesArchivee|length!=0 %}
                         <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesArchivee' }) }}">
+                        {% endif %}
                         <h5 class="card-text">nombre de commande(s): {{ commandesArchivee|length }}</h5>
+                        {% if commandesArchivee|length!=0 %}
                         </a>
+                        {% endif %}
                     </div>
              </div>
         </div>
