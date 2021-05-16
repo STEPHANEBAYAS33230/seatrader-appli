@@ -57,33 +57,35 @@
                     </div>
                 </div>
             {% endif %}
-                <a href="{{ path('voir-cde-admin',{'statut': 'commandesReceptionnee' }) }}">
                 <div class="card col-xl-4 mt-1" style="width: 18rem;">
                     <img class="card-img-top" src="{{ asset('assets/images/cdeVue.jpg') }}" alt="photo debarque pêche">
-                    <div class="card-body bg-warning">
-                        <h6 class="card-text text-center">Commande(s) réceptionnée(s) et vues</h6>
-                        <a class=" btn-primary" href="{{ path('voir-cde-admin',{'statut': 'commandesEnvoyees' }) }}" role="button">
-                            <p class="card-text text-center">nombre de commandes: {{ commandesReceptionnee|length }}</p>
+                    <div class="card-body bg-warning text-center">
+                        <h6 class="card-text">Commande(s) réceptionnée(s) et vues</h6>
+                        <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesReceptionnee' }) }}" role="button">
+                            <h5 class="card-text">nombre de commande(s): {{ commandesReceptionnee|length }}</h5>
                         </a>
                     </div>
-                </div></a>
+                </div>
                     <!--*****************************-->
-                <a href="{{ path('voir-cde-admin',{'statut': 'commandesTraitee' }) }}">
                 <div class="card col-xl-4 mt-1" style="width: 18rem;">
                     <img class="card-img-top" src="{{ asset('assets/images/cdeVueTraitee.jpg') }}" alt="photo">
-                    <div class="card-body bg-success">
-                        <h6 class="card-text text-center">Commande(s) réceptionnée(s) et traitée(s)</h6>
-                        <h5 class="card-text text-center">nombre de commandes: {{ commandesTraitee|length }}</h5>
+                    <div class="card-body bg-success text-center">
+                        <h6 class="card-text">Commande(s) réceptionnée(s) et traitée(s)</h6>
+                        <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesTraitee' }) }}">
+                            <h5 class="card-text">nombre de commande(s): {{ commandesTraitee|length }}</h5>
+                        </a>
                     </div>
-                </div></a>
+                </div>
                     <!--*****************************-->
-            <a href="{{ path('voir-cde-admin',{'statut': 'commandesArchivee' }) }}">
             <div class="card col-xl-4 mt-1" style="width: 18rem;">
                     <img class="card-img-top" src="{{ asset('assets/images/archives.jpg') }}" alt="photo">
-                    <div class="card-body bg-secondary">
-                        <h5 class="card-text text-center">Commande(s) archivée(s): {{ commandesArchivee|length }}</h5>
+                    <div class="card-body bg-secondary text-center">
+                        <h6 class="card-text">Commande(s) Archivée(s)</h6>
+                        <a class="btn btn-primary mt-1" href="{{ path('voir-cde-admin',{'statut': 'commandesArchivee' }) }}">
+                        <h5 class="card-text">nombre de commande(s): {{ commandesArchivee|length }}</h5>
+                        </a>
                     </div>
-            </div></a>
+             </div>
         </div>
         <!--//***********row******************-->
 

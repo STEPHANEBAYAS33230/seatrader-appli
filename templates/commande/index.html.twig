@@ -86,10 +86,9 @@
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
 
-    {% if miseav.raison=="PAVILLON FRANCE" %}<h5 style="background: linear-gradient(to left,blue, white,red);">{% else %}<h6 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} colis de{{ miseav.colisage }}{{ prod.pieceOuKg }}</h6>
-    {% endif %}
+    {% if miseav.raison=="PAVILLON FRANCE" %}<h5 style="background: linear-gradient(to left,blue, white,red);">{% else %}<h5 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} colis de{{ miseav.colisage }}{{ prod.pieceOuKg }}</h5>{% endif %}
                                     {% endfor %}
-</td>
+                                </td>
 
                                 <td><label for="prod{{ prod.id }}">quantité:</label><input id="prod{{ prod.id }}" name="prod{{ prod.id }}" type="number" size="3" min="0" max="999" value="{{ prod.quantite }}"></td>
                             </tr>
@@ -101,7 +100,7 @@
             </table>
         </div>
         <div class="row col-xl-12">
-        note: {{ form_widget(commandeForm.note,{'value': 'message à remplir juste avant envoi (impératif)'}) }}
+        {{ form_widget(commandeForm.note,{'value': 'message à remplir juste avant de clicker sur enregister et envoyer (impératif).'}) }}
         </div>
         <div class="row col-xl-12 mt-2">
         <button class="btn btn-outline-primary" type="submit">Enregistrer et Envoyer ma Commande</button>

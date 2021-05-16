@@ -57,9 +57,9 @@
                             <td>{{ nbreLigne }}</td>
                             <td>{{ nbreColis }}</td>
                             <td><a class="btn btn-primary" data-toggle="modal" data-target="#SupprCde{{ cdeAJ.id }}" ><i class="fas fa-trash-alt"></i></a></td>
-                            <td>{# if cdeAJ.jourDeLivraison|date('d/m/Y')>dateToday|date('d/m/Y') #} <a class="btn btn-primary" href="{{ path('modifier-cde',{'id': cdeAJ.id }) }}">modifier</a>{# endif #}</td>
-
-                            <!--****************************************************************************************-->
+                            <td><a class="btn btn-primary" href="{{ path('modifier-cde',{'id': cdeAJ.id }) }}">modifier</a></td>
+                            <td><a class="btn btn-primary" href="{{ path('voir-une-cde-admin',{'id': cdeAJ.id }) }}"><i class="fas fa-eye"></i></a></td>
+                             <!--****************************************************************************************-->
                             <!-- Modal supprimer cde-->
                             <div class="modal fade bgFondModal"  id="SupprCde{{ cdeAJ.id }}" tabindex="-1" role="dialog" aria-labelledby="SupprCdeLabel{{ cdeAJ.id }}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

@@ -4,22 +4,19 @@ namespace App\Form;
 
 use App\Entity\Commande;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommandeType extends AbstractType
+class CommandeEtatType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('jourDeLivraison',DateType::class,[
-                'format' => 'dd-MM-yyyy',
-            ])
+            //->add('jourDeLivraison')
             //->add('dateCreationCommande')
-            ->add('note',TextareaType::class,['attr'=>['rows'=>5,'cols'=>30, 'maxlength'=>150]])
-            //->add('etatCommande')
+            //->add('note')
+            //->add('object')
+            ->add('etatCommande')
             //->add('utilisateur')
             //->add('listeProduits')
         ;

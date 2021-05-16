@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\EtatCommande;
-use App\Entity\EtatUtilisateur;
 use App\Entity\FamilleProduit;
 use App\Entity\MiseEnAvant;
 use App\Entity\Produit;
+use App\Form\CommandeEtatType;
 use App\Form\CommandeType;
+use App\Form\EtatCommandeType;
 use DateInterval;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -393,12 +394,13 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    //********************supprimer mise en avant
+    //********************supprimer cde
     /**
      * @Route("/commande-/{id}", name="supprimer-cde")
      */
     public function supprimerCde($id, EntityManagerInterface $em){
         //****************on recupere la cde
+        //********ajouter controle user est le bon ou admin
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
         $cde = $cdeRepo->find($id);
 
@@ -409,7 +411,7 @@ class CommandeController extends AbstractController
     }
 
 
-    //********************supprimer mise en avant
+    //********************supprimer cde
     /**
      * @Route("/commande-modifier/{id}", name="modifier-cde")
      */
@@ -772,17 +774,6 @@ class CommandeController extends AbstractController
             $cde = $cdeRepo->filtreCdeStatut($etat);
         }
 
-
-
-
-
-
-
-
-
-
-
-
         //***********************************
         return $this->render('commande/voir-cde-admin.html.twig',[ "dateToday"=>$today,"user"=>$user,
             'cde'=>$cde, 'statut'=>$statut,
@@ -792,4 +783,61 @@ class CommandeController extends AbstractController
 
     }
     //**************************************************************
+    //********************supprimer cde
+    /**
+     * @Route("/voir-cde-admin/{id}", name="voir-une-cde-admin")
+     */
+    public function voirUneCdeAdmin($id, EntityManagerInterface $em, Request $request): Response
+    {
+        // recupere toutes les familles/produits
+        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+        $familleProduit = $familleProduitRepo->findAll();
+        // recupere toutes l etat 3 (
+        $etatCdeRepo = $this->getDoctrine()->getRepository(EtatCommande::class);
+        $etat = $etatCdeRepo->find(3);
+        //****************on recupere la cde
+        //********ajouter controle user est le bon ou admin à faire
+        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+        $cde = $cdeRepo->find($id);
+        //********on change le statut de la cde
+        $etatCde=$cde->getEtatCommande();
+        if ($etatCde=="envoyée")
+        {
+        $cde->setEtatCommande($etat);
+            //***on enregistre la cde
+            $em->persist($cde);
+            $em->flush();
+        }
+
+        // on récupère l'user
+        $user=$this->getUser();
+        $today = new \DateTime('now');
+        //*****on cree formulaire pour etatcommande
+
+        $etatCmmdeForm = $this->createForm(CommandeEtatType::class, $cde);
+        $etatCmmdeForm->handleRequest($request);
+        //**************************
+        if ($etatCmmdeForm->isSubmitted() and $etatCmmdeForm->isValid()) {
+
+            //***on enregistre la cde
+            $em->persist($cde);
+            $em->flush();
+            return $this->redirectToRoute('home_connected');
+
+        }
+        //********************route
+        return $this->render('commande/voir-une-cde-admin.html.twig',[ "dateToday"=>$today,"user"=>$user,
+            'cde'=>$cde, 'familleProduit'=>$familleProduit, 'etatCmmdeForm'=>$etatCmmdeForm->createView(),
+
+        ]);
+
+    }
+
+
+
+
+
+
+
+
 }

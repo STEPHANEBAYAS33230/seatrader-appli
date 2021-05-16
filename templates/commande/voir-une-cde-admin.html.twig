@@ -1,0 +1,95 @@
+
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}commande réceptionnée |{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+    <div class="container marge-container">
+    <div class="row">
+
+
+
+        <div class="col-xl-12 justify-content-center titre">
+            <div>
+                <div>
+
+                    <h3>Commande de {{ cde.utilisateur.nomDeLaSociete }}<i class="fas fa-fish"></i></h3>
+                    <h3>Pour Livraison le {{ cde.jourDeLivraison|date("d/m/Y") }}</h3>
+                    <p>passé par {{ cde.utilisateur.nom }}-{{ cde.utilisateur.prenom }} le {{ cde.dateCreationCommande|date("d/m/Y") }}</p>
+                </div>
+            </div>
+        </div>
+        <!--//*****************************-->
+        <div class="row col-xl-12 justify-content-around mt-4 rounded">
+            <table class="table table-striped table-secondary rounded">
+                {% set clr=1 %}
+                {%  for famille in familleProduit %}
+                    <thead >
+                    <tr class="bg-white mt-3">
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <thead>
+                    {% if clr==1 %}<tr class="bg-warning mt-1">{% set clr=2 %}{% elseif clr==2 %}<tr class="bg-primary mt-1">{% set clr=3 %}{% elseif clr==3 %}<tr class="bg-success mt-1">{% set clr=1 %}{% endif %}
+                        <th scope="col">famille</th>
+                        <th scope="col"></th>
+                        <th scope="col"><h4 class="text-left text-dark">{{ famille.nomFamille }}</h4></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Unité</th>
+                        <th scope="col"></th>
+                        <th scope="col">quantité(colis)</th>
+
+                    </tr>
+                    </thead>
+
+                    {%  for prod in cde.object %}
+                        {% if famille.nomFamille==prod.famille %}
+                            <tbody>
+                            <tr>
+                                <th>{{ prod.id }}</th>
+                                <td>{{ prod.nomProduit }}</td>
+                                <td>{{ prod.pieceOuKg }}</td>
+                                <td>
+
+                                </td>
+
+                                <td>quantité:{{ prod.quantite }}</td>
+                            </tr>
+                            </tbody>
+
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+        <div class="row col-xl-12">
+            note: {{ cde.note }}
+        </div>
+        <div class="row col-xl-12 mt-1">
+
+            {{ form_start(etatCmmdeForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+            {{ form_widget(etatCmmdeForm.etatCommande) }}
+
+                <button class="btn btn-outline-primary" type="submit">valider</button>
+            {{ form_end(etatCmmdeForm) }}
+        </div>
+        <div class="row col-xl-12 mt-2">
+            <a class="btn btn-secondary" href=javascript:history.go(-1)>Retour</a>
+        </div>
+    </div>{# <!--fin de container-->#}
+
+{% endblock %}
