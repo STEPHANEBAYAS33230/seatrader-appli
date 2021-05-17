@@ -9,7 +9,6 @@ use App\Entity\MiseEnAvant;
 use App\Entity\Produit;
 use App\Form\CommandeEtatType;
 use App\Form\CommandeType;
-use App\Form\EtatCommandeType;
 use DateInterval;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -692,7 +691,7 @@ class CommandeController extends AbstractController
                 if ($lobjet->getQuantite()>0){$pasVide=true;}
             }
             //*****si cde vide retour en page de cde
-            if ( $pasVide==false or $role!=['ROLE_ADMIN','ROLE_USER']) {
+            if ( $pasVide==false and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
