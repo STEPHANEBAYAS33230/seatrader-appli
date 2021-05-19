@@ -244,7 +244,7 @@ class CreerUnUtilisateurController extends AbstractController
     /**
      * @Route("/admin/mon-profil", name="modif-cpte-admin")
      */
-    public function modifiercompteAdmin(UserInterface $user,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function modifiercompteadmin(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $titrePage="Modifier mon compte administrateur";
         // on récupère l'user
