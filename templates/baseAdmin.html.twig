@@ -79,7 +79,8 @@
                             </ul>
                             <div>
 
-                                {{ dateToday|date("d/m/Y") }}<p><i class="fas fa-user"></i>{{ user.nom }}</p>
+                                {{ dateToday|date("d/m/Y") }}<p>{% if is_granted('ROLE_ADMIN') %}<a class="nav-link text-primary" href="{{ path('modif-cpte-admin') }}" title="Modifier mon profil">{% endif %}
+                                        <i class="fas fa-user"></i>{{ user.nom }}{% if is_granted('ROLE_ADMIN') %}</a>{% endif %}</p>
 
                             </div>
 

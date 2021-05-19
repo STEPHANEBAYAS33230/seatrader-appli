@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\FiltreSociete;
 use App\Entity\Utilisateur;
+use App\Form\AdminProfilType;
 use App\Form\FiltreSocieteType;
 use App\Form\ModifUserUtilisateurType;
 use App\Form\ModifUtilisateurType;
@@ -237,4 +238,57 @@ class CreerUnUtilisateurController extends AbstractController
         ]);
 
     }
+
+    //***********************************************************************************************
+    /**
+     * @Route("/admin/mon-profil", name="modif-cpte-admin")
+     */
+    public function modifiercompteAdmin(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $titrePage="Modifier mon compte administrateur";
+        // on récupère l'user
+
+        $user=$this->getUser();
+        $id=$user->getId();
+        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateur = $utilisateurRepo->find($id);
+
+        $today = strftime('%A %d %B %Y %I:%M:%S');
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //*********on recupere le compte de l'utilisateur à modifier
+        //****************
+
+
+
+        $registerForm = $this->createForm(AdminProfilType::class, $utilisateur);
+        $registerForm->handleRequest($request);
+
+        // si formulaire validé
+        if ($registerForm->isSubmitted() and $registerForm->isValid()) {
+
+            //hasher le mot de passe avec class passwordEncoderInterface
+            $hashed=$encoder->encodePassword($utilisateur,$utilisateur->getPassword());
+            $utilisateur->setPassword($hashed);
+
+            //sauvegarder mon utilsateur
+            //try{
+
+            $em->persist($utilisateur);
+            $em->flush();
+            return $this->redirectToRoute('home_connected', [
+
+            ]);
+
+
+
+        }
+        var_dump($titrePage);
+        die();
+        return $this->render('creer_un_utilisateur/index.html.twig', [
+            "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage
+        ]);
+
+    }
+
+    //***********************************************************************************************
 }

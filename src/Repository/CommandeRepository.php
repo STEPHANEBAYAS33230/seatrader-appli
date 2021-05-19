@@ -35,6 +35,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('today', $today)
             ->andWhere('c.utilisateur = :user') //gsestion user
            ->setParameter('user', $user)
+            ->orderBy('c.jourDeLivraison', 'DESC')
             ->getQuery()
             ->getResult();
         return $result;
@@ -57,6 +58,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('dla', $dateLimiteAncienne)
             ->andWhere('c.utilisateur = :user') //gsestion user
             ->setParameter('user', $user)
+            ->orderBy('c.jourDeLivraison', 'DESC')
             ->getQuery()
             ->getResult();
         return $result;
@@ -81,6 +83,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('heure', $heure)
             ->andWhere('c.utilisateur = :user') //gsestion user
             ->setParameter('user', $user)
+            ->orderBy('c.jourDeLivraison', 'DESC')
             ->getQuery()
             ->getResult();
         return $result;
@@ -105,6 +108,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->setParameter('heure', $heure)
             ->andWhere('c.utilisateur = :user') //gsestion user
             ->setParameter('user', $user)
+            ->orderBy('c.jourDeLivraison', 'DESC')
             ->getQuery()
             ->getResult();
         return $result;
@@ -115,6 +119,7 @@ class CommandeRepository extends ServiceEntityRepository
         $result = $this->createQueryBuilder('c')
             ->where('c.etatCommande = :etat') // gestion date
             ->setParameter('etat', $etat)
+            ->orderBy('c.jourDeLivraison', 'DESC')
             ->getQuery()
             ->getResult();
         return $result;
