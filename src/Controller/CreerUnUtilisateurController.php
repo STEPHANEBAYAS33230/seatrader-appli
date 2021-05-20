@@ -242,14 +242,13 @@ class CreerUnUtilisateurController extends AbstractController
 
     //***********************************************************************************************
     /**
-     * @Route("/admin/mon-profil", name="modif-cpte-admin")
+     * @Route("/monCompte/monProfil", name="modif_cpte_adminas")
      */
-    public function modifiercompteadmin(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function modifierAdmin(UserInterface $user,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        $titrePage="Modifier mon compte administrateur";
         // on récupère l'user
 
-        $user=$this->getUser();
+        //$user=$this->getUser();
         $id=$user->getId();
         $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
         $utilisateur = $utilisateurRepo->find($id);
@@ -259,8 +258,6 @@ class CreerUnUtilisateurController extends AbstractController
         //*********on recupere le compte de l'utilisateur à modifier
         //****************
 
-
-
         $registerForm = $this->createForm(AdminProfilType::class, $utilisateur);
         $registerForm->handleRequest($request);
 
@@ -268,7 +265,7 @@ class CreerUnUtilisateurController extends AbstractController
         if ($registerForm->isSubmitted() and $registerForm->isValid()) {
 
             //hasher le mot de passe avec class passwordEncoderInterface
-            $hashed=$encoder->encodePassword($user,$user->getPassword());
+            $hashed=$encoder->encodePassword($utilisateur,$utilisateur->getPassword());
             $utilisateur->setPassword($hashed);
 
             //sauvegarder mon utilsateur
@@ -283,10 +280,9 @@ class CreerUnUtilisateurController extends AbstractController
 
 
         }
-        var_dump($titrePage);
-        die();
+        $titrePage="Modifier mon compte administrateur";
         return $this->render('creer_un_utilisateur/index.html.twig', [
-            "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage
+            "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage,
         ]);
 
     }

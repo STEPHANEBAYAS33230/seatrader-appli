@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CalendrierLivraison;
 use App\Entity\Commande;
 use App\Entity\EtatCommande;
 use App\Entity\FamilleProduit;
@@ -113,8 +114,11 @@ class CommandeController extends AbstractController
             //*********si jour livraison egale à dim ou lundi pas de cde possible
             //******************************
             //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
+            $calendrierLivRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
+            $blocCalendrierLiv=$calendrierLivRepo->filtreDateBloc($dtt2);
+            $openCalendrierLiv=$calendrierLivRepo->filtreDateOpen($dtt2);
             //******************************
-            if ($jourSem=="dim" or $jourSem=="lun") {
+            if (($jourSem=="dim" or $jourSem=="lun" or sizeof($blocCalendrierLiv)>0) and sizeof($openCalendrierLiv)<1) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -486,8 +490,13 @@ class CommandeController extends AbstractController
             //*********si jour livraison egale à dim ou lundi pas de cde possible
             //******************************
             //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
+            //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
+            $calendrierLivRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
+            $blocCalendrierLiv=$calendrierLivRepo->filtreDateBloc($dtt2);
+            $openCalendrierLiv=$calendrierLivRepo->filtreDateOpen($dtt2);
             //******************************
-            if ($jourSem=="dim" or $jourSem=="lun" and $role!=['ROLE_ADMIN','ROLE_USER']) {
+            if (($jourSem=="dim" or $jourSem=="lun" or sizeof($blocCalendrierLiv)>0) and sizeof($openCalendrierLiv)<1 and $role!=['ROLE_ADMIN','ROLE_USER']) {
+            //if ($jourSem=="dim" or $jourSem=="lun" and $role!=['ROLE_ADMIN','ROLE_USER']) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
