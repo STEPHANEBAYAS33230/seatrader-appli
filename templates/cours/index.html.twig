@@ -1,0 +1,75 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}TELECHARGER COURS DES PRODUITS|{{ parent() }}{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+
+    <div class="container marge-container">
+        <div class="row">
+            <!--**************************-->
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h3>Télécharger et Mettre en ligne le cours des produits <i class="fas fa-camera"></i></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--**************************-->
+            <!--**************************-->
+            <div class="col-xl-6 justify-content-center " style="height: 150px;">
+                <div>
+                    <h3 class="">Cours des produits<i class="fas fa-fish"></i></h3>
+                </div>
+                <div>
+                    <p>format PDF</p>
+                </div>
+                <div>
+                    <p>MISE EN LIGNE APRES VALIDATION</p>
+                </div>
+            </div>
+            <div class="col-xl-3 justify-content-lg-start tailleImage">
+                <div><img id="imagerie" class="taileImage m-0 p-0 bg-secondary" alt="document pdf"></div>
+            </div>
+            <div class="col-xl-3 justify-content-lg-start">
+
+                    <div class="taileImage">
+                        <img id="pdfDoc" class="tailleImage m-0 p-0" src="{{ asset('assets/images/pdfDoc.png') }}" alt="photo du fichier PDF">
+                    </div>
+
+            </div>
+
+        </div>
+        <!--**************************-->
+        <!--**************************-->
+        <div class="row">
+            <div class="col-xl-12 justify-content-center formulaireBlue">
+                {{ form_start(coursForm, { 'attr' : { 'style': '', } }) }}
+                <div class="caseform">
+                    {{ form_help(coursForm.brochureFilename) }}{{ form_errors(coursForm.brochureFilename) }}
+                    {{ form_label(coursForm.brochureFilename) }}: {{ form_widget(coursForm.brochureFilename) }}
+
+                    <button class="btn-grad" type="submit">valider</button>
+                    <a class="btn-grad" href=javascript:history.go(-1)>Retour</a>
+                    {{ form_end(coursForm) }}
+                </div>
+            </div>
+        </div>
+        <!--fin du main*************-->
+
+
+    </div><!--fin de container-->
+    <script type="text/javascript">
+        var nb = 2;
+        timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
+        document.getElementById("photo_produit_brochureFilename").onchange = function () {
+
+                // get loaded data and render thumbnail.
+                document.getElementById("imagerie").src= document.getElementById("pdfDoc").src;
+
+        };
+    </script>
+{% endblock %}
