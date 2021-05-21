@@ -26,7 +26,7 @@ class CommandeRepository extends ServiceEntityRepository
     {   //pour les users simple
        // $today->add(new DateInterval('P1D'));
         $today = new \DateTime('now');
-        $today->add(new DateInterval('P2D'));
+        $today->add(new DateInterval('P1D'));
         //$idi=$user->getId();
 
 
@@ -94,7 +94,7 @@ class CommandeRepository extends ServiceEntityRepository
         $today = new \DateTime('now');
         //$today->add(new DateInterval('P1D'));
         $today2 = new \DateTime('now');
-        $today2->add(new DateInterval('P2D'));
+        $today2->add(new DateInterval('P1D'));
         $heure=intval(Date( 'H'));
         //$idi=$user->getId();
 

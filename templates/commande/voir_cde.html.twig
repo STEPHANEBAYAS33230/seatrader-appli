@@ -129,7 +129,7 @@
                     <!--//************************fin cde  jour+1 apres11h  juste à voir-->
                     <!--//************************cde  jour+1 apres11h juste à voir-->
                     {% for cdeAJ in commandeEncoreModifiable %}
-                        <tr>
+                        <tr class="bg-warning">
                             <th scope="row">{{ cdeAJ.id }}</th>
                             <td scope="col">{{ cdeAJ.utilisateur.nom }}-{{ cdeAJ.utilisateur.nomDeLaSociete }}</td>
                             <td>{{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</td>
@@ -173,7 +173,7 @@
                     <!--***************************************************************-->
                     <!--//************************cde apres jour modifiable supprimable-->
                      {% for cdeAJ in commandeApresJour %}
-                        <tr>
+                        <tr class="bg-success">
                             <th scope="row">{{ cdeAJ.id }}</th>
                             <td scope="col">{{ cdeAJ.utilisateur.nom }}-{{ cdeAJ.utilisateur.nomDeLaSociete }}</td>
                             <td>{{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</td>
