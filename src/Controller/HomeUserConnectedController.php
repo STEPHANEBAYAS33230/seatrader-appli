@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cours;
 use App\Entity\FiltreDateMiseEnAvant;
 use App\Entity\MiseEnAvant;
 use App\Form\FiltreDateMiseEnAvantType;
@@ -29,6 +30,11 @@ class HomeUserConnectedController extends AbstractController
         $today->format('Y-m-d');
         // on récupère l'user
         $user=$this->getUser();
+        //**************ON RECUPERE LE PDF
+        //****************on recupere le produit
+        $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
+        $lecours = $coursRepo->findAll();
+        $cours=$lecours[0];
         //******creation du formulaire filtreMiseEnAvant
         //*********creation du formulaire
         $filtreDateMiseEnAvant= new FiltreDateMiseEnAvant();
@@ -101,7 +107,7 @@ class HomeUserConnectedController extends AbstractController
         $today = new \DateTime('now');
         $today->format('Y-m-d');
         return $this->render('home_user_connected/index.html.twig', ["dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant,
-            "filtreDateMiseEnAvantForm"=>$filtreDateMiseEnAvantForm->createView(),
+            "filtreDateMiseEnAvantForm"=>$filtreDateMiseEnAvantForm->createView(), 'cours'=>$cours
         ]);
     }
 }

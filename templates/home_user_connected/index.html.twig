@@ -37,9 +37,23 @@
 
     <!--*****fin row*********************-->
     <!--//*****************************-->
-    <div class="row col-xl-12 justify-content-around">
+    <div class="row justify-content-between">
+         <div  class="card-miseEn-Avant">
+            <div class="bg-secondary" >
+                    <h4 class="raison" >cours des produits SEATRADER</h4>
+                </div>
+                <div class="leproduit">
+                    <img style="width: 260px; height: 144px" src="{{ asset('assets/images/pdfDoc.png') }}" alt="photo du PDF">
+                </div>
+                <div class="align-items-center">
+                    <h4 class="prix bg-primary" ></h4>
+                </div>
+            <h3 class="text-center"><a href="{{ asset('uploads/brochures/' ~ cours.brochureFilename) }}" download="Cours_Produits_SEATRADER.pdf" >Télécharger le cours des produits</a></h3>
+            </div>
+         </div>
+        {# ******************************************************* #}
         {%  for miseEa in miseEnAvant %}
-        <div  class="card-miseEn-Avant" >
+         <div  class="card-miseEn-Avant">
             {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEa.couleur }}">{% endif %}
                     <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
                 </div>
@@ -56,11 +70,10 @@
                 <p class="text-center">{{ miseEa.origine }}</p>
                 <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
             </div>
-            {% endfor %}
-            <div class="justify-content-center col-xl-12"><h6>Mise(s) en Avant affichée(s) la plus récente(s) ou en cours</h6></div>
-
-
         </div>
+        {% endfor %}
+        <div class="justify-content-center col-xl-12"><h6>Mise(s) en Avant affichée(s) la plus récente(s) ou en cours</h6></div>
+
         <!--*****fin row*********************-->
         <!--//*****************************-->
         <!--//*****************************-->
