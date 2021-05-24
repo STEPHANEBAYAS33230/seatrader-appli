@@ -8,72 +8,73 @@
  {% endblock %}
 
 {% block main %}
-<div class="container marge-container">
-    <div class="row">
-        <div class="col-xl-3 justify-content-center mt-5">
-            <div class="card bg-light mb-3" style="max-width: 18rem;">
-                <div class="card-header">Passez vos commandes avant 11h</div>
-                <div class="card-body">
-                    <p class="card-title">Jour de commande->Jour de livraison</p>
-                    <p class="card-text">Lun->Mar Mar->Mer Mer->Jeu Ven->Sam</p>
+    <div class="container marge-container">
+        <div class="row">
+            <div class="col-xl-3 justify-content-center mt-5">
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Passez vos commandes avant 11h</div>
+                    <div class="card-body">
+                        <p class="card-title">Jour de commande->Jour de livraison</p>
+                        <p class="card-text">Lun->Mar Mar->Mer Mer->Jeu Ven->Sam</p>
+                    </div>
                 </div>
+
             </div>
 
-        </div>
 
-
-        <div class="col-xl-9 justify-content-center titre">
-            <div>
+            <div class="col-xl-9 justify-content-center titre">
                 <div>
-                <h3>Retrouvez nos opportunités chaque jour<i class="fas fa-fish"></i></h3>
-                {{ form_start(filtreDateMiseEnAvantForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
-                    sélectionnez la période choisie: {{ form_widget(filtreDateMiseEnAvantForm.dateMeA) }} entre {{ form_widget(filtreDateMiseEnAvantForm.datePlus) }}
-                    <button class="btn-grad" type="submit">Rechercher</button>
-                    {{ form_end(filtreDateMiseEnAvantForm) }}
+                    <div>
+                        <h3>Retrouvez nos opportunités chaque jour<i class="fas fa-fish"></i></h3>
+                        {{ form_start(filtreDateMiseEnAvantForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                        sélectionnez la période choisie: {{ form_widget(filtreDateMiseEnAvantForm.dateMeA) }} entre {{ form_widget(filtreDateMiseEnAvantForm.datePlus) }}
+                        <button class="btn-grad" type="submit">Rechercher</button>
+                        {{ form_end(filtreDateMiseEnAvantForm) }}
+                    </div>
                 </div>
             </div>
-    </div>
-    <!--//*****************************-->
+        </div>
+        <!--//*****************************-->
 
-    <!--*****fin row*********************-->
-    <!--//*****************************-->
-    <div class="row justify-content-between">
-         <div  class="card-miseEn-Avant">
-            <div class="bg-secondary" >
+        <!--*****fin row*********************-->
+        <!--//*****************************-->
+        <div class="row justify-content-around">
+            <div  class="card-miseEn-Avant">
+                <div class="bg-secondary" >
                     <h4 class="raison" >cours des produits SEATRADER</h4>
                 </div>
                 <div class="leproduit">
-                    <img style="width: 260px; height: 144px" src="{{ asset('assets/images/pdfDoc.png') }}" alt="photo du PDF">
+                    <a href="{{ asset('uploads/brochures/' ~ cours.brochureFilename) }}" target="_blank"><img style="width: 260px; height: 144px" src="{{ asset('assets/images/pdfDoc.png') }}" alt="photo du PDF"></a>
                 </div>
                 <div class="align-items-center">
                     <h4 class="prix bg-primary" ></h4>
                 </div>
-            <h3 class="text-center"><a href="{{ asset('uploads/brochures/' ~ cours.brochureFilename) }}" download="Cours_Produits_SEATRADER.pdf" >Télécharger le cours des produits</a></h3>
+                <h3 class="text-center"><a href="{{ asset('uploads/brochures/' ~ cours.brochureFilename) }}" download="Cours_Produits_SEATRADER.pdf" >Télécharger le cours des produits</a></h3>
             </div>
-         </div>
-        {# ******************************************************* #}
-        {%  for miseEa in miseEnAvant %}
-         <div  class="card-miseEn-Avant">
-            {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEa.couleur }}">{% endif %}
-                    <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
-                </div>
-                <div class="leproduit">
-                    {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
-                    <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+            {# ******************************************************* #}
+            {%  for miseEa in miseEnAvant %}
+            <div  class="card-miseEn-Avant">
+                {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEa.couleur }}">{% endif %}
+                        <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
+                    </div>
+                    <div class="leproduit">
+                        {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
+                        <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+
+                    </div>
+                    <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                    <div class="align-items-center">
+                        <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
+                    </div>
+                    <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                    <p class="text-center">{{ miseEa.origine }}</p>
+                    <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
 
                 </div>
-                <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
-                <div class="align-items-center">
-                    <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
-                </div>
-                <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
-                <p class="text-center">{{ miseEa.origine }}</p>
-                <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
-        <div class="justify-content-center col-xl-12"><h6>Mise(s) en Avant affichée(s) la plus récente(s) ou en cours</h6></div>
-
         <!--*****fin row*********************-->
         <!--//*****************************-->
         <!--//*****************************-->
@@ -81,4 +82,4 @@
 
     </div><!--fin de container-->
 
-    {% endblock %}
+{% endblock %}

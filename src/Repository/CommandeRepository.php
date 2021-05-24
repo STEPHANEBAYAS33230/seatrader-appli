@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commande;
+use App\Entity\EtatCommande;
 use App\Entity\Utilisateur;
 use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -124,8 +125,35 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult();
         return $result;
     }
+    public function passerArchive(EtatCommande $etat)
+    {  //*******recuperer les cde traité ancienne d'1mois par rapport à la date du jour
+        $today = new \DateTime('now');
+        $today->sub(new DateInterval('P30D'));
+        $result = $this->createQueryBuilder('c')
+            ->where('c.etatCommande = :etat') // gestion date
+            ->setParameter('etat', $etat)
+            ->andWhere('c.jourDeLivraison < :today') // gestion date
+            ->setParameter('today', $today)
+            ->orderBy('c.jourDeLivraison', 'DESC')
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
 
-
+    public function effacerArchive(EtatCommande $etat)
+    {  //*******recuperer les cde archivee d'2mois et + par rapport à la date du jour
+        $today = new \DateTime('now');
+        $today->sub(new DateInterval('P60D'));
+        $result = $this->createQueryBuilder('c')
+            ->where('c.etatCommande = :etat') // gestion date
+            ->setParameter('etat', $etat)
+            ->andWhere('c.jourDeLivraison < :today') // gestion date
+            ->setParameter('today', $today)
+            ->orderBy('c.jourDeLivraison', 'DESC')
+            ->getQuery()
+            ->getResult();
+        return $result;
+    }
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
