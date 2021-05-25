@@ -36,6 +36,11 @@
                         <th scope="col"></th>
                     </tr>
                     </thead>
+                {% set AuMoinsUnProduitQuantite=false %}
+                {%  for prod in cde.object %}
+                    {% if prod.quantite>0 and famille.nomFamille==prod.famille%}{% set AuMoinsUnProduitQuantite=true %}{% endif %}
+                    {% endfor %}
+                    {% if AuMoinsUnProduitQuantite==true %}
                     <thead>
                     {% if clr==1 %}<tr class="bg-warning mt-1">{% set clr=2 %}{% elseif clr==2 %}<tr class="bg-primary mt-1">{% set clr=3 %}{% elseif clr==3 %}<tr class="bg-success mt-1">{% set clr=1 %}{% endif %}
                         <th scope="col">famille</th>
@@ -58,7 +63,7 @@
 
                     {%  for prod in cde.object %}
                         <!--voir si quantite>0-->
-                        {% if famille.nomFamille==prod.famille %}
+                        {% if famille.nomFamille==prod.famille and prod.quantite>0 %}
                             <tbody>
                             <tr>
                                 <th>{{ prod.id }}</th>
@@ -74,6 +79,7 @@
 
                         {% endif %}
                     {% endfor %}
+                    {% endif %}
                 {% endfor %}
             </table>
         </div>
