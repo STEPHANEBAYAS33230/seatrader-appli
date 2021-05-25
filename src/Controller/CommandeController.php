@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommandeController extends AbstractController
 {
     /**
-     * @Route("/commande", name="faire_cde")
+     * @Route("/profile/commande", name="faire_cde")
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
@@ -372,7 +372,7 @@ class CommandeController extends AbstractController
 
     //*****************voir mes cdes
     /**
-     * @Route("/commande/cde", name="voir_cde")
+     * @Route("/profile/commande/cde", name="voir_cde")
      */
     public function voirCde() :Response
     {
@@ -399,7 +399,7 @@ class CommandeController extends AbstractController
 
     //********************supprimer cde
     /**
-     * @Route("/commande-/{id}", name="supprimer-cde")
+     * @Route("/profile/commande-/{id}", name="supprimer-cde")
      */
     public function supprimerCde($id, EntityManagerInterface $em){
         //****************on recupere la cde
@@ -416,7 +416,7 @@ class CommandeController extends AbstractController
 
     //********************supprimer cde
     /**
-     * @Route("/commande-modifier/{id}", name="modifier-cde")
+     * @Route("/profile/commande-modifier/{id}", name="modifier-cde")
      */
     public function modifierCde($id, Request $request, EntityManagerInterface $em)
     {    // on récupère l'user/ date today
@@ -758,7 +758,7 @@ class CommandeController extends AbstractController
 
     //********************voir les cde envoyee/recept/traité/archivé pour admin
     /**
-     * @Route("/commandes/{statut}", name="voir-cde-admin")
+     * @Route("/admin/commandes/{statut}", name="voir-cde-admin")
      */
     public function voirCdeAdmin($statut, Request $request, EntityManagerInterface $em)
     {    // on récupère l'user/ date today
@@ -793,7 +793,7 @@ class CommandeController extends AbstractController
     //**************************************************************
     //********************supprimer cde
     /**
-     * @Route("/voir-cde-admin/{id}", name="voir-une-cde-admin")
+     * @Route("/admin/voir-cde-admin/{id}", name="voir-une-cde-admin")
      */
     public function voirUneCdeAdmin($id, EntityManagerInterface $em, Request $request): Response
     {

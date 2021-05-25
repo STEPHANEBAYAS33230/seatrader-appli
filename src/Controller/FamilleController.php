@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FamilleController extends AbstractController
 {
     /**
-     * @Route("/famille", name="ajouter-famille")
+     * @Route("/admin/famille", name="ajouter-famille")
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
@@ -56,7 +56,7 @@ class FamilleController extends AbstractController
 
 
     /**
-     * @Route("/famille/{id}", name="supprimer_famille")
+     * @Route("/admin/famille/{id}", name="supprimer_famille")
      */
     public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
         //****************

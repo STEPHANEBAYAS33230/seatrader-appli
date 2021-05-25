@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CreerUnUtilisateurController extends AbstractController
 {
     /**
-     * @Route("/admin", name="creerUnUtilisateur")
+     * @Route("/admin/nouveau-client", name="creerUnUtilisateur")
      */
     public function index(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
@@ -242,7 +242,7 @@ class CreerUnUtilisateurController extends AbstractController
 
     //***********************************************************************************************
     /**
-     * @Route("/monCompte/monProfil", name="modif_cpte_adminas")
+     * @Route("/admin/monCompte/monProfil", name="modif_cpte_adminas")
      */
     public function modifierAdmin(UserInterface $user,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {

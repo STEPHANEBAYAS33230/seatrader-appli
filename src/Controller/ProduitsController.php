@@ -17,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ * @Route ("/admin")
+ */
 class ProduitsController extends AbstractController
 {
     /**

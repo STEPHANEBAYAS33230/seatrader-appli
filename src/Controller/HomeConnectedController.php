@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route ("/profile")
+ */
 class HomeConnectedController extends AbstractController
 {
     /**
@@ -65,7 +68,7 @@ class HomeConnectedController extends AbstractController
 
 
         //***************************************
-        // on récupère l'user
+        // on récupère l'user et son role
         $user=$this->getUser();
         $role=$user->getRoles();
 
