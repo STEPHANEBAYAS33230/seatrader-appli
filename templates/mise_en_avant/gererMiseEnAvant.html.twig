@@ -7,11 +7,24 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_ADMIN') %}
 <div class="container marge-container">
     <div class=row">
         <div class="col-xl-12 justify-content-center titre">
             <div>
                 <h3 class="">GESTION des mises en avant de produits/opportunités<i class="fas fa-fish"></i></h3>
+                {# read and display all flash messages #}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="text-warning">
+                            {{ message }}
+                            {% if message=="Une erreur s'est produite pendant la suppression." %}<script type="text/javascript">
+                                setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/logout";},2000);
+                            </script>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
         </div>
         <div class="col-xl-12 justify-content-center">
@@ -111,4 +124,5 @@
     </div>
     <!--//*****************************-->
 </div><!--fin container***********************************-->
+    {% endif %}
 {% endblock %}

@@ -111,6 +111,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/apache-pack" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/rate-limiter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/lock" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/semaphore" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

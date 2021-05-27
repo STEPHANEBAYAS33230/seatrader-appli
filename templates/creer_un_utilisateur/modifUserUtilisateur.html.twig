@@ -10,7 +10,7 @@
  {% endblock %}
 
 {% block main %}
-
+    {% if is_granted('ROLE_USER') %}
     <div class="container marge-container">
         <div class=row">
 
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col-xl-3 justify-content-end mt-5">
-                <div><p>{{ form_widget(registerForm.emailPerso, { 'required': true }) }}</p></div>
+                <div><p>{{ form_widget(registerForm.emailPerso, { 'required': false }) }}</p></div>
                 <div><p>{{ form_widget(registerForm.telephone_societe) }}</p></div>
                 <div><p>{{ form_widget(registerForm.telephonePerso, { 'required': false }) }}</p></div>
                 <div><p></p></div>
@@ -89,6 +89,6 @@
         </div>
 
     </div><!--fin de container-->
-
+{% endif %}
 {% endblock %}
 

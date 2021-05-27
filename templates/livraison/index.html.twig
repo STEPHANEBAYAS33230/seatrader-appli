@@ -7,6 +7,7 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container">
         <div class=row">
             <div class="col-xs-12 justify-content-center titre">
@@ -86,4 +87,5 @@
         </div>
         <!--//*****************************-->
     </div><!--fin container***********************************-->
+    {% endif %}
 {% endblock %}

@@ -176,11 +176,22 @@ class MiseEnAvantController extends AbstractController
         //****************on recupere la miseEnAvant
         $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
         $miseEnAvant = $miseEnAvantRepo->find($id);
-
+        if ($miseEnAvant==null) {
+            $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression.');
+            return $this->redirectToRoute('gérer_mise_en_avant');
+        }
         //********************
-        $em->remove($miseEnAvant);
-        $em->flush();
-        return $this->redirectToRoute('gérer_mise_en_avant');
+        try
+        {
+            $em->remove($miseEnAvant);
+            $em->flush();
+            return $this->redirectToRoute('gérer_mise_en_avant');
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $this->addFlash('error', 'Erreur lors de la suppression. Nous n\' avons pas pu supprimer la mise en avant/opportunités.');
+            return $this->redirectToRoute('gérer_mise_en_avant');
+        }
+
     }
 //**************************modifier miseEnAvant
 

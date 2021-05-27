@@ -91,7 +91,7 @@ class CommandeController extends AbstractController
             // affichage du jour de la semaine
             $jourSem= $joursem[date("w",$timestamp)];
             //***************si message non changé
-            if ( $commande->getNote()=="message à remplir juste avant envoi (impératif)" ) {
+            if ( $commande->getNote()=="message à remplir juste avant de clicker sur enregister et envoyer (impératif)." ) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
@@ -406,8 +406,15 @@ class CommandeController extends AbstractController
         //********ajouter controle user est le bon ou admin
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
         $cde = $cdeRepo->find($id);
-
-        //********************
+        //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
+        $personne=$cde->getUtilisateur();
+        // on récupère l'user
+        $user=$this->getUser();
+        $role=$user->getRoles();
+        If ($personne!=$user and $role==['ROLE_USER']) {
+            return $this->redirectToRoute('app_logout');
+        }
+        //*************************************************************************************
         $em->remove($cde);
         $em->flush();
         return $this->redirectToRoute('voir_cde');
@@ -423,14 +430,23 @@ class CommandeController extends AbstractController
         $user=$this->getUser();
         $role=$user->getRoles();
         $today = new \DateTime('now');
+        //****************on recupere la cde
+        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+        $commande = $cdeRepo->find($id);
+        //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
+        $personne=$commande->getUtilisateur();
+        // on récupère l'user
+        If ($personne!=$user and $role==['ROLE_USER']) {
+            return $this->redirectToRoute('app_logout');
+        }
+        //*************************************************************************************
         // recupere toutes les familles
         $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $familleProduit = $familleProduitRepo->findAll();
         //***CDE
         $cde=new Commande();
-        //****************on recupere la cde
-        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        $commande = $cdeRepo->find($id);
+
+        //**********************on recup les produits de la cde
         $produits=$commande->getObject();
         $this->addFlash('error', "Vous pouvez modifier cette commande.");
         $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -467,7 +483,7 @@ class CommandeController extends AbstractController
             // affichage du jour de la semaine
             $jourSem= $joursem[date("w",$timestamp)];
             //***************si message non changé
-            if ( $commande->getNote()=="message à remplir juste avant envoi (impératif)" ) {
+            if ( $commande->getNote()=="message à remplir juste avant de clicker sur enregister et envoyer (impératif)." ) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');

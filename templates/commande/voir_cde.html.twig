@@ -7,6 +7,7 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_USER') %}
     <div class="container marge-container">
         <div class=row">
             <div class="col-xl-12 justify-content-center titre">
@@ -233,4 +234,5 @@
             setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/profile/commande/cde";},20000);
         }
     </script>
+    {% endif %}
 {% endblock %}

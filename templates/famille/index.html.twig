@@ -7,7 +7,7 @@
  {% endblock %}
 
 {% block main %}
-
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container">
         <div class=row">
 
@@ -16,6 +16,18 @@
             <div class="col-xl-12 justify-content-center titre">
                 <div>
                     <h2 class="">Ajouter des  Familles <i class="fas fa-fish"></i></h2>
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-warning">
+                                {{ message }}
+                                {% if message=="Une erreur s'est produite pendant la suppression." %}<script type="text/javascript">
+                                    setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/logout";},2000);
+                                </script>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -29,12 +41,6 @@
 
                         <div>
                             <h6 class="css-CaseFamille">{{ familly.nomFamille }} <a  class="poubelle-lien" href=" {{ path('supprimer_famille',{'id':familly.id}) }}"><i class="fas fa-trash"></i></a></h6>
-                            {# {%  for prod in familly.listingProduits %}
-
-                                <p class="colonne-prod">{{ prod.nomProduit }}</p>
-
-
-                            {% endfor %}#}
                         </div>
                     </div>
                 </div>
@@ -59,5 +65,5 @@
 
 
     </div><!--fin de container-->
-
+    {% endif %}
 {% endblock %}

@@ -7,7 +7,7 @@
  {% endblock %}
 
 {% block main %}
-
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container">
         <div class="row">
             <!--**************************-->
@@ -19,7 +19,7 @@
         </div>
         <div class="row">
             <!--**************************-->
-             <!--**************************-->
+            <!--**************************-->
             <div class="col-xl-6 justify-content-center " style="height: 150px;">
                 <div>
                     <h3 class="">{{ prod.nomProduit }}<i class="fas fa-fish"></i></h3>
@@ -35,13 +35,13 @@
                 <div><img id="imagerie" class="taileImage m-0 p-0 bg-secondary"></div>
             </div>
             <div class="col-xl-3 justify-content-lg-start">
-                    {% if prod.brochureFilename!=null or prod.brochureFilename!="" %}
-                        <div class="taileImage">
-                            <img class="tailleImage m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
-                        </div>
-                    {% else %}
-                      <div class="tailleImage bg-secondary"></div>
-                    {% endif %}
+                {% if prod.brochureFilename!=null or prod.brochureFilename!="" %}
+                    <div class="taileImage">
+                        <img class="tailleImage m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                    </div>
+                {% else %}
+                    <div class="tailleImage bg-secondary"></div>
+                {% endif %}
             </div>
 
         </div>
@@ -59,8 +59,7 @@
                     {{ form_end(produitForm) }}
                 </div>
             </div>
-        </div>
-        <!--fin du main*************-->
+        </div><!--fin du main*************-->
 
 
     </div><!--fin de container-->
@@ -79,4 +78,5 @@
             reader.readAsDataURL(this.files[0]);
         };
     </script>
+    {% endif %}
 {% endblock %}

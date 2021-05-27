@@ -8,6 +8,7 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_USER') %}
     <div class="container marge-container">
         <div class="row">
             <div class="col-xl-3 justify-content-center mt-5">
@@ -81,5 +82,5 @@
 
 
     </div><!--fin de container-->
-
+    {% endif %}
 {% endblock %}

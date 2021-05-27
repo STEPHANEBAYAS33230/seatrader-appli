@@ -7,7 +7,7 @@
  {% endblock %}
 
 {% block main %}
-
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container bg-light">
         <div class=row">
 
@@ -123,5 +123,6 @@
 
     </div><!--fin de container-->
 
+    {% endif %}
     {% endif %}
 {% endblock %}

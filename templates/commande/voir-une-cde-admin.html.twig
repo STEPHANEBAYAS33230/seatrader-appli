@@ -8,6 +8,7 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container">
     <div class="row">
 
@@ -86,7 +87,7 @@
         <div class="row col-xl-12">
             note: {{ cde.note }}
         </div>
-        <div class="row col-xl-12 mt-1">
+        <div class="row col-xl-12 mt-1 titre">
 
             {{ form_start(etatCmmdeForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
             {{ form_widget(etatCmmdeForm.etatCommande) }}
@@ -96,5 +97,5 @@
         </div>
 
     </div>{# <!--fin de container-->#}
-
+    {% endif %}
 {% endblock %}

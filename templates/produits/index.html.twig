@@ -7,14 +7,15 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_ADMIN') %}
     <script type="text/javascript">
 
 
-            if ((screen.width)<500 ) {
-                document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
-                document.getElementById("colonne-prod").class="colonne-prod";
+        if ((screen.width)<500 ) {
+            document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
+            document.getElementById("colonne-prod").class="colonne-prod";
 
-            }
+        }
 
 
     </script>
@@ -27,13 +28,13 @@
                 <div class="row justify-content-around" >
                     <h4>Les familles</h4>
 
-               {#  <div class="justify-content-around">#}
+                    {#  <div class="justify-content-around">#}
                     {%  for famille in familleProduit %}
                         <div class="surCadre">
-                    <h6 class="nom-famille">{{ famille.nomFamille }}</h6>
+                            <h6 class="nom-famille">{{ famille.nomFamille }}</h6>
                         </div>
                     {% endfor %}
-                {# </div>#}
+                    {# </div>#}
                 </div>
 
             </div>
@@ -41,7 +42,19 @@
             <!--**************************-->
             <div class="col-xl-12 justify-content-center titre">
                 <div>
-                <h3 class="">Ajouter/Modifier des  Produits <i class="fas fa-fish"></i></h3>
+                    <h3 class="">Ajouter/Modifier des  Produits <i class="fas fa-fish"></i></h3>
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-danger">
+                                {{ message }}
+                                {% if message=="Une erreur s'est produite pendant la suppression." %}<script type="text/javascript">
+                                    setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/logout";},2000);
+                                </script>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                     {{ form_start(filtrefamilleForm) }}
                     {{ form_widget(filtrefamilleForm.nom) }}
                     <button class="btn-grad" type="submit" >Filtrer les familles</button>
@@ -65,97 +78,98 @@
         <!--//*****************************-->
         <div class="row justify-content-around">
             {%  for famille in familleProduit %}
-                {% if (familleProduit|length)>1 %}
-                <div  class="col-xl-4 colonne-famPdro" >
-                    {% else %}
-                        <div id="colonne-famPdro" class="col-xl-12 colonne-famPdro row justify-content-between" >
-                        {% endif %}
+            {% if (familleProduit|length)>1 %}
+            <div  class="col-xl-4 colonne-famPdro" >
+                {% else %}
+                <div id="colonne-famPdro" class="col-xl-12 colonne-famPdro row justify-content-between" >
+                    {% endif %}
 
 
 
-                            <div class="col-xl-12" ><h6 class="text-center text-white">{{ famille.nomFamille }} </h6></div>
-                                {%  for prod in famille.listingProduits %}
-                                    {% if (familleProduit|length)>1 %}
-                                    <div  class="colonne-prod mt-1 p-1 text-xl-center" >
-                                    {% else %}
-                                    <div id="colonne-prod" class="colonne-prod col-3 m-1 p-1 text-xl-center" >
-                                     {% endif %}
-                                <p class="text-center m-0 p-0 ">
-                                    {{ prod.nomProduit }}
-                                    <a type="button" class="btn btn btn-primary p-1 m-1" title="modifier" href="{{ path('modifier_produit',{'id':prod.id}) }}"><i class="fas fa-address-card" ></i></a>
-                                    <button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#SupprProduit{{ prod.id }}"><i class="fas fa-trash"></i></button>
-                                    <button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera"></i></button>
-                                </p>
-                                    <!--****************************************************************************************-->
-                                    <!-- Modal détail-Produit-->
-                                    <div class="modal fade bgFondModal"  id="SupprProduit{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="SupprProduitLabel{{ prod.id }}" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header formulaireBlue">
-                                                    <h5 class="modal-title text-light" id="detLabel{{ prod.id }}" >Voulez-vous vraiment supprimer ce produit ?</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                    <a  class="btn btn-secondary" href="{{ path('supprimer_produit',{'id':prod.id}) }}">Supprimer</a>{# </button>#}
-                                                </div>
-                                            </div>
+                    <div class="col-xl-12" ><h6 class="text-center text-white">{{ famille.nomFamille }} </h6></div>
+                    {%  for prod in famille.listingProduits %}
+                    {% if (familleProduit|length)>1 %}
+                    <div  class="colonne-prod mt-1 p-1 text-xl-center" >
+                        {% else %}
+                        <div id="colonne-prod" class="colonne-prod col-3 m-1 p-1 text-xl-center" >
+                            {% endif %}
+                            <p class="text-center m-0 p-0 ">
+                                {{ prod.nomProduit }}
+                                <a type="button" class="btn btn btn-primary p-1 m-1" title="modifier" href="{{ path('modifier_produit',{'id':prod.id}) }}"><i class="fas fa-address-card" ></i></a>
+                                <button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#SupprProduit{{ prod.id }}"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera"></i></button>
+                            </p>
+                            <!--****************************************************************************************-->
+                            <!-- Modal détail-Produit-->
+                            <div class="modal fade bgFondModal"  id="SupprProduit{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="SupprProduitLabel{{ prod.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header formulaireBlue">
+                                            <h5 class="modal-title text-light" id="detLabel{{ prod.id }}" >Voulez-vous vraiment supprimer ce produit ?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                            <a  class="btn btn-secondary" href="{{ path('supprimer_produit',{'id':prod.id}) }}">Supprimer</a>{# </button>#}
                                         </div>
                                     </div>
-                                    <!--****************************************************************************************************************************-->
-                                        <!--****************************************************************************************************************************-->
-                                        <!-- Modal détail-Produit-->
-                                        <div class="modal fade bgFondModal"  id="detail{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ prod.id }}" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header formulaireBlue">
-                                                        <img style="width: 270px; height: 150px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
-                                                        <h5 class="modal-title text-light" id="detLabel{{ prod.id }}" >Détails Produit: {{ prod.nomProduit }}</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h4 class="text-primary">unité: {{ prod.pieceOuKg }}</h4>
-                                                        <h4 class="text-primary">famille: {{ prod.famille }}</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                                                       <a  class="btn btn-secondary" href="{{ path('telecharger-photo_produit',{'id':prod.id}) }}">Télécharger une photo</a>{# </button>#}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    <!--****************************************************************************************************************************-->
                                 </div>
+                            </div>
+                            <!--****************************************************************************************************************************-->
+                            <!--****************************************************************************************************************************-->
+                            <!-- Modal détail-Produit-->
+                            <div class="modal fade bgFondModal"  id="detail{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ prod.id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header formulaireBlue">
+                                            <img style="width: 270px; height: 150px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                                            <h5 class="modal-title text-light" id="detLabel{{ prod.id }}" >Détails Produit: {{ prod.nomProduit }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 class="text-primary">unité: {{ prod.pieceOuKg }}</h4>
+                                            <h4 class="text-primary">famille: {{ prod.famille }}</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                            <a  class="btn btn-secondary" href="{{ path('telecharger-photo_produit',{'id':prod.id}) }}">Télécharger une photo</a>{# </button>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                {% endfor %}
+                            <!--****************************************************************************************************************************-->
+                        </div>
+
+                        {% endfor %}
 
 
+                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-        <!--fin de row*************-->
+                <!--fin de row*************-->
 
 
 
-    </div><!--fin de container-->
-    <script>
-        var nb = 2;
-        timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
+            </div><!--fin de container-->
+            <script>
+                var nb = 2;
+                timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
 
-        setInterval("ecran()",1000)
-        function ecran() {
+                setInterval("ecran()",1000)
+                function ecran() {
 
-            if ((screen.width)<500 ) {
-                document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
-                document.getElementById("colonne-prod").class="colonne-prod";
+                    if ((screen.width)<500 ) {
+                        document.getElementById("colonne-famPdro").class="col-xl-4 colonne-famPdro";
+                        document.getElementById("colonne-prod").class="colonne-prod";
 
-            }
+                    }
 
-        }
-    </script>
+                }
+            </script>
+            {% endif %}
 {% endblock %}

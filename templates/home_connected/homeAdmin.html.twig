@@ -8,6 +8,7 @@
  {% endblock %}
 
 {% block main %}
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container">
         <div class=row">
             <div class="col-xl-12 justify-content-center titre" data-aos="flip-left">
@@ -137,4 +138,5 @@
             setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/profile/home/connected";},20000);
         }
     </script>
+    {% endif %}
 {% endblock %}

@@ -81,7 +81,7 @@ class HomeConnectedController extends AbstractController
             return $this->redirectToRoute('home_connected_user');
         }
 
-
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $today = strftime('%A %d %B %Y %I:%M:%S');
         // si l'utilisateur est admin VVVVVVV (route si dessous)
         //******recuperer les cdes envoyée

@@ -107,24 +107,28 @@ class ProduitsController extends AbstractController
         //****************on recupere le produit
         $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $prod = $produitRepo->find($id);
-        $nameImage=$this->getParameter("brochures_directory")."/".$prod->getBrochureFilename();
-        //********************
-        if (file_exists($nameImage)) {
-            unlink($nameImage);
+        if ($prod==null) {
+            $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression.');
+            return $this->redirectToRoute('ajouter-produits');
         }
+        try {
+            $em->remove($prod);
+            $em->flush();
+            //*****efface aussi l'image
+            $nameImage = $this->getParameter("brochures_directory") . "/" . $prod->getBrochureFilename();
+            //********************
+            if (file_exists($nameImage)) {
+                unlink($nameImage);
+            }
 
 
-        //********************
-        $em->remove($prod);
-        $em->flush();
+            //********************
 
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $this->addFlash('error', 'Erreur lors de la suppression. Nous n\' avons pas pu supprimer le produit. Il se peut que ce produit soit impliquer dans les opportunités. Il faut supprimer les opportunités avant. ');
+            return $this->redirectToRoute('ajouter-produits');
+        }
         return $this->redirectToRoute('ajouter-produits');
-
-
-
-        //***************************
-
-
 
     }
 

@@ -63,17 +63,20 @@ class FamilleController extends AbstractController
 
         $familleRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $famille = $familleRepo->find($id);
+        if ($famille==null) {
+            $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression.');
+            return $this->redirectToRoute('ajouter-famille');
+        }
         //********************
-        $em->remove($famille);
-        $em->flush();
-
-        return $this->redirectToRoute('ajouter-famille');
-
-
-
-        //***************************
-
-
+        try {
+            $em->remove($famille);
+            $em->flush();
+            return $this->redirectToRoute('ajouter-famille');
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la famille. Il se peut que cette famille contient encore des produits. Il faut supprimer les produits avant. ');
+            return $this->redirectToRoute('ajouter-famille');
+        }
 
     }
     }
