@@ -9,6 +9,7 @@ use App\Form\FiltreSocieteType;
 use App\Form\ModifUserUtilisateurType;
 use App\Form\ModifUtilisateurType;
 use App\Form\UtilisateurType;
+use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Mapping\EntityListenerServiceResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,6 +77,8 @@ class CreerUnUtilisateurController extends AbstractController
         // on récupère l'user et date du jour
         $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
+        $dateSept = new \DateTime('now');
+        $dateSept->sub(new DateInterval('P7D'));
         // on recupere tous les utilisateurs
         // récupérer la liste des utilisateurs à modifier
         $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
@@ -100,6 +103,7 @@ class CreerUnUtilisateurController extends AbstractController
 
         return $this->render('gerer_mes_clients/index.html.twig', [
             'dateToday'=>$today, 'user'=>$user, 'utilisateur'=>$utilisateur,"filtreSocieteForm"=>$filtreSocieteForm->createView(), 'filtreSociete'=>$filtreSociete, 'filtrenom'=>$nomfiltre,
+            'dateSept'=>$dateSept
         ]);
 
 

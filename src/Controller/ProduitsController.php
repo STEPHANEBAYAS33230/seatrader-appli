@@ -111,16 +111,17 @@ class ProduitsController extends AbstractController
             $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression.');
             return $this->redirectToRoute('ajouter-produits');
         }
-        try {
+        try {$brochure=$prod->getBrochureFilename();
             $em->remove($prod);
             $em->flush();
-            //*****efface aussi l'image
-            $nameImage = $this->getParameter("brochures_directory") . "/" . $prod->getBrochureFilename();
-            //********************
-            if (file_exists($nameImage)) {
-                unlink($nameImage);
+            if ($brochure!=null) {
+                //*****efface aussi l'image
+                $nameImage = $this->getParameter("brochures_directory") . "/" . $prod->getBrochureFilename();
+                //********************
+                if (file_exists($nameImage)) {
+                    unlink($nameImage);
+                }
             }
-
 
             //********************
 

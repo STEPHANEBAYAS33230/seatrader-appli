@@ -425,15 +425,7 @@ class CommandeController extends AbstractController
         }
         $em->remove($cde);
         $em->flush();
-        //**************mettre à jour listingCommande ds Utilisateur****************************************************
-        // récupérer l utilisateur à modifier $personne (celui qui a qui la cde appartient) $cde passé
 
-        $utiliRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utili = $utiliRepo->find($personne);
-        $utili->removeCommande($cde);
-        $em->remove($utili);
-        $em->flush();
-        //**************************************************************************************************************
         return $this->redirectToRoute('voir_cde');
     }
 
