@@ -8,6 +8,7 @@ use App\Entity\EtatCommande;
 use App\Entity\FamilleProduit;
 use App\Entity\MiseEnAvant;
 use App\Entity\Produit;
+use App\Entity\Utilisateur;
 use App\Form\CommandeEtatType;
 use App\Form\CommandeType;
 use DateInterval;
@@ -352,7 +353,15 @@ class CommandeController extends AbstractController
                 //***on enregistre la cde
                 $em->persist($commande);
                 $em->flush();
-
+            //**************mettre à jour listingCommande ds Utilisateur************************************************
+                // récupérer l utilisateur à modifier $personne (celui qui a qui la cde appartient) $cde passé
+                $personne=$commande->getUtilisateur();
+                $utiliRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+                $utili = $utiliRepo->find($personne);
+                $utili->addCommande($commande);
+                $em->persist($utili);
+                $em->flush();
+                //******************************************************************************************************
 
                 //***********redirection vers voir mes commandes
                 $this->addFlash('success', "Commande enregistrée et envoyée");
@@ -414,9 +423,17 @@ class CommandeController extends AbstractController
         If ($personne!=$user and $role==['ROLE_USER']) {
             return $this->redirectToRoute('app_logout');
         }
-        //*************************************************************************************
         $em->remove($cde);
         $em->flush();
+        //**************mettre à jour listingCommande ds Utilisateur****************************************************
+        // récupérer l utilisateur à modifier $personne (celui qui a qui la cde appartient) $cde passé
+
+        $utiliRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utili = $utiliRepo->find($personne);
+        $utili->removeCommande($cde);
+        $em->remove($utili);
+        $em->flush();
+        //**************************************************************************************************************
         return $this->redirectToRoute('voir_cde');
     }
 
@@ -807,7 +824,7 @@ class CommandeController extends AbstractController
 
     }
     //**************************************************************
-    //********************supprimer cde
+    //********************
     /**
      * @Route("/admin/voir-cde-admin/{id}", name="voir-une-cde-admin")
      */

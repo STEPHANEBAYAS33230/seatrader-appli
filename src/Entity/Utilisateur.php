@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,7 +28,7 @@ class Utilisateur implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=60, unique=true)
      */
     private $nomDeLaSociete;
 
@@ -83,9 +85,53 @@ class Utilisateur implements UserInterface
     private $telephonePerso;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=16)
      */
     private $etatUtilisateur="ACTIF";
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="utilisateur", cascade={"persist","remove"})
+     */
+    private $listingCommandes;
+
+    /**
+     * Utilisateur constructor.
+     * @param $listingCommandes
+     */
+    public function __construct()
+    {
+        $this->listingCommandes = new ArrayCollection();
+    }
+    //****************************************
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getListingCommandes(): Collection
+    {
+        return $this->listingCommandes;
+    }
+
+    //ajouter un produit
+    public function addCommande(Commande $listingCommandes): self
+    {
+        if (!$this->listingCommandes->contains($listingCommandes)) {
+            $this->listingCommandes[] = $listingCommandes;
+
+        }
+        return $this;
+    }
+
+    //enlever un produit
+    public function removeCommande(Commande $listingCommandes): self
+    {
+        if ($this->listingCommandes->contains($listingCommandes)) {
+            $this->listingCommandes->removeElement($listingCommandes);
+            //$listingProduits->removeSortie($this);
+        }
+        return $this;
+    }
+
+    //****************************************
 
     /**
      * @return mixed

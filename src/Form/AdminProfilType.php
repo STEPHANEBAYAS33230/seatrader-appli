@@ -31,9 +31,6 @@ class AdminProfilType extends AbstractType
             ->add('emailPerso',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'email personnel']])
             ->add('telephone_societe',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'tel Société',]])
             ->add('telephonePerso',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'tel personnel',]])
-            //->add('etatUilisateur')
-            //->add('etatUtilisateur', EntityType::class, ['class' => EtatUtilisateur::class,'choice_value'=>'etatUtilisateur'])
-
         ;
     }
 

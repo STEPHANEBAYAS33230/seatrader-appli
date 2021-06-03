@@ -7,8 +7,8 @@
  {% endblock %}
 
 {% block main %}
-{% if is_granted('ROLE_ADMIN') %}
-    <div class="container marge-container">
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="container marge-container">
         <div class=row">
             <div class="col-xl-12 justify-content-center titre">
                 <div>
@@ -35,63 +35,63 @@
             <div  class="card-miseEn-Avant mb-0" >
                 {% if miseEnAvantSubmit.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEnAvantSubmit.couleur }}">{% endif %}
                         <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
-                </div>
-                <div class="leproduit">
-                    <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+                    </div>
+                    <div class="leproduit">
+                        <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
 
+                    </div>
+                    <p class="livraisonProduit">livraison prévue le {{ miseEnAvantSubmit.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                    <div class="">
+                        <h4 class="prix" >prix: {{ miseEnAvantSubmit.prix }} €/kg</h4>
+                    </div>
+                    <h3 class="text-center">{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
+                    <p class="text-center">{{ miseEnAvantSubmit.origine }}</p>
+                    <p class="text-center">colis par {{ miseEnAvantSubmit.colisage }} {{ miseEnAvantSubmit.produitMiseEnAvant.pieceOuKg }}</p>
                 </div>
-                <p class="livraisonProduit">livraison prévue le {{ miseEnAvantSubmit.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
-                <div class="">
-                    <h4 class="prix" >prix: {{ miseEnAvantSubmit.prix }} €/kg</h4>
-                </div>
-                <h3 class="text-center">{{ miseEnAvantSubmit.produitMiseEnAvant.nomProduit }}</h3>
-                <p class="text-center">{{ miseEnAvantSubmit.origine }}</p>
-                <p class="text-center">colis par {{ miseEnAvantSubmit.colisage }} {{ miseEnAvantSubmit.produitMiseEnAvant.pieceOuKg }}</p>
             </div>
-        </div>
-        <!--*****fin row*********************-->
+            <!--*****fin row*********************-->
             <div class="justify-content-center col-xl-12"><h6>Affichage du modèle</h6></div>
 
-        <!--*****fin row*********************-->
-        <!--//*****************************-->
-        <div class="row">
-            <div class="col-xl-12 justify-content-center titre">
-                <div>
+            <!--*****fin row*********************-->
+            <!--//*****************************-->
+            <div class="row">
+                <div class="col-xl-12 justify-content-center titre">
                     <div>
-                        {{ form_help(miseEnAvantDeuxForm.produitMiseEnAvant) }}{{ form_errors(miseEnAvantDeuxForm.produitMiseEnAvant) }}
-                        {{ form_label(miseEnAvantDeuxForm.produitMiseEnAvant) }}: {{ form_widget(miseEnAvantDeuxForm.produitMiseEnAvant) }}
-                    </div>
-                    <div>
-                        {{ form_help(miseEnAvantDeuxForm.origine) }}{{ form_errors(miseEnAvantDeuxForm.origine) }}
-                        {{ form_label(miseEnAvantDeuxForm.origine) }}: {{ form_widget(miseEnAvantDeuxForm.origine) }}
-
-                        {{ form_help(miseEnAvantDeuxForm.colisage) }}{{ form_errors(miseEnAvantDeuxForm.colisage) }}
-                        {{ form_label(miseEnAvantDeuxForm.colisage) }}: {{ form_widget(miseEnAvantDeuxForm.colisage) }}
-                    </div>
-                    <div>
-                        {{ form_help(miseEnAvantDeuxForm.prix) }}{{ form_errors(miseEnAvantDeuxForm.prix) }}
-                        {{ form_label(miseEnAvantDeuxForm.prix) }}: {{ form_widget(miseEnAvantDeuxForm.prix) }}
-
-                        {{ form_help(miseEnAvantDeuxForm.raison) }}{{ form_errors(miseEnAvantDeuxForm.raison) }}
-                        {{ form_label(miseEnAvantDeuxForm.raison) }}: {{ form_widget(miseEnAvantDeuxForm.raison) }}
-                    </div>
-                    <div>
-                        {{ form_help(miseEnAvantDeuxForm.couleur) }}{{ form_errors(miseEnAvantDeuxForm.couleur) }}
-                        {{ form_label(miseEnAvantDeuxForm.couleur) }}: {{ form_widget(miseEnAvantDeuxForm.couleur) }}
-
-                        <button class="btn-grad" type="submit">Enregister</button>
-                        {{ form_end(miseEnAvantDeuxForm) }}
                         <div>
-                            <a class="btn btn-secondary" href=javascript:history.go(-1)>Retour</a>
-                            <a class="btn btn-secondary" href="{{ path('gérer_mise_en_avant') }}">Annuler</a>
+                            {{ form_help(miseEnAvantDeuxForm.produitMiseEnAvant) }}{{ form_errors(miseEnAvantDeuxForm.produitMiseEnAvant) }}
+                            {{ form_label(miseEnAvantDeuxForm.produitMiseEnAvant) }}: {{ form_widget(miseEnAvantDeuxForm.produitMiseEnAvant) }}
+                        </div>
+                        <div>
+                            {{ form_help(miseEnAvantDeuxForm.origine) }}{{ form_errors(miseEnAvantDeuxForm.origine) }}
+                            {{ form_label(miseEnAvantDeuxForm.origine) }}: {{ form_widget(miseEnAvantDeuxForm.origine) }}
 
+                            {{ form_help(miseEnAvantDeuxForm.colisage) }}{{ form_errors(miseEnAvantDeuxForm.colisage) }}
+                            {{ form_label(miseEnAvantDeuxForm.colisage) }}: {{ form_widget(miseEnAvantDeuxForm.colisage) }}
+                        </div>
+                        <div>
+                            {{ form_help(miseEnAvantDeuxForm.prix) }}{{ form_errors(miseEnAvantDeuxForm.prix) }}
+                            {{ form_label(miseEnAvantDeuxForm.prix) }}: {{ form_widget(miseEnAvantDeuxForm.prix) }}
+
+                            {{ form_help(miseEnAvantDeuxForm.raison) }}{{ form_errors(miseEnAvantDeuxForm.raison) }}
+                            {{ form_label(miseEnAvantDeuxForm.raison) }}: {{ form_widget(miseEnAvantDeuxForm.raison) }}
+                        </div>
+                        <div>
+                            {{ form_help(miseEnAvantDeuxForm.couleur) }}{{ form_errors(miseEnAvantDeuxForm.couleur) }}
+                            {{ form_label(miseEnAvantDeuxForm.couleur) }}: {{ form_widget(miseEnAvantDeuxForm.couleur) }}
+
+                            <button class="btn-grad" type="submit">Enregister</button>
+                            {{ form_end(miseEnAvantDeuxForm) }}
+                            <div>
+                                <a class="btn btn-secondary" href=javascript:history.go(-1)>Retour</a>
+                                <a class="btn btn-secondary" href="{{ path('gérer_mise_en_avant') }}">Annuler</a>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div><!--fin colonne*************-->
-        </div>
-        <!--*****fin row*********************-->
+                </div><!--fin colonne*************-->
+            </div>
+            <!--*****fin row*********************-->
 
-    </div><!--fin de container-->
+        </div><!--fin de container-->
     {% endif %}
 {% endblock %}

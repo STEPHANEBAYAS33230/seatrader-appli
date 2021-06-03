@@ -41,7 +41,7 @@ class Commande
     private $etatCommande;
 
     /**
-     * @ORM\ManyToOne (targetEntity="App\Entity\Utilisateur")
+     * @ORM\ManyToOne (targetEntity="App\Entity\Utilisateur", inversedBy="listingCommandes")
      */
     private $utilisateur;
 
@@ -88,7 +88,7 @@ class Commande
     {
         if (!$this->listeProduits->contains($listeProduits)) {
             $this->listeProduits[] = $listeProduits;
-            //$listingProduits->addSortie($this);
+
         }
         return $this;
     }
