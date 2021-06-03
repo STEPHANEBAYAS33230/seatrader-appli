@@ -69,6 +69,7 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">Produit</th>
+                        <th scope="col">Photos</th>
                         <th scope="col">Unité</th>
                         <th scope="col"></th>
                         <th scope="col">quantité(colis)</th>
@@ -82,6 +83,31 @@
                             <tr>
                                 <th>{{ prod.id }}</th>
                                 <td>{{ prod.nomProduit }}</td>
+                                <td><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera"></i></button></td>
+                                <!--****************************************************************************************************************************-->
+                                <!-- Modal détail-Produit-->
+                                <div class="modal fade bgFondModal"  id="detail{{ prod.id }}" tabindex="-1" role="dialog" aria-labelledby="detLabel{{ prod.id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header formulaireBlue">
+                                                <img style="width: 270px; height: 150px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                                                <h5 class="modal-title text-light" id="detLabel{{ prod.id }}" >Détails Produit: {{ prod.nomProduit }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="text-primary">unité: {{ prod.pieceOuKg }}</h4>
+                                                <h4 class="text-primary">famille: {{ prod.famille }}</h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                <a  class="btn btn-secondary" href="{{ path('telecharger-photo_produit',{'id':prod.id}) }}">Télécharger une photo</a>{# </button>#}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--****************************************************************************************************************************-->
                                 <td>{{ prod.pieceOuKg }}</td>
                                 <td>
                                     {% for miseav in miseEnAvant %}

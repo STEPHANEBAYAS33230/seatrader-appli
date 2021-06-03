@@ -68,6 +68,11 @@ class FamilleController extends AbstractController
             return $this->redirectToRoute('ajouter-famille');
         }
         //********************
+        $list=$famille->getListingProduits();
+        if (count($list)>0){
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la famille. Il se peut que cette famille contient encore des produits. Il faut supprimer les produits avant. ');
+            return $this->redirectToRoute('ajouter-famille');
+        }
         try {
             $em->remove($famille);
             $em->flush();
