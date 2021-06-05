@@ -27,9 +27,11 @@
                             <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
                     </div>
                     <div class="leproduit">
-                        {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
-                        <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
-
+                        {% if miseEa.produitMiseEnAvant.brochureFilename!=null %}
+                            <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+                        {% else %}
+                            <img style="width: 260px; height: 144px" src="{{ asset('assets/images/slide-01.jpg') }}" alt="photo du banc de poissons">
+                        {% endif %}
                     </div>
                     <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
                     <div class="align-items-center">

@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommandeController extends AbstractController
 {
     /**
-     * @Route("/profile/commande", name="faire_cde")
+     * @Route("/monAppli/commande", name="faire_cde")
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
@@ -381,7 +381,7 @@ class CommandeController extends AbstractController
 
     //*****************voir mes cdes
     /**
-     * @Route("/profile/commande/cde", name="voir_cde")
+     * @Route("/monAppli/commande/cde", name="voir_cde")
      */
     public function voirCde() :Response
     {
@@ -408,7 +408,7 @@ class CommandeController extends AbstractController
 
     //********************supprimer cde
     /**
-     * @Route("/profile/commande-/{id}", name="supprimer-cde")
+     * @Route("/monAppli/commande-/{id}", name="supprimer-cde")
      */
     public function supprimerCde($id, EntityManagerInterface $em){
         //****************on recupere la cde
@@ -416,6 +416,9 @@ class CommandeController extends AbstractController
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
         $cde = $cdeRepo->find($id);
         //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
+        if ($cde==null){ //si $commande null déconnexion
+            return $this->redirectToRoute('app_logout');
+        }
         $personne=$cde->getUtilisateur();
         // on récupère l'user
         $user=$this->getUser();
@@ -432,7 +435,7 @@ class CommandeController extends AbstractController
 
     //********************supprimer cde
     /**
-     * @Route("/profile/commande-modifier/{id}", name="modifier-cde")
+     * @Route("/monAppli/commande-modifier/{id}", name="modifier-cde")
      */
     public function modifierCde($id, Request $request, EntityManagerInterface $em)
     {    // on récupère l'user/ date today
@@ -443,6 +446,9 @@ class CommandeController extends AbstractController
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
         $commande = $cdeRepo->find($id);
         //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
+        if ($commande==null){ //si $commande null déconnexion
+            return $this->redirectToRoute('app_logout');
+        }
         $personne=$commande->getUtilisateur();
         // on récupère l'user
         If ($personne!=$user and $role==['ROLE_USER']) {

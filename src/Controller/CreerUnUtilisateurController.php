@@ -199,7 +199,7 @@ class CreerUnUtilisateurController extends AbstractController
 
     //***********************************************************************************************
     /**
-     * @Route("/profile/compte", name="modifier_monprofilUser")
+     * @Route("/monAppli/compte", name="modifier_monprofilUser")
      */
     public function modifierUtilisateurUser(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
