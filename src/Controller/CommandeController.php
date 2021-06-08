@@ -159,18 +159,7 @@ class CommandeController extends AbstractController
                 $diff=$diff*-1;
             } else  if( intval($mois)<intval($dttmois) and intval($annee)==intval($dttan)) { $diff=$diff*-1;}
             else  if( intval($annee)<intval($dttan)) { $diff=$diff*-1;}
-            /*var_dump($dttjour);
-            var_dump($dttmois);
-            var_dump($dttan);
-            var_dump($dtjour);
-            var_dump($diff);
-            var_dump($jourSem);
-            var_dump($jour);
-            var_dump($mois);
-            var_dump($annee);
-            var_dump($heure);
-            die();*/
-            //*******************************
+
             if ($diff<=0) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee

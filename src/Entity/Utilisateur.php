@@ -126,7 +126,7 @@ class Utilisateur implements UserInterface
     {
         if ($this->listingCommandes->contains($listingCommandes)) {
             $this->listingCommandes->removeElement($listingCommandes);
-            //$listingProduits->removeSortie($this);
+
         }
         return $this;
     }

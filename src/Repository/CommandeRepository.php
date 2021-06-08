@@ -125,12 +125,13 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult();
         return $result;
     }
+
     public function passerArchive(EtatCommande $etat)
     {  //*******recuperer les cde traité ancienne d'1mois par rapport à la date du jour
         $today = new \DateTime('now');
         $today->sub(new DateInterval('P30D'));
         $result = $this->createQueryBuilder('c')
-            ->where('c.etatCommande = :etat') // gestion date
+            ->where('c.etatCommande = :etat') // gestion etat
             ->setParameter('etat', $etat)
             ->andWhere('c.jourDeLivraison < :today') // gestion date
             ->setParameter('today', $today)
@@ -145,7 +146,7 @@ class CommandeRepository extends ServiceEntityRepository
         $today = new \DateTime('now');
         $today->sub(new DateInterval('P60D'));
         $result = $this->createQueryBuilder('c')
-            ->where('c.etatCommande = :etat') // gestion date
+            ->where('c.etatCommande = :etat') // gestion etat
             ->setParameter('etat', $etat)
             ->andWhere('c.jourDeLivraison < :today') // gestion date
             ->setParameter('today', $today)

@@ -49,7 +49,7 @@ class Commande
      * @ORM\ManyToMany(targetEntity="App\Entity\Produit", mappedBy="commande")
      */
     private $listeProduits;
-
+    // object contiendras les produits de la commande issue de la Table Produits
     /**
      * @ORM\Column(type="object", nullable=true)
      */

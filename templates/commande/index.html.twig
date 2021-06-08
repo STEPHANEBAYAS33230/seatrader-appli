@@ -117,7 +117,7 @@
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
 
     {% if miseav.raison=="PAVILLON FRANCE" %}<h5 style="background: linear-gradient(to left,blue, white,red);">
-                                        {% else %}<h5 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} colis de{{ miseav.colisage }}{{ prod.pieceOuKg }}</h5>{% endif %}
+                                        {% else %}<h5 style="background-color: {{ miseav.couleur }};">{% endif %}{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} <br>colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</h5>{% endif %}
                                     {% endfor %}
                                 </td>
 
