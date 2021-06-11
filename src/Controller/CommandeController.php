@@ -368,29 +368,31 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    //*****************voir mes cdes
+    //*****************fonctionnalité voir/AFFICHER mes cdes pour un utilisateur connecté
+    //***************la route /monAppli/ est accessible uniquement au ROLE_USER OU ROLE_ADMIN
     /**
      * @Route("/monAppli/commande/cde", name="voir_cde")
      */
     public function voirCde() :Response
     {
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // on récupère l'user
         $user=$this->getUser();
+        //DATE DU  JOUR
         $today = new \DateTime('now');
-        // recupere les commandes +2j apres date du jour
         $commandeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        $commandeApresJour = $commandeRepo->filtrerLesCdes($user); //filter cde avec date livraison apres date du jour/du user conecté aussi
-        // recuperer les cdee avant la date du jour 30jours
+        //filter cde avec date livraison apres date du jour -l'utilisateur a encore du temps (au moins 24h) sur FOND VERT
+        $commandeApresJour = $commandeRepo->filtrerLesCdes($user);
+        //FILTRER VIEILLE CDE  recuperer les cdee avant la date du jour et -30jours D'ANCIENNETE FOND GRIS
         $commandeAvantJour= $commandeRepo->filtrerLesAnciennesCdes($user);
-
-        // recupere les commandes +1j apres date du jour modifiable
+        // FILTRER recupere les commandes +1j ou apres date du jour modifiable encore jusqu a 11h du matin en  FOND ORANGE
         $commandeEncoreModifiable=$commandeRepo->filtrerLesCdesEgalToday($user);
-        // recupere les commandes +1j apres date du jour non modifiable car heure>11
+        // recupere les commandes +1j apres date du jour non modifiable car heure>11 afficher en FOND GRIS
         $commandeNonModifiable=$commandeRepo->filtrerLesCdesNonEgalToday($user);
         //***************************
         return $this->render('commande/voir_cde.html.twig', [ "dateToday"=>$today,"user"=>$user,
-            "commandeApresJour"=>$commandeApresJour,  "commandeAvantJour"=>$commandeAvantJour, 'commandeEncoreModifiable'=>$commandeEncoreModifiable,
+            "commandeApresJour"=>$commandeApresJour,  "commandeAvantJour"=>$commandeAvantJour,
+            'commandeEncoreModifiable'=>$commandeEncoreModifiable,
             'commandeNonModifiable'=>$commandeNonModifiable,
         ]);
     }

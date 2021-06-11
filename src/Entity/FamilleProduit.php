@@ -58,7 +58,7 @@ class FamilleProduit
     {
         if (!$this->listingProduits->contains($listingProduits)) {
             $this->listingProduits[] = $listingProduits;
-            //$listingProduits->addSortie($this);
+
         }
         return $this;
     }
@@ -68,7 +68,7 @@ class FamilleProduit
     {
         if ($this->listingProduits->contains($listingProduits)) {
             $this->listingProduits->removeElement($listingProduits);
-            //$listingProduits->removeSortie($this);
+
         }
         return $this;
     }

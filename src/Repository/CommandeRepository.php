@@ -22,10 +22,9 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
-
+    //filter cde avec date livraison apres date du jour -l'utilisateur a encore du temps (au moins 24h) sur FOND VERT
     public function filtrerLesCdes(Utilisateur $user)
-    {   //pour les users simple
-       // $today->add(new DateInterval('P1D'));
+    {
         $today = new \DateTime('now');
         $today->add(new DateInterval('P1D'));
         //$idi=$user->getId();
@@ -43,13 +42,10 @@ class CommandeRepository extends ServiceEntityRepository
     }
 
     //***********filtrer les anciennes cdes -1mois en arriere max(<datejour non modifiable et non supprimable)
-
+    //FILTRER VIEILLE CDE  recuperer les cdee avant la date du jour et -30jours D'ANCIENNETE FOND GRIS
     public function filtrerLesAnciennesCdes(Utilisateur $user)
-    {   //pour les users simple
-        // $today->add(new DateInterval('P1D'));
+    {
         $today = new \DateTime('now');
-        //$today->add(new DateInterval('P1D'));
-        //$idi=$user->getId();
         $dateLimiteAncienne=new \DateTime('now');
         $dateLimiteAncienne->sub(new DateInterval('P31D'));
         $result = $this->createQueryBuilder('c')
@@ -64,6 +60,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult();
         return $result;
     }
+    // FILTRER recupere les commandes +1j ou apres date du jour modifiable encore jusqu a 11h du matin en  FOND ORANGE
     public function filtrerLesCdesEgalToday(Utilisateur $user)
     {   //pour les users simple ceux qui st encore modifiable et supprimable
         $today = new \DateTime('now');
@@ -89,7 +86,7 @@ class CommandeRepository extends ServiceEntityRepository
             ->getResult();
         return $result;
     }
-
+// recupere les commandes +1j apres date du jour non modifiable car heure>11H afficher en FOND GRIS
     public function filtrerLesCdesNonEgalToday(Utilisateur $user)
     {   //pour les users simple ceux qui st encore modifiable et supprimable
         $today = new \DateTime('now');

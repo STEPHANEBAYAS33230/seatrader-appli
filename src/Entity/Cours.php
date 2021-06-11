@@ -23,7 +23,7 @@ class Cours
     private $brochureFilename;
 
     /**
-     * @ORM\ManyToOne (targetEntity="App\Entity\Utilisateur")
+     * @ORM\OneToOne (targetEntity="App\Entity\Utilisateur")
      */
     private $utilisateur;
 

@@ -16,7 +16,6 @@ class AdminProfilType extends AbstractType
     {
         $builder
             ->add('nomDeLaSociete',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'nom Société',]])
-            //->add('roles')
             ->add('password', RepeatedType::class,[
                 'type' => PasswordType::class,
                 'invalid_message' => 'le mot de passe est incorrecte.',
