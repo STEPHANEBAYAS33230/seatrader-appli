@@ -24,6 +24,7 @@ class OrigineController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // on récupère l'user
         $user = $this->getUser();
         // recupere toutes les origines
@@ -60,8 +61,7 @@ class OrigineController extends AbstractController
      * @Route("/origine/{id}", name="supprimer-origine")
      */
     public function supprimerOrigin($id, EntityManagerInterface $em,Request $request){
-        //****************
-
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $origineRepo = $this->getDoctrine()->getRepository(Origine::class);
         $origine = $origineRepo->find($id);
         //********************
