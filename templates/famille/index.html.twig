@@ -10,9 +10,6 @@
     {% if is_granted('ROLE_ADMIN') %}
         <div class="container marge-container">
             <div class=row">
-
-
-                <!--**************************-->
                 <div class="col-xl-12 justify-content-center titre">
                     <div>
                         <h2 class="">Ajouter des  Familles <i class="fas fa-fish"></i></h2>
@@ -32,9 +29,7 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
-
-            <!--//*****************************-->
+            </div><!--fin row-->
             <div class="row justify-content-around">
                 {%  for familly in famille %}
 
@@ -43,7 +38,7 @@
 
                             <div>
                                 <h6 class="css-CaseFamille">{{ familly.nomFamille }}
-                                    <a  class="poubelle-lien" href=" {{ path('supprimer_famille',{'id':familly.id}) }}">
+                                    <a  class="css-poubelle-lien" href=" {{ path('supprimer_famille',{'id':familly.id}) }}">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </h6>
@@ -51,9 +46,7 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
-            <!--fin du main*************-->
-            <!--**************************-->
+            </div><!--row*************-->
             <div class="row">
                 <div class="col-xl-12 justify-content-center formulaireBlue">
                     {{ form_start(familleForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
@@ -66,10 +59,7 @@
                         {{ form_end(familleForm) }}
                     </div>
                 </div>
-            </div>
-            <!--fin du main*************-->
-
-
+            </div><!--row*************-->
         </div><!--fin de container-->
     {% endif %}
 {% endblock %}

@@ -27,8 +27,6 @@ class CommandeRepository extends ServiceEntityRepository
     {
         $today = new \DateTime('now');
         $today->add(new DateInterval('P1D'));
-        //$idi=$user->getId();
-
 
         $result = $this->createQueryBuilder('c')
             ->where('c.jourDeLivraison > :today') // gestion date
