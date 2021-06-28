@@ -207,6 +207,7 @@ class CreerUnUtilisateurController extends AbstractController
         // on récupère l'user
         $user=$this->getUser();
         $id=$user->getId();
+        $role=$user->getRoles();
         $today = strftime('%A %d %B %Y %I:%M:%S');
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //*********on recupere le compte de l'utilisateur à modifier
@@ -230,10 +231,18 @@ class CreerUnUtilisateurController extends AbstractController
 
             $em->persist($utilisateur);
             $em->flush();
-            $this->addFlash('success', 'le compte a été modifié avec succès');
-            return $this->redirectToRoute('gerer_mes_clients', [
+            if ($role == ['ROLE_ADMIN']) {
+                $this->addFlash('success', 'le compte a été modifié avec succès');
+                return $this->redirectToRoute('gerer_mes_clients', [
 
-            ]);
+                ]);
+            }
+            else
+            {//si role=user
+                return $this->redirectToRoute('home_connected', [
+
+                ]);
+            }
 
 
 
