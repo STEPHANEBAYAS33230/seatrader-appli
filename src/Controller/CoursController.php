@@ -13,9 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-// @Route ("/admin") signifie que uniquement l'administrateur aura acces au controller et ses fonctionnalités
-// configuré dans le security.yaml
-// voir annotation ci-dessous
+// @Route ("/admin") signifie que uniquement l'administrateur connecté aura acces au controller et ses fonctionnalités
+// configuré dans le security.yaml--- voir annotation ci-dessous
 /**
  *
  * @Route ("/admin")
@@ -34,7 +33,7 @@ class CoursController extends AbstractController
         // SluggerInterface $slugger: pour la gestion de  la string du nom du pdf sauvegarder dans brochures_directory (public/uploads/brochures)
         //                              nom+"-"+key+.pdf ex: TSUD-60a7c8076ebc2.pdf
         //controller uniq acces à l'administrateur
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); // acess denied si personne n est authentifier
+        $this->denyAccessUnlessGranted('ROLE_ADMIN'); // acess denied si personne n est pas authentifier ADMIN
         $cours = null;
         $user = $this->getUser();  //on récupère l'user(admin obligaoire)
         $id = $user->getId();
@@ -81,8 +80,7 @@ class CoursController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // si une exception se produit pendant le telechargement (donc pas de telechargement)
-                    // ajout d'une message flash avant redirection
+                    // si une exception se produit pendant le telechargement/ ajout d'une message flash avant redirection
                     $this->addFlash('error', "Une erreur s'est produite pendant le téléchargement.");
                     return $this->redirectToRoute('mettre_le_cours_ligne'); //redirection vers un controller
                 }

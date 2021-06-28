@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * @ORM\Entity(repositoryClass=ProduitRepository::class)
  * @UniqueEntity(
@@ -33,8 +34,12 @@ class Produit
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      */
-    private $quantite=0;
+    private $quantite;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\FamilleProduit", inversedBy="listingProduits")

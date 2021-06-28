@@ -83,8 +83,8 @@ class ProduitsController extends AbstractController
             $filtrefamille->setNom($familleChoisie);
             $famille=$familleProduitRepo->filtrerFamille($filtrefamille);
             //******************
-            /*$this->addFlash('success', 'produit créé');
-            return $this->redirectToRoute('ajouter-produits', [
+            $this->addFlash('success', 'produit créé');
+            /*return $this->redirectToRoute('ajouter-produits', [
 
             ]);*/
 

@@ -183,8 +183,8 @@ class CreerUnUtilisateurController extends AbstractController
 
             $em->persist($utilisateur);
             $em->flush();
-            $this->addFlash('success', 'le compte a été créé avec succès (veuillez-vous connecter maintenant)');
-            return $this->redirectToRoute('home_connected', [
+            $this->addFlash('success', 'le compte a été créé avec succès');
+            return $this->redirectToRoute('gerer_mes_clients', [
 
             ]);
 
@@ -230,8 +230,8 @@ class CreerUnUtilisateurController extends AbstractController
 
             $em->persist($utilisateur);
             $em->flush();
-            $this->addFlash('success', 'le compte a été modifié avec succès (veuillez-vous connecter');
-            return $this->redirectToRoute('home_connected_user', [
+            $this->addFlash('success', 'le compte a été modifié avec succès');
+            return $this->redirectToRoute('gerer_mes_clients', [
 
             ]);
 

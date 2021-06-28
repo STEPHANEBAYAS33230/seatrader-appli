@@ -13,9 +13,6 @@
     border-style: solid;
     border-width: 3px 3px 3px 3px;
     border-radius: 5px;
-    /*padding: 10px;*/
-    /*margin-left: 5px;
-    margin-right: 5px;*/
 }
 
 
@@ -25,7 +22,7 @@
     background-image: url('../images/reservation-bg.jpg');
     color: white;
     font-weight: bold;
-    border-color:blue;
+    border-color: #1e1ef5;
     border-style: solid;
     border-width: 3px 3px 3px 3px;
     border-radius: 5px;
@@ -34,22 +31,17 @@
 .colonne-famPdro{
     color: white;
     font-weight: bold;
-    /*width: 250px;*/
     margin: 10px;
-    background-color: #918c8c;
     background-image: url("../images/pieceFondGrey.png");
-    /*background-image: url('../images/reservation-bg.jpg');*/
     border-color:blue;
-    border-style: wave;
-    border-width: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 3px 5px 3px 5px;
     border-radius: 5px;
-
 }
 
 .colonne-prod{
     padding: 2px;
     margin: 2px;
-    /*background-color: #7abaff;*/
     background-image: url("../images/pieceFondBlue.png");
     border-color:blue;
     border-style: solid;
@@ -78,7 +70,7 @@ input:focus{
     border-radius: 4px;
 }
 
-
+@media (min-width: 1900px) { .cacher{visibility: hidden;}}
 .btn-grad {background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%)}
 .btn-grad {
     margin-top: 10px;
@@ -96,7 +88,7 @@ input:focus{
 }
 
 .btn-grad:hover {
-    background-position: right center; /* change the direction of the change here */
+    background-position: right center;
     color: #fff;
     text-decoration: none;
 }

@@ -22,15 +22,25 @@ class MiseEnAvantController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
-
-
-
+        $this->denyAccessUnlessGranted('ROLE_ADMIN'); // acess denied si personne n est pas authentifier ADMIN
+        //effacer les mises en avant de +de 1 mois (maintenance)
+        $dt1=new \DateTime('now');
+        $dt1->sub(new DateInterval('P31D'));
+        $dt2=new \DateTime('now');
+        $dt2->sub(new DateInterval('P365D'));
+        //on recupere le repository
+        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+        // filtre les mea qui sont entre -1mois et 1an
+        $oldMise=$miseEnAvantRepo->filtrer($dt2, $dt1);
+        //********************on boucle les miseEnavant à effacer/supprimer
+        foreach( $oldMise as $mea ) {
+            $em->remove($mea);}
+        $em->flush();
+        //**************************************************
 
         // on récupère l'user
         $user=$this->getUser();
         // les dates
-
-
         $today = new \DateTime('now');
         $dtplus = new \DateTime('now');
         $dtmoins= new \DateTime('now');
@@ -39,24 +49,21 @@ class MiseEnAvantController extends AbstractController
         $dtplus->format('Y-m-d');
         $dtmoins->format('Y-m-d');
         $today->format('Y-m-d');
-
-
-
-
+        //*******************recherche des mise en avant les +proche de la date du jour à afficher
         for($i=1;$i<31;$i++) {
             $today->add(new DateInterval('P1D'));
             $dtmoins->add(new DateInterval('P1D'));
             $dtplus->add(new DateInterval('P1D'));
-
             // récupère repository
             $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
             $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
-            if (!empty($miseEnAvant)){
+            if (!empty($miseEnAvant)){//dès qu'une mise en avant recente est trouvé on sort de la boucle
                 break;
             }
 
         }
-        //**************************si miseEnavant vide ds le futur (1mois)-->passé à moins 30j
+        // si aucune trouvée apres la date du jour, recherche avant date du jour
+        //*************nouvelle recherche ds le  passé si miseEnavant vide ds le futur (1mois)-->passé à moins 30j
         if (empty($miseEnAvant)){
             $today = new \DateTime('now');
             $dtplus = new \DateTime('now');
@@ -78,33 +85,36 @@ class MiseEnAvantController extends AbstractController
                 if (!empty($miseEnAvant)){
                     break;
                 }
-
             }
-            //***********fin de IF
         }
+        //*****************fin recherche mise en avant****************************************************
+        //reinitialisation des dates
         $today = new \DateTime('now');
         $todayPlus = new \DateTime('now');
         $todayPlus->add(new DateInterval('P1D'));
-        //******************************************************
         //**********creation d une nouvelle mise en avant
         $miseEnAvantSelect= new MiseEnAvant();
         // on hydrate la nouvelle mise en avant
         $miseEnAvantSelect->setDateCreation($today);
         $miseEnAvantSelect->setDateLivraisonMiseEnAvant($todayPlus);
 
-        //*********creation du formulaire
+        //*********creation du formulaire pour vue 1
         $miseEnAvantForm = $this->createForm(MiseEnAvantType::class, $miseEnAvantSelect);
         $miseEnAvantForm->handleRequest($request);
-        //*********creation du formulaire
+        $soumission=false;
+        //*********creation du deuxieme formulaire pour vue 2
         $miseEnAvantDeuxForm = $this->createForm(MiseEnAvantDeuxType::class, $miseEnAvantSelect);
         $miseEnAvantDeuxForm->handleRequest($request);
-        //**********route**********************************************************
-        if (($miseEnAvantForm->isSubmitted() and $miseEnAvantForm->isValid()) or ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid()))
+        //********************************************************************
+        if (($miseEnAvantForm->isSubmitted() and $miseEnAvantForm->isValid())
+            or ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid()))
         {
-
+            // changement d'etat de $soumission comme le premier formulaire validée
+            $soumission=true;
+            //si $soumission=true la vue2 sera visible/false vue1
             //************
             if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())
-            {
+            {// si deuxieme formulaire soumis on enregistre
                 $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
                 $em->persist($miseEnAvantSelect);
                 $em->flush();
@@ -112,30 +122,28 @@ class MiseEnAvantController extends AbstractController
 
                 ]);
             }
-            //*********recuperer les mises avant/date en cours
-            $today = new \DateTime('now');
+            //*********date en cours
+
             $dtplus = new \DateTime('now');
             $dtmoins= new \DateTime('now');
             $dtmoins->sub(new DateInterval('P1D'));
             $dtplus->add(new DateInterval('P1D'));
             $dtplus->format('Y-m-d');
             $dtmoins->format('Y-m-d');
-            $today->format('Y-m-d');
 
-            //**********************************debut recherche mise en avant recente ou -ancienne
-            //**********************************fin recherche mise en avant recente ou -ancienne
             $today = new \DateTime('now');
             $todayPlus = new \DateTime('now');
             $todayPlus->add(new DateInterval('P1D'));
-            //*************************************fin mise en avant en cours ou passée
+            //**********************vers le template deux avec aprecu de la mise en avant
             return $this->render('mise_en_avant/voirMiseEnAvant.html.twig', [
-                'miseEnAvantDeuxForm'=>$miseEnAvantDeuxForm->createView(), "user"=>$user, "dateToday"=>$today, 'miseEnAvantSubmit'=>$miseEnAvantSelect,
-                'miseEnAvant'=>$miseEnAvant,
+                'miseEnAvantDeuxForm'=>$miseEnAvantDeuxForm->createView(), "user"=>$user, "soumission"=>$soumission,
+                "dateToday"=>$today, 'miseEnAvantSubmit'=>$miseEnAvantSelect,'miseEnAvant'=>$miseEnAvant,
             ]);
         }
 
             return $this->render('mise_en_avant/creerMiseEnAvant.html.twig', [
-            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, "miseEnAvantForm"=>$miseEnAvantForm->createView(),
+            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, "soumission"=>$soumission,
+                "miseEnAvantForm"=>$miseEnAvantForm->createView(),
 
         ]);
     }
@@ -158,17 +166,11 @@ class MiseEnAvantController extends AbstractController
         $dtmoins->sub(new DateInterval('P30D'));
         $dtplus->add(new DateInterval('P30D'));
         $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
-
-
-
-
-
-
         return $this->render('mise_en_avant/gererMiseEnAvant.html.twig', [
             "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, 'dtplus'=>$dtplus, 'dtmoins'=>$dtmoins,
         ]);
     }
-//********************supprimer mise en avant
+    //********************supprimer mise en avant
     /**
      * @Route("/gestion-mise-en-avant/{id}", name="supprimer-misEa")
      */
@@ -208,8 +210,6 @@ class MiseEnAvantController extends AbstractController
         $miseEnAvantDeuxForm = $this->createForm(MiseEnAvantDeuxType::class, $miseEnAvantSelect);
         $miseEnAvantDeuxForm->handleRequest($request);
         //**********route**********************************************************
-
-
             //************
             if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())
             {
@@ -229,19 +229,10 @@ class MiseEnAvantController extends AbstractController
             $dtplus->format('Y-m-d');
             $dtmoins->format('Y-m-d');
             $today->format('Y-m-d');
-
-
-
-
-
             return $this->render('mise_en_avant/voirMiseEnAvant.html.twig', [
                 'miseEnAvantDeuxForm'=>$miseEnAvantDeuxForm->createView(), "user"=>$user, "dateToday"=>$today, 'miseEnAvantSubmit'=>$miseEnAvantSelect,
 
             ]);
 
-
-
     }
-
-
 }

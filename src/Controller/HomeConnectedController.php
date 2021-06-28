@@ -11,13 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route ("/monAppli")
- */
+
 class HomeConnectedController extends AbstractController
 {
     /**
-     * @Route("/home/connected", name="home_connected")
+     * @Route("/monAppli/home/connected", name="home_connected")
      */
     public function index(EntityManagerInterface $em): Response
     {
@@ -82,8 +80,11 @@ class HomeConnectedController extends AbstractController
         }
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            return $this->redirectToRoute('home_connected--user');
         $today = strftime('%A %d %B %Y %I:%M:%S');
         // si l'utilisateur est admin VVVVVVV (route si dessous)
+        // on récupère l'user et son role
+        $user=$this->getUser();
         //******recuperer les cdes envoyée
         //****************on recupere la cde
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
@@ -96,5 +97,32 @@ class HomeConnectedController extends AbstractController
             'dateToday'=>$today,"user"=>$user, 'commandesEnvoyees'=>$commandesEnvoyees, 'commandesReceptionnee'=>$commandesReceptionnee,
             'commandesTraitee'=>$commandesTraitee, 'commandesArchivee'=>$commandesArchivee,
         ]);
+
+    }
+
+    /**
+     * @Route("/admin/home/connected-admin", name="home_connected--user")
+     */
+    public function connectedAdmin(EntityManagerInterface $em): Response
+    {
+        $today = strftime('%A %d %B %Y %I:%M:%S');
+        // si l'utilisateur est admin VVVVVVV (route si dessous)
+        // on récupère l'user et son role
+        $user=$this->getUser();
+        //******recuperer les cdes envoyée
+        //****************on recupere la cde
+        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+        $commandesEnvoyees = $cdeRepo->filtreCdeStatut(2);
+        $commandesReceptionnee = $cdeRepo->filtreCdeStatut(3);
+        $commandesTraitee = $cdeRepo->filtreCdeStatut(4);
+        $commandesArchivee = $cdeRepo->filtreCdeStatut(1);
+
+        return $this->render('home_connected/homeAdmin.html.twig', [
+            'dateToday'=>$today,"user"=>$user, 'commandesEnvoyees'=>$commandesEnvoyees, 'commandesReceptionnee'=>$commandesReceptionnee,
+            'commandesTraitee'=>$commandesTraitee, 'commandesArchivee'=>$commandesArchivee,
+        ]);
+
+
+
     }
 }

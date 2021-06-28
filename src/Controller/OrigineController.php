@@ -24,7 +24,7 @@ class OrigineController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN'); // acess denied si personne n est pas authentifier ADMIN
         // on récupère l'user
         $user = $this->getUser();
         // recupere toutes les origines
@@ -43,14 +43,9 @@ class OrigineController extends AbstractController
             //*******sauvegarde de l origine
             $em->persist($origineAajoute);
             $em->flush();
-
             //******************redirection
-
             return $this->redirectToRoute('origine', [
-
             ]);
-
-
         }
         return $this->render('origine/index.html.twig', [
             "origine" => $origine, "dateToday" => $today, 'origineForm' => $origineForm->createView(), "user" => $user,

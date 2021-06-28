@@ -63,7 +63,7 @@
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Opportunités
+                                        Opportunités/Cours
                                     </a>
                                     <div class="dropdown-menu menuDeroulant" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item lienA" href="{{ path('mettre_le_cours_ligne') }}">Mettre en ligne un nouveau cours des produits</a>
@@ -109,8 +109,14 @@
         <main>
         {% block main %}{% endblock %}
         </main>
-
-        <footer class="ombreFooter fixed-bottom bg-light ">
+        <script type="text/javascript">
+            let ecran=screen.width;
+            if (ecran<800){
+                document.getElementById("footer").style="display: none;";
+                document.getElementsById("footer").style="visibility: hidden;";
+            }
+        </script>
+        <footer id="footer" class="ombreFooter fixed-bottom bg-light cacher">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -133,5 +139,12 @@
                 </div>
             </div>
         </footer>
+        <script type="text/javascript">
+            const ecran=screen.width;
+            if (ecran<800){
+                document.getElementById("footer").style="display: none;";
+                document.getElementsById("footer").style="visibility: hidden;";
+            }
+        </script>
     </body>
 </html>

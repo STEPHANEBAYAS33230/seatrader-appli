@@ -82,7 +82,7 @@
                                                                 {% for ligne in comde.object %}
                                                                     {% if ligne.quantite>0 %} {% set nbreLigne=nbreLigne+1 %} {% set nbreColis=nbreColis+ligne.quantite %}{% endif %}
                                                                 {% endfor %}
-                                                                --{{ nbreLigne }} produit(s)--{{ nbreColis }} colis--Etat:{{ comde.etatCommande }}
+                                                                --{{ nbreLigne }} produit(s)--{{ nbreColis }} colis--<br>Etat:{{ comde.etatCommande }}
                                                             </h6>
 
                                                         {% endif %}

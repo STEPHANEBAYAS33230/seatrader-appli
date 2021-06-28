@@ -17,6 +17,13 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $user = $this->getUser();
+        if ($user != null){
+            $role = $user->getRoles();
+        if ($role == ['ROLE_USER'] ) {
+            return $this->redirectToRoute('home_connected');
+        }
+        }
         //*********recuperer les mises avant/date
         $today = new \DateTime('now');
         $dtplus = new \DateTime('now');

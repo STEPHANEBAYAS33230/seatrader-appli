@@ -324,8 +324,10 @@ class CommandeController extends AbstractController
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
                 $commandeForm->handleRequest($request);
                 foreach( $produits as $prd ) {
-                    $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
-
+                    $typeProd=$request->request->get('prod'.(string)$prd->getId(),0);
+                    if (is_integer($typeProd)) {
+                        $prd->setQuantite($request->request->get('prod' . (string)$prd->getId(), 0));
+                    }
                 }
                 return $this->render('commande/index.html.twig',[ "dateToday"=>$today,"user"=>$user, "commandeForm"=>$commandeForm->createView(),
                     "familleProduit"=>$familleProduit, 'produits'=>$produits,'cde'=>$cde, 'miseEnAvant'=>$miseEnAvant,  "dateTodey"=>$todey,
@@ -396,17 +398,15 @@ class CommandeController extends AbstractController
             'commandeNonModifiable'=>$commandeNonModifiable,
         ]);
     }
-
-    //********************supprimer cde
-    /**
+     /**
      * @Route("/monAppli/commande-/{id}", name="supprimer-cde")
      */
-    public function supprimerCde($id, EntityManagerInterface $em){
+    public function supprimerCde($id, EntityManagerInterface $em){//********************supprimer une commande
+        $this->denyAccessUnlessGranted('ROLE_USER');
         //****************on recupere la cde
-        //********ajouter controle user est le bon ou admin
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
         $cde = $cdeRepo->find($id);
-        //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
+
         if ($cde==null){ //si $commande null déconnexion
             return $this->redirectToRoute('app_logout');
         }
@@ -414,13 +414,20 @@ class CommandeController extends AbstractController
         // on récupère l'user
         $user=$this->getUser();
         $role=$user->getRoles();
+        //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
         If ($personne!=$user and $role==['ROLE_USER']) {
             return $this->redirectToRoute('app_logout');
         }
+        try {
         $em->remove($cde);
         $em->flush();
-
         return $this->redirectToRoute('voir_cde');
+
+        }catch (\Doctrine\DBAL\Exception $e)
+        {
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur');
+            return $this->redirectToRoute('ajouter-famille');
+        }
     }
 
 
@@ -862,12 +869,4 @@ class CommandeController extends AbstractController
         ]);
 
     }
-
-
-
-
-
-
-
-
 }

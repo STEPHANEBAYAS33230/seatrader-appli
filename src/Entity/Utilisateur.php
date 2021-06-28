@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  * @UniqueEntity(
@@ -29,6 +30,8 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
      */
     private $nomDeLaSociete;
 
@@ -44,16 +47,21 @@ class Utilisateur implements UserInterface
      * message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un caractère spécial.")
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
      */
     private $prenom;
 
@@ -62,18 +70,23 @@ class Utilisateur implements UserInterface
      * @Assert\Email(
      *     message = "Cette email '{{ value }}'est incorrecte."
      * )
+     * @Assert\NotBlank
      */
     private $emailSociete;
 
     /**
      * @ORM\Column(type="string", length=55, nullable=true)
+     * @Assert\Email(
+     *     message = "Cette email '{{ value }}'est incorrecte."
+     * )
      */
     private $emailPerso;
 
     /**
      * @ORM\Column(type="string", length=16)
-     *@Assert\Length(min = 8, max = 20, minMessage = "min_lenght", maxMessage = "max_lenght")
+     *@Assert\Length(min = 8, max = 20, minMessage = "trop court", maxMessage = "trop long")
      *@Assert\Regex(pattern="/^(0|(\+[0-9]{2}[. -]?))[1-9]([. -]?[0-9][0-9]){4}$/", message="uniquement des chiffres")
+     * @Assert\Type("string")
      */
     private $telephone_societe;
 
@@ -81,6 +94,7 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=16, nullable=true)
      *@Assert\Length(min = 8, max = 20, minMessage = "min_lenght", maxMessage = "max_lenght")
      *@Assert\Regex(pattern="/^(0|(\+[0-9]{2}[. -]?))[1-9]([. -]?[0-9][0-9]){4}$/ ", message="uniquement des chiffres")
+     * @Assert\Type("string")
      */
     private $telephonePerso;
 
@@ -111,7 +125,7 @@ class Utilisateur implements UserInterface
         return $this->listingCommandes;
     }
 
-    //ajouter un produit
+    //ajouter une cde
     public function addCommande(Commande $listingCommandes): self
     {
         if (!$this->listingCommandes->contains($listingCommandes)) {

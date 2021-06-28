@@ -1,6 +1,6 @@
 {% extends 'baseAdmin.html.twig' %}
 
-{% block title %}PRODUITS|{{ parent() }}{% endblock %}
+{% block title %}PRODUITS|{{ parent() }}{% endblock %} {# titre de la page #}
 
  {% block stylesheets %}
      <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
@@ -21,24 +21,18 @@
         </script>
         <div class="container marge-container">
             <div class=row">
-
-                <!--*****************************-->
+                <!--**************AFFICHAGE DES FAMILLE DE PRODUITS***************-->
                 <div class="col-xl-12  colonne-famille m-6" >
-
                     <div class="row justify-content-around" >
                         <h4>Les familles</h4>
-
-                        {#  <div class="justify-content-around">#}
-                        {%  for famille in familleProduit %}
+                        {%  for famille in familleProduit %} {# ON BOUCLE familleProduit qui a été envoyé $this->render du controller #}
                             <div class="surCadre">
-                                <h6 class="nom-famille">{{ famille.nomFamille }}</h6>
+                                <h6 class="nom-famille">{{ famille.nomFamille }}</h6>{# affichage du nom de la famille #}
                             </div>
                         {% endfor %}
-                        {# </div>#}
                     </div>
-
                 </div>
-                <!--//****************************-->
+                <!--**************************************************************-->
                 <!--**************************-->
                 <div class="col-xl-12 justify-content-center titre">
                     <div>
@@ -62,27 +56,22 @@
                     </div>
                 </div>
                 <div class="col-xl-12 justify-content-center formulaireBlue mt-2">
-                    {{ form_start(produitForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                    {{ form_start(produitForm, { 'attr' : { 'class': 'caseForm' } }) }}
                     <div class="caseform">
                         {{ form_help(produitForm.nomProduit) }}{{ form_errors(produitForm.nomProduit) }}
                         {{ form_label(produitForm.nomProduit) }}: {{ form_widget(produitForm.nomProduit) }}
                         {{ form_label(produitForm.famille) }}: {{ form_widget(produitForm.famille) }}
                         {{ form_widget(produitForm.pieceOuKg) }}
-
                         <button class="btn-grad" type="submit">valider</button>
                         {{ form_end(produitForm) }}
                     </div>
                 </div>
             </div>
 
-            <!--//*****************************-->
+            <!-*****************************-->
             <div class="row justify-content-center">
                 {% set numColor=0 %}
                 {%  for famille in familleProduit %}
-
-
-
-
                     <div class="col-xl-8 mt-4">
 
                         <table class="table table-striped table-secondary">
