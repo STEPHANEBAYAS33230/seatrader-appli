@@ -48,9 +48,9 @@ class HomeUserConnectedController extends AbstractController
         //**********si formulaire date valider
         if ($filtreDateMiseEnAvantForm->isSubmitted() and $filtreDateMiseEnAvantForm->isValid() )
         {
-
-
-
+            $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
+            $lecours = $coursRepo->findAll();
+            $cours=$lecours[0];
             $dtplus=$filtreDateMiseEnAvant->getDatePlus();
             $dtmoins=$filtreDateMiseEnAvant->getDateMeA();
 
@@ -58,7 +58,7 @@ class HomeUserConnectedController extends AbstractController
             $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
             $today = new \DateTime('now');
             return $this->render('home_user_connected/index.html.twig', ["dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant,
-                "filtreDateMiseEnAvantForm"=>$filtreDateMiseEnAvantForm->createView(),
+                "filtreDateMiseEnAvantForm"=>$filtreDateMiseEnAvantForm->createView(),'cours'=>$cours,
             ]);
 
 
