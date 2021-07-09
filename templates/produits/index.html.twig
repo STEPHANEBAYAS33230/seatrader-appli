@@ -97,6 +97,15 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {% if famille.listingProduits|length==0 %}
+                            <tr>
+                                <th scope="row"></th>
+                                <td><h6>Aucun produit dans cette famille</h6></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {% else %}
                             {%  for prod in famille.listingProduits %}
                                 <tr>
                                     <th scope="row"></th>
@@ -150,6 +159,7 @@
                                     <!--****************************************************************************************************************************-->
                                 </tr>
                             {% endfor %}
+                            {% endif %}
                             </tbody>
 
                         </table>

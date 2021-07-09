@@ -69,7 +69,9 @@ input:focus{
     background-color: #5eb5e0;
     border-radius: 4px;
 }
-
+.css-passageCdeCard {
+    max-width: 18rem;
+}
 @media (min-width: 1900px) { .cacher{visibility: hidden;}}
 .btn-grad {background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%)}
 .btn-grad {

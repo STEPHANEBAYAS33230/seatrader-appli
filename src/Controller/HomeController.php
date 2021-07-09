@@ -2,21 +2,29 @@
 
 namespace App\Controller;
 
+use App\Entity\Formulaire;
 use App\Entity\MiseEnAvant;
+use App\Form\FormulaireType;
 use DateInterval;
-use DatePeriod;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
-use function Sodium\add;
+
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(Request $request, MailerInterface $mailer): Response
     {
+        //*********creation du formulaire
+        $formulaire=new Formulaire();
+        $formulaireForm = $this->createForm(FormulaireType::class, $formulaire);
+        $formulaireForm->handleRequest($request);
         $user = $this->getUser();
         if ($user != null){
             $role = $user->getRoles();
@@ -74,6 +82,43 @@ class HomeController extends AbstractController
             }
         //***********fin de IF
         }
+        if ($formulaireForm->isSubmitted() and $formulaireForm->isValid())
+        {
+            $from=$formulaire->getEmail();
+            $message=$formulaire->getMessage();
+            //envoi mail
+            $email = (new Email())
+                ->from($from)
+                ->to('lila74500@hotmail.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('formulaire seatrader-appli')
+                ->text($message);
+                //->html('<p>See Twig integration for better HTML integration!</p>');
+
+            $mailer->send($email);
+
+            //envoi mail2
+            $email = (new Email())
+                ->from('lila74500@hotmail.fr')
+                ->to($from)
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('mail envoyé')
+                ->text('Votre message a bien été envoyé à la société Seatrader.');
+                //->html('<p>See Twig integration for better HTML integration!</p>');
+
+            $mailer->send($email);
+            return $this->redirectToRoute('home', [
+
+            ]);
+
+
+        }
 
 
 
@@ -81,7 +126,7 @@ class HomeController extends AbstractController
 
         //****************************************************************
         return $this->render('home/index.html.twig', [
-            "miseEnAvant" => $miseEnAvant, "today"=>$today,
+            "miseEnAvant" => $miseEnAvant, "today"=>$today, 'formulaireForm'=>$formulaireForm->createView(),
 
         ]);
     }
