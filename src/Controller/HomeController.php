@@ -93,7 +93,7 @@ class HomeController extends AbstractController
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
+                ->priority(Email::PRIORITY_HIGH)
                 ->subject('formulaire seatrader-appli')
                 ->text($message);
                 //->html('<p>See Twig integration for better HTML integration!</p>');
@@ -108,8 +108,8 @@ class HomeController extends AbstractController
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('mail envoyé')
-                ->text('Votre message a bien été envoyé à la société Seatrader.');
+                ->subject('Accusé de réception: message envoyé')
+                ->text('Votre message a bien été envoyé à la société Seatrader. Vous serez contacter dans les plus brefs délais.');
                 //->html('<p>See Twig integration for better HTML integration!</p>');
 
             $mailer->send($email);

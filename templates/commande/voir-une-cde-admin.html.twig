@@ -26,8 +26,7 @@
         <!--//*****************************-->
         <div class="row col-xl-12 justify-content-around mt-4 rounded">
             <table class="table table-striped table-secondary rounded">
-                {% set clr=1 %}
-                {%  for famille in familleProduit %}
+
                     <thead >
                     <tr class="bg-white mt-3">
                         <th scope="col"></th>
@@ -36,6 +35,8 @@
                         <th scope="col"></th>
                     </tr>
                     </thead>
+                {% set clr=1 %}
+                {%  for famille in familleProduit %}
                 {% set AuMoinsUnProduitQuantite=false %}
                 {%  for prod in cde.object %}
                     {% if prod.quantite>0 and famille.nomFamille==prod.famille%}{% set AuMoinsUnProduitQuantite=true %}{% endif %}
