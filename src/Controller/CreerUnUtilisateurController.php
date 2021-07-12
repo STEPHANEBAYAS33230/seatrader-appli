@@ -278,9 +278,19 @@ class CreerUnUtilisateurController extends AbstractController
 
             //sauvegarder mon utilsateur
             //try{
-
+            try
+            {
             $em->persist($utilisateur);
             $em->flush();
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
+                if ($role ==['ROLE_ADMIN']) {
+                return $this->redirectToRoute('gerer_mes_clients', [ ]);}
+                if ($role ==['ROLE_USER']) {
+                    return $this->redirectToRoute('home_connected', [ ]);}
+            }
             if ($role == ['ROLE_ADMIN']) {
                 $this->addFlash('success', 'le compte a été modifié avec succès');
                 return $this->redirectToRoute('gerer_mes_clients', [
@@ -313,9 +323,15 @@ class CreerUnUtilisateurController extends AbstractController
 
         //$user=$this->getUser();
         $id=$user->getId();
-        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $utilisateurRepo->find($id);
-
+        try {
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
         $today = strftime('%A %d %B %Y %I:%M:%S');
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //*********on recupere le compte de l'utilisateur à modifier
@@ -333,21 +349,25 @@ class CreerUnUtilisateurController extends AbstractController
 
             //sauvegarder mon utilsateur
             //try{
+            try
+            {
+                $em->persist($utilisateur);
+                $em->flush();
+                $this->addFlash('error', 'Le compte a été modifié avec succès');
+                return $this->redirectToRoute('home_connected', [
 
-            $em->persist($utilisateur);
-            $em->flush();
-            return $this->redirectToRoute('home_connected', [
-
-            ]);
-
-
-
+                ]);
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte: '.$errorMessage);
+                return $this->redirectToRoute('home_connected', [ ]);
+            }
         }
         $titrePage="Modifier mon compte administrateur";
         return $this->render('creer_un_utilisateur/index.html.twig', [
             "registerForm"=>$registerForm->createView(), 'dateToday'=>$today, 'user'=>$user, 'titrePage'=>$titrePage,
         ]);
-
     }
 
     //***********************************************************************************************

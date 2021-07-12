@@ -226,7 +226,7 @@
     <script type="text/javascript">
         setInterval( Raffraichir(), 10000);
         function Raffraichir() {
-            setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/monAppli/commande/cde";},30000);
+            setTimeout(function(){window.location.href="{{ path('voir_cde',{}) }}";},20000);
         }
     </script>
     {% endif %}

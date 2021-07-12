@@ -26,6 +26,13 @@
             <div class="col-xl-9 justify-content-center titre">
                 <div>
                     <div>
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="text-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
                         <h3>Retrouvez nos opportunités chaque jour<i class="fas fa-fish"></i></h3>
                         {{ form_start(filtreDateMiseEnAvantForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
                         sélectionnez la période choisie: {{ form_widget(filtreDateMiseEnAvantForm.dateMeA) }} entre {{ form_widget(filtreDateMiseEnAvantForm.datePlus) }}
