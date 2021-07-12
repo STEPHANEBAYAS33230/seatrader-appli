@@ -44,23 +44,19 @@ class CreerUnUtilisateurController extends AbstractController
             $participant->setPassword($hashed);
 
             //sauvegarder mon utilsateur
-            //try{
+            try{
+                $em->persist($participant);
+                $em->flush();
+                $this->addFlash('success', 'le compte a été créé avec succès.');
+                return $this->redirectToRoute('home_connected', [
+                ]);
+            }catch (\Doctrine\DBAL\Exception $e)
+            {
+                   $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Nous n\' avons pas pu créer le compte suite un problème/ '.$errorMessage);
+                   return $this->redirectToRoute('home_connected', [ ]);
+            }
 
-            $em->persist($participant);
-            $em->flush();
-            $this->addFlash('success', 'le compte a été créé avec succès.');
-            return $this->redirectToRoute('home_connected', [
-
-            ]);
-
-            //} catch (\Doctrine\DBAL\Exception $e) {
-            //    $errorMessage = $e->getMessage();
-            //   echo ($errorMessage);
-            //  $this->addFlash('error', 'Nous n\' avons pas pu créer le compte (email existant...etc)');
-            // return $this->redirectToRoute('home', [
-            //   'controller_name' => 'HomeController',
-            //  ]);
-            // }
 
         }
         return $this->render('creer_un_utilisateur/index.html.twig', [
@@ -81,8 +77,16 @@ class CreerUnUtilisateurController extends AbstractController
         $dateSept->sub(new DateInterval('P7D'));
         // on recupere tous les utilisateurs
         // récupérer la liste des utilisateurs à modifier
-        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $utilisateurRepo->findAll();
+        try {
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->findAll();
+        }catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème de connexion à la base de données/ '.$errorMessage);
+            return $this->redirectToRoute('home_connected--user', [ ]);
+        }
+
         //***********preparation du formulaire filtreSociete
         $filtreSociete = new FiltreSociete();
         $filtreSocieteForm = $this->createForm(FiltreSocieteType::class, $filtreSociete);
@@ -94,11 +98,15 @@ class CreerUnUtilisateurController extends AbstractController
             $utilisateurRepo=null;
 
                 $nomfiltre=$filtreSociete->getNom();
-                $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-                $utilisateur = $utilisateurRepo->filtrerSociete($filtreSociete);
-
-
-
+                try {
+                    $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+                    $utilisateur = $utilisateurRepo->filtrerSociete($filtreSociete);
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème de connexion à la base de données/erreur: '.$errorMessage);
+                    return $this->redirectToRoute('home_connected--user', [ ]);
+                }
         }
 
         return $this->render('gerer_mes_clients/index.html.twig', [
@@ -116,8 +124,15 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function activerInactiverUtilisateur($id, EntityManagerInterface $em,Request $request){
         //****************
-        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $utilisateurRepo->find($id);
+        try {
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème de connection à la base de données: '.$errorMessage);
+            return $this->redirectToRoute('gerer_mes_clients', [ ]);
+        }
         $etat=$utilisateur->getEtatUtilisateur();
         //********************SI ACTIF -> INACTIF ET AUSSI LE CONTRAIRE
         if ($etat=="ACTIF") {
@@ -125,9 +140,15 @@ class CreerUnUtilisateurController extends AbstractController
         } else {
             $utilisateur->setEtatUtilisateur("ACTIF");
         }
-        $em->persist($utilisateur);
-        $em->flush();
-
+        try {
+            $em->persist($utilisateur);
+            $em->flush();
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Nous n\'avons pas réussi à inactiver/activer: '.$errorMessage);
+            return $this->redirectToRoute('gerer_mes_clients', [ ]);
+        }
         return $this->redirectToRoute('gerer_mes_clients');
 
 
@@ -142,11 +163,17 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function supprimerUtilisateur($id, EntityManagerInterface $em,Request $request){
         //****************
-        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $utilisateurRepo->find($id);
-        $em->remove($utilisateur);
-        $em->flush();
-
+        try {
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->find($id);
+            $em->remove($utilisateur);
+            $em->flush();
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Suppression impossible/erreur: '.$errorMessage);
+            return $this->redirectToRoute('gerer_mes_clients', [ ]);
+        }
         return $this->redirectToRoute('gerer_mes_clients');
 
     }
@@ -164,9 +191,15 @@ class CreerUnUtilisateurController extends AbstractController
         //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //*********on recupere le compte de l'utilisateur à modifier
         //****************
-        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $utilisateurRepo->find($id);
-
+        try {
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            return $this->redirectToRoute('gerer_mes_clients', [ ]);
+        }
 
         $registerForm = $this->createForm(ModifUtilisateurType::class, $utilisateur);
         $registerForm->handleRequest($request);
@@ -179,14 +212,20 @@ class CreerUnUtilisateurController extends AbstractController
             $utilisateur->setPassword($hashed);
 
             //sauvegarder mon utilsateur
-            //try{
+            try{
+                $em->persist($utilisateur);
+                $em->flush();
+                $this->addFlash('success', 'le compte a été modifié avec succès');
+                return $this->redirectToRoute('gerer_mes_clients', [
 
-            $em->persist($utilisateur);
-            $em->flush();
-            $this->addFlash('success', 'le compte a été modifié avec succès');
-            return $this->redirectToRoute('gerer_mes_clients', [
+                ]);
+            }   catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
+                return $this->redirectToRoute('gerer_mes_clients', [ ]);
+            }
 
-            ]);
 
 
 
@@ -201,7 +240,7 @@ class CreerUnUtilisateurController extends AbstractController
     /**
      * @Route("/monAppli/compte", name="modifier_monprofilUser")
      */
-    public function modifierUtilisateurUser(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function  modifierUtilisateurUser(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $titrePage="Modifier mon Compte";
         // on récupère l'user
@@ -209,12 +248,23 @@ class CreerUnUtilisateurController extends AbstractController
         $id=$user->getId();
         $role=$user->getRoles();
         $today = strftime('%A %d %B %Y %I:%M:%S');
-        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //*********on recupere le compte de l'utilisateur à modifier
         //****************
-        $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $utilisateurRepo->find($id);
-
+        try {
+            $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateur = $utilisateurRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
+            if ($role == ['ROLE_ADMIN']) {
+                $this->denyAccessUnlessGranted('ROLE_ADMIN');
+                $this->addFlash('success', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
+                return $this->redirectToRoute('gerer_mes_clients', [
+                ]);
+            }
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
 
         $registerForm = $this->createForm(ModifUserUtilisateurType::class, $utilisateur);
         $registerForm->handleRequest($request);
