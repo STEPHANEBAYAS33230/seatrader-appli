@@ -11,6 +11,7 @@
 
 {% block main %}
     {% if is_granted('ROLE_ADMIN') %}
+
     <div class="container marge-container">
         <div class=row">
 
@@ -18,7 +19,7 @@
             <!--**************************-->
             <div class="col-12 justify-content-center titre">
                 <div>
-                    <h2 class="">{{ titrePage }}</h2>
+                    <h2 class="">{{ titrePage }} </h2><h6>(* obligation de saisies)</h6>
                 </div>
             </div>
         </div>
@@ -27,18 +28,18 @@
         <!--**************************-->
         <div class="row fondContainer form-group text-light mt-3">
                     <div class="col-xl-3 justify-content-start mt-5">
-                        <div>
+                        <div class="lobelo">
                             {{ form_start(registerForm, { 'attr' : { 'style': '', 'class': '' } }) }}
                             {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
                             <p>{{ form_label(registerForm.nomDeLaSociete) }}</p>
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-4 lobelo">
                             <p>{{ form_label(registerForm.nom) }}</p>
                         </div>
-                        <div class="mt-5">
+                        <div class="mt-5 lobelo">
                            <p>{{ form_label(registerForm.prenom) }}</p>
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-4 lobelo">
                             {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
                            <p>{{ form_label(registerForm.emailSociete) }}</p>
                         </div>
@@ -51,19 +52,19 @@
 
                     </div>
                     <div class="col-xl-3 justify-content-end mt-5">
-                        <div>
+                        <div class="lobelo">
                             {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
                             <p>{{ form_label(registerForm.emailPerso) }}</p>
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-4 lobelo">
                             {{ form_help(registerForm.telephone_societe) }}{{ form_errors(registerForm.telephone_societe) }}
                              <p>{{ form_label(registerForm.telephone_societe) }}</p>
                         </div>
-                        <div class="mt-5">
+                        <div class="mt-5 lobelo">
                             {{ form_help(registerForm.telephonePerso) }}{{ form_errors(registerForm.telephonePerso) }}
                              <p>{{ form_label(registerForm.telephonePerso) }}</p>
                         </div>
-                        <div>
+                        <div class="lobelo">
                             {{ form_help(registerForm.password) }}{{ form_errors(registerForm.password) }}
                             <p></p>
                         </div>

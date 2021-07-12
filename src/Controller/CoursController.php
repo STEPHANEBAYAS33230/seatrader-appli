@@ -40,9 +40,17 @@ class CoursController extends AbstractController
         //recup date du jour
         $today = strftime('%A %d %B %Y %I:%M:%S');
         //****************on recupere le nom de la filename du cours du user
-        $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
-        $lecours = $coursRepo->trouver($user); //avec la methode trouver(...) du repository CoursRepository.php
-        // si il n'y a pas eu encore de cours enregisté (c a dire que c'est la premiere fois)
+        try {
+            $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
+            $lecours = $coursRepo->trouver($user); //avec la methode trouver(...) du repository CoursRepository.php
+            // si il n'y a pas eu encore de cours enregisté (c a dire que c'est la premiere fois)
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème de connexion à la base de données/'.$errorMessage);
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
+
         if ($lecours == null) { //si null on cree un nouveau cours
             $cours = new Cours();
             $cours->setUtilisateur($user);
@@ -81,17 +89,26 @@ class CoursController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // si une exception se produit pendant le telechargement/ ajout d'une message flash avant redirection
-                    $this->addFlash('error', "Une erreur s'est produite pendant le téléchargement.");
+                    $this->addFlash('error', "Une erreur s'est produite pendant le téléchargement: ".$e);
                     return $this->redirectToRoute('mettre_le_cours_ligne'); //redirection vers un controller
                 }
                 // *** ecriture du nom du cours de produits
                 $cours->setBrochureFilename($newFilename);
             }
             // ... on sauvegarde ds la bdd et on redirige vers pas accueil connecté
-            $em->persist($cours);
-            $em->flush();
-            return $this->redirectToRoute('home_connected'); //redirection vers un controller
-            // redirectToRoute est forme reduite de return new RedirectResponse($this->generateUrl('home_connected'));
+            try {
+                $em->persist($cours);
+                $em->flush();
+                $this->addFlash('success', 'le cours des produits est en ligne.');
+                return $this->redirectToRoute('home_connected'); //redirection vers un controller
+                // redirectToRoute est forme reduite de return new RedirectResponse($this->generateUrl('home_connected'));
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\' avons pas pu mettre en ligne le cours des produits/ '.$errorMessage);
+                return $this->redirectToRoute('home_connected', [ ]);
+            }
+
         }
         //***direction vers le template twig/ je fourni à mon template la date du jour/le formulaire/mon utilisateur
         return $this->render('cours/index.html.twig', [
