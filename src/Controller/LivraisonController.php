@@ -23,13 +23,33 @@ class LivraisonController extends AbstractController
         $user=$this->getUser();
         $today = new \DateTime('now');
         // *****
-        $calendrierLivRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
-        $oldCalendrierLiv=$calendrierLivRepo->filtreOldDate($today);
+        try {
+            $calendrierLivRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
+            $oldCalendrierLiv = $calendrierLivRepo->filtreOldDate($today);
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            return $this->redirectToRoute('livraison');
+        }
         foreach ($oldCalendrierLiv as $cal){
-        $em->remove($cal);}
+            try {
+        $em->remove($cal);
         $em->flush();
+            }
+            catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème maintenance calendrier-livraisons : ' . $errorMessage);
+                return $this->redirectToRoute('livraison');
+            }
+        }
         // recupere toutes les date de calendrierL
+        try {
         $calendrierLiv = $calendrierLivRepo->findAll();
+        } catch (\Doctrine\DBAL\Exception $e) {
+        $errorMessage = $e->getMessage();
+        $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+        return $this->redirectToRoute('livraison');
+        }
         $dateArray=[];
         $jourArray=[];
 
@@ -66,8 +86,14 @@ class LivraisonController extends AbstractController
         $newCalendrierLiv->setDateLivraison(date_create_from_format("d-m-Y",$dtt));
         $newCalendrierLiv->setOuverteBloque("Bloquée");
         //********************
-        $em->persist($newCalendrierLiv);
-        $em->flush();
+        try {
+            $em->persist($newCalendrierLiv);
+            $em->flush();
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Nous avons pas pu sauvegarder la date: ' . $errorMessage);
+            return $this->redirectToRoute('livraison');
+        }
         return $this->redirectToRoute('livraison');
     }
 
@@ -79,10 +105,16 @@ class LivraisonController extends AbstractController
      */
     public function debloquerdate($id, EntityManagerInterface $em){
         // recupere la date
-        $calendrierRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
-        $newCalendrierLiv = $calendrierRepo->find($id);
-        $em->remove($newCalendrierLiv);
-        $em->flush();
+        try {
+            $calendrierRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
+            $newCalendrierLiv = $calendrierRepo->find($id);
+            $em->remove($newCalendrierLiv);
+            $em->flush();
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème: Base de données/enregistrement date débloquée ' . $errorMessage);
+            return $this->redirectToRoute('livraison');
+        }
         return $this->redirectToRoute('livraison');
     }
 
@@ -98,8 +130,14 @@ class LivraisonController extends AbstractController
         $newCalendrierLiv->setDateLivraison(date_create_from_format("d-m-Y",$dtt));
         $newCalendrierLiv->setOuverteBloque("Ouverte");
         //********************
-        $em->persist($newCalendrierLiv);
-        $em->flush();
+        try {
+            $em->persist($newCalendrierLiv);
+            $em->flush();
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Imposible de bloquer cette date: ' . $errorMessage);
+            return $this->redirectToRoute('livraison');
+        }
         return $this->redirectToRoute('livraison');
     }
 }

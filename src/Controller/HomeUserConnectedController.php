@@ -35,8 +35,14 @@ class HomeUserConnectedController extends AbstractController
         $user=$this->getUser();
         //**************ON RECUPERE LE PDF
         //****************on recupere le produit
-        $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
-        $lecours = $coursRepo->findAll();
+        try {
+            $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
+            $lecours = $coursRepo->findAll();
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            return $this->redirectToRoute('app_logout');
+        }
         $cours=$lecours[0];
         //******creation du formulaire filtreMiseEnAvant
         //*********creation du formulaire
@@ -48,14 +54,25 @@ class HomeUserConnectedController extends AbstractController
         //**********si formulaire date valider
         if ($filtreDateMiseEnAvantForm->isSubmitted() and $filtreDateMiseEnAvantForm->isValid() )
         {
-            $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
-            $lecours = $coursRepo->findAll();
+            try {
+                $coursRepo = $this->getDoctrine()->getRepository(Cours::class);
+                $lecours = $coursRepo->findAll();
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                return $this->redirectToRoute('app_logout');
+            }
             $cours=$lecours[0];
             $dtplus=$filtreDateMiseEnAvant->getDatePlus();
             $dtmoins=$filtreDateMiseEnAvant->getDateMeA();
-
-            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-            $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            try {
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                return $this->redirectToRoute('app_logout');
+            }
             $today = new \DateTime('now');
             return $this->render('home_user_connected/index.html.twig', ["dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant,
                 "filtreDateMiseEnAvantForm"=>$filtreDateMiseEnAvantForm->createView(),'cours'=>$cours,
@@ -74,8 +91,14 @@ class HomeUserConnectedController extends AbstractController
             $dtplus->add(new DateInterval('P1D'));
 
             // récupère repository
-            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-            $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            try {
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                return $this->redirectToRoute('app_logout');
+            }
             if (!empty($miseEnAvant)){
                 break;
             }
@@ -98,8 +121,14 @@ class HomeUserConnectedController extends AbstractController
                 $dtplus->sub(new DateInterval('P1D'));
 
                 // récupère repository
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                } catch (\Doctrine\DBAL\Exception $e) {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                    return $this->redirectToRoute('app_logout');
+                }
                 if (!empty($miseEnAvant)){
                     break;
                 }

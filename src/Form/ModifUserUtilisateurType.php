@@ -13,14 +13,14 @@ class ModifUserUtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomDeLaSociete',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'nom Société', 'readonly'=>true,]])
+            ->add('nomDeLaSociete',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'nom Société*', 'readonly'=>true,]])
             //->add('roles')
             //->add('password')
-            ->add('nom',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'nom',]])
-            ->add('prenom',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'prenom',]])
-            ->add('emailSociete',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'email Société', 'readonly'=>true,]])
+            ->add('nom',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'nom*',]])
+            ->add('prenom',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'prenom*',]])
+            ->add('emailSociete',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'email Société*', 'readonly'=>true,]])
             ->add('emailPerso',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'email personnel',]])
-            ->add('telephone_societe',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'tel Société', 'readonly'=>true,]])
+            ->add('telephone_societe',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'tel Société*', 'readonly'=>true,]])
             ->add('telephonePerso',TextType::class,['attr'=>['class'=>'form-control text-primary', 'style'=> 'background-color: #fffcc8; border-radius: 15px;', 'placeholder'=>'tel personnel',]])
             //->add('etatUtilisateur')
         ;

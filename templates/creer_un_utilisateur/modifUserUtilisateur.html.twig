@@ -18,7 +18,7 @@
             <!--**************************-->
             <div class="col-12 justify-content-center titre">
                 <div>
-                    <h4 class="">{{ titrePage }}</h4><h6>(nom de la societe, email et mot de passe et nom de la société uniquement modifiable par l'administrateur du site)</h6>
+                    <h4 class="">{{ titrePage }}</h4><h6>(nom de la societe, email et mot de passe et nom de la société uniquement modifiable par l'administrateur du site) *requis</h6>
                 </div>
             </div>
         </div>
@@ -27,23 +27,23 @@
         <!--**************************-->
         <div class="row fondContainer form-group text-light mt-3">
             <div class="col-xl-3 justify-content-start mt-5">
-                <div>
+                <div class="lobelo">
                     {{ form_start(registerForm, { 'attr' : { 'style': '', 'class': '' } }) }}
-                    {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
                     <p>{{ form_label(registerForm.nomDeLaSociete) }}</p>
                 </div>
-                <div class="mt-4">
+                <div class="mt-4 lobelo">
                     <p>{{ form_label(registerForm.nom) }}</p>
                 </div>
-                <div class="mt-5">
+                <div class="mt-5 lobelo">
                     <p>{{ form_label(registerForm.prenom) }}</p>
                 </div>
-                <div class="mt-4">
-                    {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
+                <div class="mt-4 lobelo">
                     <p>{{ form_label(registerForm.emailSociete) }}</p>
                 </div>
             </div>
             <div class="col-xl-3 justify-content-end mt-5">
+                {{ form_help(registerForm.nomDeLaSociete) }}{{ form_errors(registerForm.nomDeLaSociete) }}
+                {{ form_help(registerForm.emailSociete) }}{{ form_errors(registerForm.emailSociete) }}
                 <div><p>{{ form_widget(registerForm.nomDeLaSociete,{'readonly': 'true'}) }}</p></div>
                 <div><p>{{ form_widget(registerForm.nom) }}</p></div>
                 <div><p>{{ form_widget(registerForm.prenom) }}</p></div>
@@ -51,15 +51,13 @@
 
             </div>
             <div class="col-xl-3 justify-content-end mt-5">
-                <div>
-                    {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
+                <div class="lobelo">
                     <p>{{ form_label(registerForm.emailPerso) }}</p>
                 </div>
-                <div class="mt-4">
-                    {{ form_help(registerForm.telephone_societe) }}{{ form_errors(registerForm.telephone_societe) }}
+                <div class="mt-4 lobelo">
                     <p>{{ form_label(registerForm.telephone_societe) }}</p>
                 </div>
-                <div class="mt-5">
+                <div class="mt-5 lobelo">
                     {{ form_help(registerForm.telephonePerso) }}{{ form_errors(registerForm.telephonePerso) }}
                     <p>{{ form_label(registerForm.telephonePerso) }}</p>
                 </div>
@@ -69,6 +67,8 @@
                 </div>
             </div>
             <div class="col-xl-3 justify-content-end mt-5">
+                {{ form_help(registerForm.emailPerso) }}{{ form_errors(registerForm.emailPerso) }}
+                {{ form_help(registerForm.telephone_societe) }}{{ form_errors(registerForm.telephone_societe) }}
                 <div><p>{{ form_widget(registerForm.emailPerso, { 'required': false }) }}</p></div>
                 <div><p>{{ form_widget(registerForm.telephone_societe) }}</p></div>
                 <div><p>{{ form_widget(registerForm.telephonePerso, { 'required': false }) }}</p></div>

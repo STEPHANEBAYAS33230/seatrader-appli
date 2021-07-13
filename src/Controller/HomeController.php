@@ -49,8 +49,14 @@ class HomeController extends AbstractController
             $dtplus->add(new DateInterval('P1D'));
 
             // récupère repository
-            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-            $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            try {
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                return $this->redirectToRoute('home');
+            }
             if (!empty($miseEnAvant)){
                 break;
             }
@@ -73,8 +79,14 @@ class HomeController extends AbstractController
                 $dtplus->sub(new DateInterval('P1D'));
 
                 // récupère repository
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                } catch (\Doctrine\DBAL\Exception $e) {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                    return $this->redirectToRoute('home');
+                }
                 if (!empty($miseEnAvant)){
                     break;
                 }

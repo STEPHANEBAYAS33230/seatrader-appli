@@ -28,10 +28,18 @@ class CommandeController extends AbstractController
     {
 
         // recupere toutes les familles/produits
-        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-        $familleProduit = $familleProduitRepo->findAll();
-        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $produits = $produitRepo->findAll();
+        try {
+            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $familleProduit = $familleProduitRepo->findAll();
+            $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+            $produits = $produitRepo->findAll();
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
+
 
         //***********mettre les quantité à zero pour les produits
         foreach( $produits as $prd ) {
@@ -66,8 +74,16 @@ class CommandeController extends AbstractController
         $todey->add(new DateInterval('P1D'));
         $todayTrente = new \DateTime('now');
         $todayTrente->add(new DateInterval('P30D'));
-        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-        $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+        try{
+            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+            $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
+
         //******************************************
         $commandeForm = $this->createForm(CommandeType::class, $commande);
         $commandeForm->handleRequest($request);
@@ -97,8 +113,16 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try{
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                }catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
+
                 //******************************************
                 $this->addFlash('error', "commande en cours (note à changer juste avant l'envoi de la commande (impératif))");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -115,17 +139,32 @@ class CommandeController extends AbstractController
             //*********si jour livraison egale à dim ou lundi pas de cde possible
             //******************************
             //** MANQUE VOIR SI DATE OUVERTE(pour dim/et lun) ou bloqué(pour mar/mer/jeu/ven/sam) PAR ADMIN
-            $calendrierLivRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
-            $blocCalendrierLiv=$calendrierLivRepo->filtreDateBloc($dtt2);
-            $openCalendrierLiv=$calendrierLivRepo->filtreDateOpen($dtt2);
+            try {
+                $calendrierLivRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
+                $blocCalendrierLiv=$calendrierLivRepo->filtreDateBloc($dtt2);
+                $openCalendrierLiv=$calendrierLivRepo->filtreDateOpen($dtt2);
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                return $this->redirectToRoute('home_connected', [ ]);
+            }
+
             //******************************
             if (($jourSem=="dim" or $jourSem=="lun" or sizeof($blocCalendrierLiv)>0) and sizeof($openCalendrierLiv)<1) {
                 //************toutes les miseENavant apres la date du jour
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
                 //******************************************
                 $this->addFlash('error', "La livraison n'est pas ouverte pour ce jour là.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -188,8 +227,16 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try{
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                }catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
+
                 //******************************************
                 $this->addFlash('error', "Date de livraison >à 1mois.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -209,8 +256,16 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try{
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
+
                 //******************************************
                 $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -230,8 +285,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
                 //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -250,8 +312,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
                 //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -270,8 +339,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try{
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
                 //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -289,18 +365,30 @@ class CommandeController extends AbstractController
 
 
             // recupere toutes les produits
-            $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-            $produits = $produitRepo->findAll();
-
+            try {
+                $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+                $produits = $produitRepo->findAll();
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                return $this->redirectToRoute('home_connected', [ ]);
+            }
             foreach( $produits as $prd ) {//recupere les valeurs des input en formulaire pour les produits
                 $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
                 //voir si tout produit quantite egal à 0 pour ne pas enregistrer
                 //$commande->add($prd);
                 //$prd->addcommande($commande);
                 // recupere l etat envoyee
-                $etatRepo = $this->getDoctrine()->getRepository(EtatCommande::class);
-                $etat = $etatRepo->find(2);
-
+                try {
+                    $etatRepo = $this->getDoctrine()->getRepository(EtatCommande::class);
+                    $etat = $etatRepo->find(2);
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
                 $commande->setEtatCommande($etat);
                 $commande->setObject($produits);
                 //$em->persist($prd); pâs d'enregistrement de la quantite ds l'entity produit (doit toujours etre egal à zero)
@@ -316,8 +404,17 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
+                //****************************************
+
                 //******************************************
                 $this->addFlash('error', "La commande est vide.");
                 $commande->setNote("message à remplir juste avant envoi (impératif)");//*******ligne ajout
@@ -342,22 +439,29 @@ class CommandeController extends AbstractController
 
                 //**************************
                 //***on enregistre la cde
-                $em->persist($commande);
-                $em->flush();
-            //**************mettre à jour listingCommande ds Utilisateur************************************************
-                // récupérer l utilisateur à modifier $personne (celui qui a qui la cde appartient) $cde passé
-                $personne=$commande->getUtilisateur();
-                $utiliRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-                $utili = $utiliRepo->find($personne);
-                $utili->addCommande($commande);
-                $em->persist($utili);
-                $em->flush();
-                //******************************************************************************************************
+                try {
+                    $em->persist($commande);
+                    $em->flush();
+                    //**************mettre à jour listingCommande ds Utilisateur************************************************
+                    // récupérer l utilisateur à modifier $personne (celui qui a qui la cde appartient) $cde passé
+                    $personne=$commande->getUtilisateur();
+                    $utiliRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+                    $utili = $utiliRepo->find($personne);
+                    $utili->addCommande($commande);
+                    $em->persist($utili);
+                    $em->flush();
+                    //******************************************************************************************************
 
-                //***********redirection vers voir mes commandes
-                $this->addFlash('success', "Commande enregistrée et envoyée");
+                    //***********redirection vers voir mes commandes
+                    $this->addFlash('success', "Commande enregistrée et envoyée");
 
-                return $this->redirectToRoute('voir_cde');
+                    return $this->redirectToRoute('voir_cde');
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde: '.$errorMessage);
+                    return $this->redirectToRoute('home_connected', [ ]);
+                }
 
             } else {
                 $this->addFlash('error', "Un problème a été détecté. La commande n'a pas été enregistré.");
@@ -383,14 +487,21 @@ class CommandeController extends AbstractController
         //DATE DU  JOUR
         $today = new \DateTime('now');
         $commandeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        //filter cde avec date livraison apres date du jour -l'utilisateur a encore du temps (au moins 24h) sur FOND VERT
-        $commandeApresJour = $commandeRepo->filtrerLesCdes($user);
-        //FILTRER VIEILLE CDE  recuperer les cdee avant la date du jour et -30jours D'ANCIENNETE FOND GRIS
-        $commandeAvantJour= $commandeRepo->filtrerLesAnciennesCdes($user);
-        // FILTRER recupere les commandes +1j ou apres date du jour modifiable encore jusqu a 11h du matin en  FOND ORANGE
-        $commandeEncoreModifiable=$commandeRepo->filtrerLesCdesEgalToday($user);
-        // recupere les commandes +1j apres date du jour non modifiable car heure>11 afficher en FOND GRIS
-        $commandeNonModifiable=$commandeRepo->filtrerLesCdesNonEgalToday($user);
+        try {
+            //filter cde avec date livraison apres date du jour -l'utilisateur a encore du temps (au moins 24h) sur FOND VERT
+            $commandeApresJour = $commandeRepo->filtrerLesCdes($user);
+            //FILTRER VIEILLE CDE  recuperer les cdee avant la date du jour et -30jours D'ANCIENNETE FOND GRIS
+            $commandeAvantJour = $commandeRepo->filtrerLesAnciennesCdes($user);
+            // FILTRER recupere les commandes +1j ou apres date du jour modifiable encore jusqu a 11h du matin en  FOND ORANGE
+            $commandeEncoreModifiable = $commandeRepo->filtrerLesCdesEgalToday($user);
+            // recupere les commandes +1j apres date du jour non modifiable car heure>11 afficher en FOND GRIS
+            $commandeNonModifiable = $commandeRepo->filtrerLesCdesNonEgalToday($user);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
         //***************************
         return $this->render('commande/voir_cde.html.twig', [ "dateToday"=>$today,"user"=>$user,
             "commandeApresJour"=>$commandeApresJour,  "commandeAvantJour"=>$commandeAvantJour,
@@ -404,8 +515,15 @@ class CommandeController extends AbstractController
     public function supprimerCde($id, EntityManagerInterface $em){//********************supprimer une commande
         $this->denyAccessUnlessGranted('ROLE_USER');
         //****************on recupere la cde
+        try {
         $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
         $cde = $cdeRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            return $this->redirectToRoute('home_connected', [ ]);
+        }
 
         if ($cde==null){ //si $commande null déconnexion
             return $this->redirectToRoute('app_logout');
@@ -422,11 +540,11 @@ class CommandeController extends AbstractController
         $em->remove($cde);
         $em->flush();
         return $this->redirectToRoute('voir_cde');
-
-        }catch (\Doctrine\DBAL\Exception $e)
+        } catch (\Doctrine\DBAL\Exception $e)
         {
-            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur');
-            return $this->redirectToRoute('ajouter-famille');
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur'.$errorMessage);
+            return $this->redirectToRoute('home_connected');
         }
     }
 
@@ -441,8 +559,15 @@ class CommandeController extends AbstractController
         $role=$user->getRoles();
         $today = new \DateTime('now');
         //****************on recupere la cde
-        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        $commande = $cdeRepo->find($id);
+        try {
+            $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+            $commande = $cdeRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
         if ($commande==null){ //si $commande null déconnexion
             return $this->redirectToRoute('app_logout');
@@ -454,8 +579,15 @@ class CommandeController extends AbstractController
         }
         //*************************************************************************************
         // recupere toutes les familles
+        try {
         $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $familleProduit = $familleProduitRepo->findAll();
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         //***CDE
         $cde=new Commande();
 
@@ -469,8 +601,15 @@ class CommandeController extends AbstractController
         $todey=$commande->getJourDeLivraison();
         $todayTrente = new \DateTime('now');
         $todayTrente->add(new DateInterval('P30D'));
-        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-        $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+        try {
+            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+            $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         //******************************************
         //***********************************soumission du formulaire
         if ($commandeForm->isSubmitted() and $commandeForm->isValid()) {
@@ -501,8 +640,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "commande en cours (note à changer juste avant l'envoi de la commande (impératif))");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -530,8 +676,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "La livraison n'est pas ouverte pour ce jour là.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -582,8 +735,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "Erreur Date de livraison.");
 
@@ -605,8 +765,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "Date de livraison >à 1mois.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -627,8 +794,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
+                try {
                 $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
                 $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "heure dépassée pour livraison le lendemain (avant 11h)");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -648,8 +822,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -668,8 +849,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -688,8 +876,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "Problème de date de livraison.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -707,8 +902,15 @@ class CommandeController extends AbstractController
 
 
             // recupere toutes les produits
+            try {
             $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $produitRepo->findAll();
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                return $this->redirectToRoute('home_connected');
+            }
 
             foreach( $produits as $prd ) {//recupere les valeurs des input en formulaire pour les produits
                 $prd->setQuantite($request->request->get('prod'.(string)$prd->getId(),0));
@@ -734,8 +936,15 @@ class CommandeController extends AbstractController
                 $todey=$commande->getJourDeLivraison();//ligneajoutee
                 $todayTrente = new \DateTime('now');
                 $todayTrente->add(new DateInterval('P30D'));
-                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                try {
+                    $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                    $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
                 //******************************************
                 $this->addFlash('error', "La commande est vide.");
                 $commandeForm = $this->createForm(CommandeType::class, $commande);
@@ -758,8 +967,15 @@ class CommandeController extends AbstractController
 
                 //**************************
                 //***on enregistre la cde
-                $em->persist($commande);
-                $em->flush();
+                try {
+                    $em->persist($commande);
+                    $em->flush();
+                } catch (\Doctrine\DBAL\Exception $e)
+                {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde:'.$errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
 
 
                 //***********redirection vers voir mes commandes
@@ -793,24 +1009,27 @@ class CommandeController extends AbstractController
     {    // on récupère l'user/ date today
         $user=$this->getUser();
         $today = new \DateTime('now');
-        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        if ($statut=="commandesEnvoyee") {
-            $etat=2;
-            $cde = $cdeRepo->filtreCdeStatut($etat);
+        try {
+            $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+            if ($statut == "commandesEnvoyee") {
+                $etat = 2;
+                $cde = $cdeRepo->filtreCdeStatut($etat);
+            } elseif ($statut == "commandesReceptionnee") {
+                $etat = 3;
+                $cde = $cdeRepo->filtreCdeStatut($etat);
+            } elseif ($statut == "commandesTraitee") {
+                $etat = 4;
+                $cde = $cdeRepo->filtreCdeStatut($etat);
+            } elseif ($statut == "commandesArchivee") {
+                $etat = 1;
+                $cde = $cdeRepo->filtreCdeStatut($etat);
+            }
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            return $this->redirectToRoute('home_connected');
         }
-        elseif  ($statut=="commandesReceptionnee") {
-            $etat=3;
-            $cde = $cdeRepo->filtreCdeStatut($etat);
-        }
-        elseif ($statut=="commandesTraitee") {
-            $etat=4;
-            $cde = $cdeRepo->filtreCdeStatut($etat);
-        }
-        elseif ($statut=="commandesArchivee") {
-            $etat=1;
-            $cde = $cdeRepo->filtreCdeStatut($etat);
-        }
-
         //***********************************
         return $this->render('commande/voir-cde-admin.html.twig',[ "dateToday"=>$today,"user"=>$user,
             'cde'=>$cde, 'statut'=>$statut,
@@ -827,23 +1046,37 @@ class CommandeController extends AbstractController
     public function voirUneCdeAdmin($id, EntityManagerInterface $em, Request $request): Response
     {
         // recupere toutes les familles/produits
-        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-        $familleProduit = $familleProduitRepo->findAll();
-        // recupere toutes l etat 3 (
-        $etatCdeRepo = $this->getDoctrine()->getRepository(EtatCommande::class);
-        $etat = $etatCdeRepo->find(3);
-        //****************on recupere la cde
-        //********ajouter controle user est le bon ou admin à faire
-        $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
-        $cde = $cdeRepo->find($id);
+        try {
+            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $familleProduit = $familleProduitRepo->findAll();
+            // recupere toutes l etat 3 (
+            $etatCdeRepo = $this->getDoctrine()->getRepository(EtatCommande::class);
+            $etat = $etatCdeRepo->find(3);
+            //****************on recupere la cde
+            //********ajouter controle user est le bon ou admin à faire
+            $cdeRepo = $this->getDoctrine()->getRepository(Commande::class);
+            $cde = $cdeRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         //********on change le statut de la cde
         $etatCde=$cde->getEtatCommande();
         if ($etatCde=="envoyée")
         {
         $cde->setEtatCommande($etat);
             //***on enregistre la cde
-            $em->persist($cde);
-            $em->flush();
+            try {
+                $em->persist($cde);
+                $em->flush();
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.$errorMessage);
+                return $this->redirectToRoute('home_connected');
+            }
         }
 
         // on récupère l'user
@@ -857,8 +1090,15 @@ class CommandeController extends AbstractController
         if ($etatCmmdeForm->isSubmitted() and $etatCmmdeForm->isValid()) {
 
             //***on enregistre la cde
-            $em->persist($cde);
-            $em->flush();
+            try {
+                $em->persist($cde);
+                $em->flush();
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.$errorMessage);
+                return $this->redirectToRoute('home_connected');
+            }
             return $this->redirectToRoute('home_connected');
 
         }
