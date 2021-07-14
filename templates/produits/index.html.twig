@@ -40,7 +40,7 @@
                         {# read and display all flash messages #}
                         {% for label, messages in app.flashes %}
                             {% for message in messages %}
-                                <div class="text-danger">
+                                <div class="text-warning">
                                     {{ message }}
                                     {% if message=="Une erreur s'est produite pendant la suppression." %}<script type="text/javascript">
                                         setTimeout(function(){window.location.href="http://localhost/seatrader-appli/public/logout";},2000);

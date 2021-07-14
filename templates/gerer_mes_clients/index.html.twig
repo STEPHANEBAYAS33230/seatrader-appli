@@ -60,7 +60,7 @@
                     </thead>
                     <tbody>
                     {%  for utilisa in utilisateur %}
-                        {% if utilisa.nomDeLaSociete!="admin" %} {# and "su" in utilisa.nomDeLaSociete #}
+                        {% if utilisa.roles!=["ROLE_ADMIN", "ROLE_USER"] %} {# and "su" in utilisa.nomDeLaSociete #}
                             <tr>
                                 <th scope="row">{{ utilisa.id }}</th>
                                 <td><h5 class="">{{ utilisa.nomDeLaSociete }}</h5></td>

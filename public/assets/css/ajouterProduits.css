@@ -3,6 +3,9 @@
     display: none;
 }
 }
+body {
+    scroll-behavior: smooth;
+}
 .marge-container{
     margin-top: 145px;
     padding-bottom: 150px;

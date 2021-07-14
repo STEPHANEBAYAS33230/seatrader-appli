@@ -44,8 +44,11 @@
                         <h4 class="raison" >{{ miseEnAvantSubmit.raison.raison }}</h4>
                     </div>
                     <div class="leproduit">
+                        {% if miseEnAvantSubmit.produitMiseEnAvant.brochureFilename!=null %}
                         <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEnAvantSubmit.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
-
+                        {% else %}
+                            <img style="width: 260px; height: 144px" src="{{ asset('assets/images/slide-01.jpg') }}" alt="photo banc de poissons">
+                        {% endif %}
                     </div>
                     <p class="livraisonProduit">livraison prévue le {{ miseEnAvantSubmit.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
                     <div class="">

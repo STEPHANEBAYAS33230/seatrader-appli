@@ -23,23 +23,23 @@ class MiseEnAvantController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN'); // acess denied si personne n est pas authentifier ADMIN
         //effacer les mises en avant de +de 1 mois (maintenance)
-        $dt1=new \DateTime('now');
+        $dt1 = new \DateTime('now');
         $dt1->sub(new DateInterval('P31D'));
-        $dt2=new \DateTime('now');
+        $dt2 = new \DateTime('now');
         $dt2->sub(new DateInterval('P365D'));
         //on recupere le repository
         try {
             $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
             // filtre les mea qui sont entre -1mois et 1an
             $oldMise = $miseEnAvantRepo->filtrer($dt2, $dt1);
-        }  catch (\Doctrine\DBAL\Exception $e) {
+        } catch (\Doctrine\DBAL\Exception $e) {
             $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
             return $this->redirectToRoute('gérer_mise_en_avant');
         }
         //********************on boucle les miseEnavant à effacer/supprimer
-        foreach( $oldMise as $mea ) {
-            try{
+        foreach ($oldMise as $mea) {
+            try {
                 $em->remove($mea);
                 $em->flush();
             } catch (\Doctrine\DBAL\Exception $e) {
@@ -47,24 +47,56 @@ class MiseEnAvantController extends AbstractController
                 $this->addFlash('error', 'Erreur Maintenance Mise En Avant: ' . $errorMessage);
                 return $this->redirectToRoute('gérer_mise_en_avant');
             }
-            //**************************************************
+        }
+        //**************************************************
 
-            // on récupère l'user
-            $user=$this->getUser();
-            // les dates
+        // on récupère l'user
+        $user = $this->getUser();
+        // les dates
+        $today = new \DateTime('now');
+        $dtplus = new \DateTime('now');
+        $dtmoins = new \DateTime('now');
+        $dtmoins->sub(new DateInterval('P1D'));
+        $dtplus->add(new DateInterval('P1D'));
+        $dtplus->format('Y-m-d');
+        $dtmoins->format('Y-m-d');
+        $today->format('Y-m-d');
+        //*******************recherche des mise en avant les +proche de la date du jour à afficher
+        for ($i = 1; $i < 31; $i++) {
+            $today->add(new DateInterval('P1D'));
+            $dtmoins->add(new DateInterval('P1D'));
+            $dtplus->add(new DateInterval('P1D'));
+            // récupère repository
+            try {
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+                return $this->redirectToRoute('gérer_mise_en_avant');
+            }
+            if (!empty($miseEnAvant)) {//dès qu'une mise en avant recente est trouvé on sort de la boucle
+                break;
+            }
+
+        }
+        // si aucune trouvée apres la date du jour, recherche avant date du jour
+        //*************nouvelle recherche ds le  passé si miseEnavant vide ds le futur (1mois)-->passé à moins 30j
+        if (empty($miseEnAvant)) {
             $today = new \DateTime('now');
             $dtplus = new \DateTime('now');
-            $dtmoins= new \DateTime('now');
+            $dtmoins = new \DateTime('now');
             $dtmoins->sub(new DateInterval('P1D'));
             $dtplus->add(new DateInterval('P1D'));
             $dtplus->format('Y-m-d');
             $dtmoins->format('Y-m-d');
             $today->format('Y-m-d');
-            //*******************recherche des mise en avant les +proche de la date du jour à afficher
-            for($i=1;$i<31;$i++) {
-                $today->add(new DateInterval('P1D'));
-                $dtmoins->add(new DateInterval('P1D'));
-                $dtplus->add(new DateInterval('P1D'));
+            //****************mise ds le passé
+            for ($i = 1; $i < 31; $i++) {
+                $today->sub(new DateInterval('P1D'));
+                $dtmoins->sub(new DateInterval('P1D'));
+                $dtplus->sub(new DateInterval('P1D'));
+
                 // récupère repository
                 try {
                     $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
@@ -74,50 +106,20 @@ class MiseEnAvantController extends AbstractController
                     $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
                     return $this->redirectToRoute('gérer_mise_en_avant');
                 }
-                if (!empty($miseEnAvant)){//dès qu'une mise en avant recente est trouvé on sort de la boucle
-                    break;
-                }
 
-            }
-            // si aucune trouvée apres la date du jour, recherche avant date du jour
-            //*************nouvelle recherche ds le  passé si miseEnavant vide ds le futur (1mois)-->passé à moins 30j
-            if (empty($miseEnAvant)){
-                $today = new \DateTime('now');
-                $dtplus = new \DateTime('now');
-                $dtmoins= new \DateTime('now');
-                $dtmoins->sub(new DateInterval('P1D'));
-                $dtplus->add(new DateInterval('P1D'));
-                $dtplus->format('Y-m-d');
-                $dtmoins->format('Y-m-d');
-                $today->format('Y-m-d');
-                //****************mise ds le passé
-                for($i=1;$i<31;$i++) {
-                    $today->sub(new DateInterval('P1D'));
-                    $dtmoins->sub(new DateInterval('P1D'));
-                    $dtplus->sub(new DateInterval('P1D'));
-
-                    // récupère repository
-                    try{
-                        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                        $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
-                    } catch (\Doctrine\DBAL\Exception $e) {
-                        $errorMessage = $e->getMessage();
-                        $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
-                        return $this->redirectToRoute('gérer_mise_en_avant');
-                    }
-                }
-                if (!empty($miseEnAvant)){
+                if (!empty($miseEnAvant)) {
                     break;
                 }
             }
         }
+
         //*****************fin recherche mise en avant****************************************************
         //reinitialisation des dates
         $today = new \DateTime('now');
         $todayPlus = new \DateTime('now');
         $todayPlus->add(new DateInterval('P1D'));
         //**********creation d une nouvelle mise en avant
-        $miseEnAvantSelect= new MiseEnAvant();
+        $miseEnAvantSelect = new MiseEnAvant();
         // on hydrate la nouvelle mise en avant
         $miseEnAvantSelect->setDateCreation($today);
         $miseEnAvantSelect->setDateLivraisonMiseEnAvant($todayPlus);
@@ -125,20 +127,18 @@ class MiseEnAvantController extends AbstractController
         //*********creation du formulaire pour vue 1
         $miseEnAvantForm = $this->createForm(MiseEnAvantType::class, $miseEnAvantSelect);
         $miseEnAvantForm->handleRequest($request);
-        $soumission=false;
+        $soumission = false;
         //*********creation du deuxieme formulaire pour vue 2
         $miseEnAvantDeuxForm = $this->createForm(MiseEnAvantDeuxType::class, $miseEnAvantSelect);
         $miseEnAvantDeuxForm->handleRequest($request);
         //********************************************************************
         if (($miseEnAvantForm->isSubmitted() and $miseEnAvantForm->isValid())
-            or ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid()))
-        {
+            or ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())) {
             // changement d'etat de $soumission comme le premier formulaire validée
-            $soumission=true;
+            $soumission = true;
             //si $soumission=true la vue2 sera visible/false vue1
             //************
-            if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())
-            {// si deuxieme formulaire soumis on enregistre
+            if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid()) {// si deuxieme formulaire soumis on enregistre
                 $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
                 try {
                     $em->persist($miseEnAvantSelect);
@@ -155,7 +155,7 @@ class MiseEnAvantController extends AbstractController
             //*********date en cours
 
             $dtplus = new \DateTime('now');
-            $dtmoins= new \DateTime('now');
+            $dtmoins = new \DateTime('now');
             $dtmoins->sub(new DateInterval('P1D'));
             $dtplus->add(new DateInterval('P1D'));
             $dtplus->format('Y-m-d');
@@ -166,17 +166,18 @@ class MiseEnAvantController extends AbstractController
             $todayPlus->add(new DateInterval('P1D'));
             //**********************vers le template deux avec aprecu de la mise en avant
             return $this->render('mise_en_avant/voirMiseEnAvant.html.twig', [
-                'miseEnAvantDeuxForm'=>$miseEnAvantDeuxForm->createView(), "user"=>$user, "soumission"=>$soumission,
-                "dateToday"=>$today, 'miseEnAvantSubmit'=>$miseEnAvantSelect,'miseEnAvant'=>$miseEnAvant,
+                'miseEnAvantDeuxForm' => $miseEnAvantDeuxForm->createView(), "user" => $user, "soumission" => $soumission,
+                "dateToday" => $today, 'miseEnAvantSubmit' => $miseEnAvantSelect, 'miseEnAvant' => $miseEnAvant,
             ]);
         }
 
         return $this->render('mise_en_avant/creerMiseEnAvant.html.twig', [
-            "dateToday"=>$today, "user"=>$user,"miseEnAvant" => $miseEnAvant, "soumission"=>$soumission,
-            "miseEnAvantForm"=>$miseEnAvantForm->createView(),
+            "dateToday" => $today, "user" => $user, "miseEnAvant" => $miseEnAvant, "soumission" => $soumission,
+            "miseEnAvantForm" => $miseEnAvantForm->createView(),
 
         ]);
     }
+
 
     //***********gerer les mises en avant
     /**
@@ -270,9 +271,9 @@ class MiseEnAvantController extends AbstractController
         if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())
         {
             try {
-            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-            $em->persist($miseEnAvantSelect);
-            $em->flush();
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $em->persist($miseEnAvantSelect);
+                $em->flush();
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Nous avons pas pu modifier la mise en avant: ' . $errorMessage);
