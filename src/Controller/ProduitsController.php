@@ -30,13 +30,19 @@ class ProduitsController extends AbstractController
         // on récupère l'user
         $user=$this->getUser();
         // recupere toutes les familles
-        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-        $famille = $familleProduitRepo->findAll();
+        try {
+            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $famille = $familleProduitRepo->findAll();
+
         // recupere tous les produits
         $ProduitRepo = $this->getDoctrine()->getRepository(Produit::class);
         $produit = $ProduitRepo->findAll();
         $today = strftime('%A %d %B %Y %I:%M:%S');
-
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         //************formulaire
         $produitF = new Produit();
         $produitForm = $this->createForm(ProduitType::class, $produitF);
@@ -65,31 +71,30 @@ class ProduitsController extends AbstractController
 
             //sauvegarder mon produit
 
-
-            $em->persist($produitF);
-            $em->flush();
-            //on recupere la famille
-            // récupérer la famille à modifier
-            $familleChoisie=$produitF->getFamille();
-            $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-            $familly = $famillyRepo->find($familleChoisie);
-            $familly->addProduit($produitF);
-            $em->persist($familly);
-            $em->flush();
-            // recupere toutes les familles
-            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-            $famille = $familleProduitRepo->findAll();
-            $filtrefamille = new FiltreFamilleProduit();
-            $filtrefamille->setNom($familleChoisie);
-            $famille=$familleProduitRepo->filtrerFamille($filtrefamille);
-            //******************
-            $this->addFlash('success', 'produit créé');
-            /*return $this->redirectToRoute('ajouter-produits', [
-
-            ]);*/
-
-
-
+            try {
+                $em->persist($produitF);
+                $em->flush();
+                //on recupere la famille
+                // récupérer la famille à modifier
+                $familleChoisie = $produitF->getFamille();
+                $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+                $familly = $famillyRepo->find($familleChoisie);
+                $familly->addProduit($produitF);
+                $em->persist($familly);
+                $em->flush();
+                // recupere toutes les familles
+                $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+                $famille = $familleProduitRepo->findAll();
+                $filtrefamille = new FiltreFamilleProduit();
+                $filtrefamille->setNom($familleChoisie);
+                $famille = $familleProduitRepo->filtrerFamille($filtrefamille);
+                //******************
+                $this->addFlash('success', 'produit créé');
+                } catch (\Doctrine\DBAL\Exception $e) {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'enregistrement des produits: ' . $errorMessage);
+                    return $this->redirectToRoute('ajouter-produits');
+                }
         }
 
 
@@ -105,8 +110,14 @@ class ProduitsController extends AbstractController
      */
     public function supprimerProduit($id, EntityManagerInterface $em){
         //****************on recupere le produit
-        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $prod = $produitRepo->find($id);
+        try {
+            $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+            $prod = $produitRepo->find($id);
+        }  catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            return $this->redirectToRoute('ajouter-produits');
+        }
         if ($prod==null) {
             $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression.');
             return $this->redirectToRoute('ajouter-produits');
@@ -126,7 +137,8 @@ class ProduitsController extends AbstractController
             //********************
 
         } catch (\Doctrine\DBAL\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression. Nous n\' avons pas pu supprimer le produit. Il se peut que ce produit soit impliquer dans les opportunités. Il faut supprimer les opportunités avant. ');
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Erreur lors de la suppression. Nous n\' avons pas pu supprimer le produit. Il se peut que ce produit soit impliquer dans les opportunités. Il faut supprimer les opportunités avant. '.$errorMessage);
             return $this->redirectToRoute('ajouter-produits');
         }
         return $this->redirectToRoute('ajouter-produits');
@@ -138,8 +150,14 @@ class ProduitsController extends AbstractController
      */
     public function telechargerPhotoProduit($id, EntityManagerInterface $em,Request $request, SluggerInterface $slugger){
         //****************on recupere le produit
-        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $prod = $produitRepo->find($id);
+        try {
+            $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+            $prod = $produitRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\accès à la base de données: ' . $errorMessage);
+            return $this->redirectToRoute('ajouter-produits');
+        }
         //***************************
         // on récupère l'user
         $user=$this->getUser();
@@ -179,18 +197,26 @@ class ProduitsController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
+                        $errorMessage = $e->getMessage();
+                        $this->addFlash('error', 'Problème détecté pendant le téléchargement: ' . $errorMessage);
+                        return $this->redirectToRoute('ajouter-produits');
                     // ... handle exception if something happens during file upload
                 }
 
-                // updates the 'brochureFilename' property to store the image file name
-                // instead of its contents
-                //$prod->setBrochureFilename($newFilename);
 
                     $prod->setBrochureFilename($newFilename);
             }
             // ... persist the $product variable or any other work
-            $em->persist($prod);
-            $em->flush();
+            try {
+                $em->persist($prod);
+                $em->flush();
+            } catch (FileException $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème détecté pendant l\'enregistrement: ' . $errorMessage);
+                return $this->redirectToRoute('ajouter-produits');
+                // ... handle exception if something happens during file upload
+            }
+
             return $this->redirectToRoute('ajouter-produits');
         }
 
@@ -206,14 +232,27 @@ class ProduitsController extends AbstractController
      */
     public function modifierProduit($id, EntityManagerInterface $em,Request $request){
         // recupere toutes les familles
-        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-        $famille = $familleProduitRepo->findAll();
+        try {
+            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $famille = $familleProduitRepo->findAll();
+        } catch (FileException $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            return $this->redirectToRoute('ajouter-produits');
+            // ... handle exception if something happens during file upload
+        }
         // recupere tous les produits
-        $ProduitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $produit = $ProduitRepo->findAll();
-        //****************on recupere le produit
-        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-        $prodf = $produitRepo->find($id);
+        try {
+            $ProduitRepo = $this->getDoctrine()->getRepository(Produit::class);
+            $produit = $ProduitRepo->findAll();
+            //****************on recupere le produit
+            $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+            $prodf = $produitRepo->find($id);
+        } catch (FileException $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+            return $this->redirectToRoute('ajouter-produits');
+        }
         // on recupere la famille actuelle
         $familleActuel=$prodf->getFamille();
         // on récupère l'user
@@ -232,23 +271,28 @@ class ProduitsController extends AbstractController
 
             //sauvegarder mon produit
 
-
-            $em->persist($prodf);
-            $em->flush();
-            // on retrouve l'ancienne famille avant modif
-            $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-            $famillie = $famillyRepo->find($familleActuel);
-            $famillie->removeProduit($prodf);
-            $em->persist($famillie);
-            $em->flush();
-            //on recupere la famille
-            // récupérer la famille à modifier
-            $familleChoisie=$prodf->getFamille();
-            $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-            $familly = $famillyRepo->find($familleChoisie);
-            $familly->addProduit($prodf);
-            $em->persist($familly);
-            $em->flush();
+            try {
+                $em->persist($prodf);
+                $em->flush();
+                // on retrouve l'ancienne famille avant modif
+                $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+                $famillie = $famillyRepo->find($familleActuel);
+                $famillie->removeProduit($prodf);
+                $em->persist($famillie);
+                $em->flush();
+                //on recupere la famille
+                // récupérer la famille à modifier
+                $familleChoisie = $prodf->getFamille();
+                $famillyRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+                $familly = $famillyRepo->find($familleChoisie);
+                $familly->addProduit($prodf);
+                $em->persist($familly);
+                $em->flush();
+            } catch (FileException $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème de sauvegarde produits...etc: ' . $errorMessage);
+                return $this->redirectToRoute('ajouter-produits');
+            }
             //******************
             $this->addFlash('success', 'produit modifié');
             return $this->redirectToRoute('ajouter-produits', [

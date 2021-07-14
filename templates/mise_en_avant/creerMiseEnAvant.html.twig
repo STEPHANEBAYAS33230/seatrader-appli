@@ -13,6 +13,13 @@
             <div class="col-xl-12 justify-content-center titre">
                 <div>
                     <h3 class="">Créer des mises en avant des opportunités<i class="fas fa-fish"></i></h3>
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

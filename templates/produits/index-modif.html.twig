@@ -32,6 +32,13 @@
             <div class="col-xl-12 justify-content-center titre">
                 <div>
                     <h2 class="">Modification du  Produit<i class="fas fa-fish"></i></h2>
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-xl-12 justify-content-center formulaireBlue mt-2">

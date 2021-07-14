@@ -28,8 +28,14 @@ class OrigineController extends AbstractController
         // on récupère l'user
         $user = $this->getUser();
         // recupere toutes les origines
-        $origineRepo = $this->getDoctrine()->getRepository(Origine::class);
-        $origine = $origineRepo->findAll();
+        try {
+            $origineRepo = $this->getDoctrine()->getRepository(Origine::class);
+            $origine = $origineRepo->findAll();
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         $today = strftime('%A %d %B %Y %I:%M:%S');
 
         //************formulaire
@@ -41,8 +47,14 @@ class OrigineController extends AbstractController
         if ($origineForm->isSubmitted() and $origineForm->isValid())
         {
             //*******sauvegarde de l origine
+            try {
             $em->persist($origineAajoute);
             $em->flush();
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Nous n\'avons pas pu ajouter cette origine: ' . $errorMessage);
+                return $this->redirectToRoute('origine');
+            }
             //******************redirection
             return $this->redirectToRoute('origine', [
             ]);
@@ -57,15 +69,22 @@ class OrigineController extends AbstractController
      */
     public function supprimerOrigin($id, EntityManagerInterface $em,Request $request){
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        try {
         $origineRepo = $this->getDoctrine()->getRepository(Origine::class);
         $origine = $origineRepo->find($id);
+        } catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+            return $this->redirectToRoute('origine');
+        }
         //********************
         try {
             $em->remove($origine);
             $em->flush();
         }catch (\Doctrine\DBAL\Exception $e)
         {
-            $this->addFlash('error', "Impossible de supprimer l'origine (utilisation en cours dans une mise en avant)");
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', "Impossible de supprimer l'origine (utilisation en cours dans une mise en avant?): ".$errorMessage);
         }
 
 
