@@ -29,13 +29,25 @@ class MiseEnAvantController extends AbstractController
         $dt2=new \DateTime('now');
         $dt2->sub(new DateInterval('P365D'));
         //on recupere le repository
-        $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-        // filtre les mea qui sont entre -1mois et 1an
-        $oldMise=$miseEnAvantRepo->filtrer($dt2, $dt1);
+        try {
+            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+            // filtre les mea qui sont entre -1mois et 1an
+            $oldMise = $miseEnAvantRepo->filtrer($dt2, $dt1);
+        }  catch (\Doctrine\DBAL\Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            return $this->redirectToRoute('home_connected');
+        }
         //********************on boucle les miseEnavant à effacer/supprimer
         foreach( $oldMise as $mea ) {
-            $em->remove($mea);}
-        $em->flush();
+            try{
+            $em->remove($mea);
+            $em->flush();
+            } catch (\Doctrine\DBAL\Exception $e) {
+        $errorMessage = $e->getMessage();
+        $this->addFlash('error', 'Erreur Maintenance Mise En Avant: ' . $errorMessage);
+        return $this->redirectToRoute('home_connected');
+        }
         //**************************************************
 
         // on récupère l'user
@@ -55,8 +67,14 @@ class MiseEnAvantController extends AbstractController
             $dtmoins->add(new DateInterval('P1D'));
             $dtplus->add(new DateInterval('P1D'));
             // récupère repository
-            $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-            $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            try {
+                $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
+                $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+            } catch (\Doctrine\DBAL\Exception $e) {
+                $errorMessage = $e->getMessage();
+                $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+                return $this->redirectToRoute('home_connected');
+            }
             if (!empty($miseEnAvant)){//dès qu'une mise en avant recente est trouvé on sort de la boucle
                 break;
             }
@@ -80,8 +98,15 @@ class MiseEnAvantController extends AbstractController
                 $dtplus->sub(new DateInterval('P1D'));
 
                 // récupère repository
+                try{
                 $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
                 $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
+                } catch (\Doctrine\DBAL\Exception $e) {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Problème d\'accès base de données: ' . $errorMessage);
+                    return $this->redirectToRoute('home_connected');
+                }
+            }
                 if (!empty($miseEnAvant)){
                     break;
                 }
@@ -116,8 +141,14 @@ class MiseEnAvantController extends AbstractController
             if ($miseEnAvantDeuxForm->isSubmitted() and $miseEnAvantDeuxForm->isValid())
             {// si deuxieme formulaire soumis on enregistre
                 $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
-                $em->persist($miseEnAvantSelect);
-                $em->flush();
+                try {
+                    $em->persist($miseEnAvantSelect);
+                    $em->flush();
+                } catch (\Doctrine\DBAL\Exception $e) {
+                    $errorMessage = $e->getMessage();
+                    $this->addFlash('error', 'Impossible de sauvegarder la mise en avant: ' . $errorMessage);
+                    return $this->redirectToRoute('creer_mise_en_avant');
+                }
                 return $this->redirectToRoute('creer_mise_en_avant', [
 
                 ]);

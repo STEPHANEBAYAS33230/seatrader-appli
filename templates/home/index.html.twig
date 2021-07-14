@@ -109,6 +109,13 @@
 
                         <div class="main-white-button scroll-to-section">
                             <a href="#reservation">Contactez-nous</a>
+                            {% for label, messages in app.flashes %}
+                                {% for message in messages %}
+                                    <div class="text-success">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

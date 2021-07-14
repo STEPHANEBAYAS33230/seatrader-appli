@@ -14,7 +14,13 @@
                 <div>
                     <h3 class="">Modifier LE PLANNING DES LIVRAISON JUSQU'A J+60jours<i class="fas fa-fish"></i></h3>
                     <p>Par défaut, les livraisons sont autorisées sur Mar-Mer-Jeu-Ven-Sam (pas de livraison le Dim et Lun)</p>
-
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="text-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-xs-12 justify-content-center col-">
