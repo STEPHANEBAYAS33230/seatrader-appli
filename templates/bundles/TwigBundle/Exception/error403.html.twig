@@ -1,0 +1,26 @@
+{% extends 'baseError.html.twig' %}
+
+{% block title %}ERROR 403 | SEATRADER-APPLI{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h1>ERREUR 403 : FORBIDDEN</h1>
+
+                    <p>
+                        Sorry but you don't have access to this page.
+                        <a href="{{ path("app_logout") }}">return to the homepage</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

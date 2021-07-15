@@ -1,0 +1,26 @@
+{% extends 'baseError.html.twig' %}
+
+{% block title %}ERROR 404 | SEATRADER-APPLI{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+
+<div class="container marge-container">
+    <div class=row">
+        <div class="col-xl-12 justify-content-center titre">
+            <div>
+                <h1>ERREUR 404 : Page not found</h1>
+
+                <p>
+                    The requested page couldn't be located. Checkout for any URL
+                    misspelling or <a href="{{ path("app_logout") }}">return to the homepage</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
