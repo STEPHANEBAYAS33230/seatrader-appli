@@ -73,10 +73,10 @@
     <script type="text/javascript">
         var nb = 2;
         timer = window.setTimeout(" window.refresh();", 1000*nb, "JavaScript");
-        document.getElementById("photo_produit_brochureFilename").onchange = function () {
+        document.getElementById("cours_brochureFilename").onchange = function () {
 
                 // get loaded data and render thumbnail.
-                document.getElementById("imagerie").src= document.getElementById("pdfDoc").src;
+                document.getElementById("imagerie").src= "{{ asset('assets/images/pdfDoc.png') }}";
 
         };
     </script>

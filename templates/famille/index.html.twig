@@ -21,7 +21,7 @@
                                     {% if message=="Une erreur s'est produite pendant la suppression." %}
                                         <script type="text/javascript">
                                             setTimeout(function(){
-                                                window.location.href="http://localhost/seatrader-appli/public/logout";},2000);
+                                                window.location.href="{{ path('app_logout',{}) }}";},2000);
                                         </script>
                                     {% endif %}
                                 </div>
