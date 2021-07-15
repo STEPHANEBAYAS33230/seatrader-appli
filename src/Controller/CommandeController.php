@@ -14,17 +14,21 @@ use App\Form\CommandeType;
 use DateInterval;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class CommandeController extends AbstractController
 {
     /**
      * @Route("/monAppli/commande", name="faire_cde")
      */
-    public function index(EntityManagerInterface $em, Request $request): Response
+    public function index(EntityManagerInterface $em, Request $request,  MailerInterface $mailer, Environment $twig): Response
     {
 
         // recupere toutes les familles/produits
@@ -434,7 +438,9 @@ class CommandeController extends AbstractController
             //****************************
             //*********controle securité si user connecté est egal à l auteur de la commande
             $utilisateur=$commande->getUtilisateur();
-            $idUtilisateur=$utilisateur->getId();
+            $numUtilisateur=$utilisateur->getTelephoneSociete();
+            $nomUtilisateur=$utilisateur->getNomDeLaSociete();
+            $nameUtilisateur=$utilisateur->getNom();
             if ($idUtilisateur=$user->getId()){
 
                 //**************************
@@ -450,6 +456,20 @@ class CommandeController extends AbstractController
                     $utili->addCommande($commande);
                     $em->persist($utili);
                     $em->flush();
+                    //envoi mail
+                    $email = (new TemplatedEmail())
+                        ->from('contact@seatrader.eu')
+                        ->to('contact@seatrader.eu')
+                        //->cc('cc@example.com')
+                        //->bcc('bcc@example.com')
+                        //->replyTo('fabien@example.com')
+                        ->priority(Email::PRIORITY_HIGH)
+                        ->subject('commande reçue')
+                        ->text('message du site seatrader-appli: une nouvelle cde de '.$nomUtilisateur.
+                            ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur)
+                        ->htmlTemplate( 'mail/mail.html.twig');
+
+                    $mailer->send($email);
                     //******************************************************************************************************
 
                     //***********redirection vers voir mes commandes
@@ -553,7 +573,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/monAppli/commande-modifier/{id}", name="modifier-cde")
      */
-    public function modifierCde($id, Request $request, EntityManagerInterface $em)
+    public function modifierCde($id, Request $request, EntityManagerInterface $em,   MailerInterface $mailer, Environment $twig)
     {    // on récupère l'user/ date today
         $user=$this->getUser();
         $role=$user->getRoles();
@@ -962,6 +982,10 @@ class CommandeController extends AbstractController
             //*********controle securité si user connecté est egal à l auteur de la commande
             $utilisateur=$commande->getUtilisateur();
             $idUtilisateur=$utilisateur->getId();
+            $utilisateur=$commande->getUtilisateur();
+            $numUtilisateur=$utilisateur->getTelephoneSociete();
+            $nomUtilisateur=$utilisateur->getNomDeLaSociete();
+            $nameUtilisateur=$utilisateur->getNom();
             $role=$user->getRoles();
             if ( $idUtilisateur==$user->getId() or $role==['ROLE_ADMIN','ROLE_USER']){
 
@@ -970,6 +994,20 @@ class CommandeController extends AbstractController
                 try {
                     $em->persist($commande);
                     $em->flush();
+                    //envoi mail
+                    $email = (new TemplatedEmail())
+                        ->from('contact@seatrader.eu')
+                        ->to('contact@seatrader.eu')
+                        //->cc('cc@example.com')
+                        //->bcc('bcc@example.com')
+                        //->replyTo('fabien@example.com')
+                        ->priority(Email::PRIORITY_HIGH)
+                        ->subject('commande modifiée reçue')
+                        ->text('message du site seatrader-appli: une MODIFICATION cde de '.$nomUtilisateur.
+                            ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur)
+                        ->htmlTemplate( 'mail/mail.html.twig');
+
+                    $mailer->send($email);
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();

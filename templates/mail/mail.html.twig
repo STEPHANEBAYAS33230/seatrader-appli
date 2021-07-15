@@ -1,0 +1,28 @@
+{% extends 'baseError.html.twig' %}
+
+{% block title %}SEATRADER-APPLI{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h1>SEATRADER mail: contact@seatrader.eu</h1>
+
+                    <h2 class="mt-3 mt-6">
+                        DE LA MER A CHEZ VOUS...
+                    </h2>
+
+                    <img style="width: 301px; height: 165px" src="{{ asset('assets/images/slide-01.jpg') }}" alt="photo banc de poissons" CLASS="mt-5" mb-5>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

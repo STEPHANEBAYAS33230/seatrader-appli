@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 
 class HomeController extends AbstractController
@@ -19,7 +21,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request, MailerInterface $mailer): Response
+    public function index(Request $request, MailerInterface $mailer, Environment $twig): Response
     {
         //*********creation du formulaire
         $formulaire=new Formulaire();
@@ -98,33 +100,35 @@ class HomeController extends AbstractController
         {
             $from=$formulaire->getEmail();
             $message=$formulaire->getMessage();
+            $number=$formulaire->getTelephone();
+            $nom=$formulaire->getNom();
+
             //envoi mail
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from($from)
-                ->to('lila74500@hotmail.fr')
+                ->to('contact@seatrader.eu')
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 ->priority(Email::PRIORITY_HIGH)
                 ->subject('formulaire seatrader-appli')
-                ->text($message);
-                //->html('<p>See Twig integration for better HTML integration!</p>');
+                ->text('email: '.$from.' nom: '.$nom.' vous a envoyé ce message du site seatrader-appli: '.$message.' tel:'.$number)
+                ->htmlTemplate( 'mail/mail.html.twig');
 
             $mailer->send($email);
 
             //envoi mail2
-            $email = (new Email())
-                ->from('lila74500@hotmail.fr')
+            $email = (new TemplatedEmail())
+                ->from('contact@seatrader.eu')
                 ->to($from)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
+                ->priority(Email::PRIORITY_HIGH)
                 ->subject('Accusé de réception: message envoyé')
-                ->text('Votre message a bien été envoyé à la société Seatrader. Vous serez contacter dans les plus brefs délais.');
-                //->html('<p>See Twig integration for better HTML integration!</p>');
-
-            $mailer->send($email);
+                ->text('Votre message a bien été envoyé à la société Seatrader. Vous serez contacter dans les plus brefs délais. Stéphane Moncorgé (PDG SEATRADER)')
+                ->htmlTemplate( 'mail/mail.html.twig');
+                $mailer->send($email);
             return $this->redirectToRoute('home', [
 
             ]);
