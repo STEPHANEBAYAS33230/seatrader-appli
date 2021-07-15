@@ -454,10 +454,7 @@
 
                     {%  for miseEa in miseEnAvant %}
                         <div  class="card-miseEn-Avant" >
-                            {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to left,blue, white,red);">{% else %}<div style="background-color: {{ miseEa.couleur }}">{% endif %}
-
-                            <h4 class="raison" >{{ miseEa.raison.raison }}</h4>
-                            </div>
+                            {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to right,blue, white,red);"><h4 class="raison" >{{ miseEa.raison.raison }}</h4></div>{% else %}<div style="background-color: {{ miseEa.couleur }}"><h4 class="raison" >{{ miseEa.raison.raison }}</h4></div>{% endif %}
                             <div class="leproduit">
                             {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
                                 {% if miseEa.produitMiseEnAvant.brochureFilename!=null %}
