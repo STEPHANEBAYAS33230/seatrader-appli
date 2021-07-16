@@ -2,14 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Code;
 use App\Entity\Commande;
 use App\Entity\EtatCommande;
 use App\Entity\MiseEnAvant;
+use App\Form\CodeType;
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 
 class HomeConnectedController extends AbstractController
@@ -75,7 +82,7 @@ class HomeConnectedController extends AbstractController
             }
             //**************************************************
             //**************************************************
-            //maintenance passer les cde archivees de+ de 2 mois à effacer
+            //maintenance passer les cde archivees de+ de 2MOIS à effacer
             // récupère repository
             // recupere l etat envoyee
             try {
@@ -117,7 +124,7 @@ class HomeConnectedController extends AbstractController
             }
 
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
-            return $this->redirectToRoute('home_connected--user');
+            return $this->redirectToRoute('home_connected--user--code');
             $today = strftime('%A %d %B %Y %I:%M:%S');
             // si l'utilisateur est admin VVVVVVV (route si dessous)
             // on récupère l'user et son role
@@ -174,4 +181,43 @@ class HomeConnectedController extends AbstractController
 
 
         }
+
+    /**
+     * @Route("/admin/home/code-admin", name="home_connected--user--code")
+     */
+    public
+    function connectedAdminCode(EntityManagerInterface $em,  MailerInterface $mailer, Environment $twig, Request $request): Response
+    {
+        $nbreHasard=rand(10000,99999);
+        // si l'utilisateur est admin VVVVVVV (route si dessous)
+        // on récupère l'user et son role
+        $user = $this->getUser();
+        //******envoi du code à contact@seatrader.eu
+        //envoi mail
+        $email = (new TemplatedEmail())
+            ->from('contact@seatrader.eu')
+            ->to('contact@seatrader.eu')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            ->priority(Email::PRIORITY_HIGH)
+            ->subject('code authentification')
+            ->text('Veuillez saisir ce code pour vous authentification: '.$nbreHasard)
+            ->htmlTemplate( 'mail/mail.html.twig');
+        $mailer->send($email);
+        $code= new Code();
+        $codeForm = $this->createForm(CodeType::class, $code);
+        $codeForm->handleRequest($request);
+        // si formulaire validé
+        if ($codeForm->isSubmitted() and $codeForm->isValid()) {
+
+
+
+
+
+        }
+        return $this->render('code/code.html.twig', [ 'codeForm' => $codeForm->createView(),]);
+
+
+    }
     }
