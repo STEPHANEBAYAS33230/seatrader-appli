@@ -1,3 +1,6 @@
+.bgjaune {
+    background-color: #c1af74;
+}
 @media (min-width: 0px) and (max-width: 800px) {
 .lobelo{
     display: none;
@@ -70,11 +73,15 @@ body {
 .caseform{
     color: white;
     text-align: center;
-
+    background-color: #e5d697;
 
 }
+input{
+    background-color: #e5d697;
+}
+
 input:focus{
-    background-color: #5eb5e0;
+    background-color: #e5d697;
     border-radius: 4px;
 }
 .css-passageCdeCard {

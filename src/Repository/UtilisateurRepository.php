@@ -54,26 +54,19 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
     }
 
     public function trouverUtilisateur($nomDLS)
-    {   $roles='ROLE_USER';
-        return $this->createQueryBuilder('u')
+    {        return $this->createQueryBuilder('u')
             ->Where('u.nomDeLaSociete = :val')
             ->setParameter('val', $nomDLS)
-            ->andWhere('locate(:roles, u.roles)!=0 ')
-            //->andWhere('u.roles = :roles')
-            ->setParameter('roles', $roles)
             ->getQuery()
             ->getResult();
 
     }
 
     public function trouverAdminis($nomDLS)
-    {   $roles='ROLE_ADMIN';
+    {
         return $this->createQueryBuilder('u')
             ->Where('u.nomDeLaSociete = :val')
             ->setParameter('val', $nomDLS)
-            ->andWhere('locate(:roles, u.roles)!=0 ')
-            //->andWhere('u.roles = :roles')
-            ->setParameter('roles', $roles)
             ->getQuery()
             ->getResult();
 

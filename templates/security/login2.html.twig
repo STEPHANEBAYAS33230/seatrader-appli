@@ -4,8 +4,6 @@
 
  {% block stylesheets %}
      <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
-     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
  {% endblock %}
 
 {% block header %}
@@ -32,6 +30,15 @@
                                 </div>
                             {% endfor %}
                         {% endfor %}
+                        <div class="form-signin" >
+                        <div class="form-label-group">
+                            {{ nombre }}
+
+                            <input class="form-control" type="password" name="code" id="codePassword" oninput="ab()" required>
+                            <label for="codePassword">Code envoyé sur email</label>
+
+                        </div>
+                        </div>
                         <form class="form-signin" method="post">
                             <div class="form-label-group">
                                 {# read and display all flash messages #}
@@ -48,42 +55,30 @@
                                 {% endif %}
 
                                 {% if app.user %}
-                                    <div class="mb-3 text-light">
+                                    <div class="mb-3 text-warning">
                                         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
                                     </div>
                                 {% endif %}
-                                <input  class="form-control bg-input" type="text" value="{{ nomDLS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus readonly>
+                                <input  class="form-control" type="text" value="{{ nomDLS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus readonly>
                                 <label for="inputNomDeLaSociete">Nom De La Société Identifiant</label>
                             </div>
 
                             <div class="form-label-group">
 
-                                <input class="form-control bg-input"  type="password" name="password" id="inputPassword" required>
+                                <input class="form-control" type="password" name="password" id="inputPassword" required>
                                 <label for="inputPassword">MOT DE PASSE</label>
 
                                 <input type="hidden" name="_csrf_token"
                                        value="{{ csrf_token('authenticate') }}"
                                 >
                             </div>
-                            <div class="form-label-group">
-                                {{ nombre }}
 
-                                <input class="form-control bg-input" type="number" name="code" id="codePassword" onchange="function f() {
-                                    var nb=document.getElementById('codePassword').value
-                                    if (nb==={{ nombre }}) {
-                                        document.getElementById('boutonValider').style.visibility='visible';
-
-                                        }
-                                }" required>
-                                <label for="codePassword">Code envoyé sur email</label>
-
-                            </div>
 
                             {# <div class="checkbox mb-3 custom-control custom-checkbox mb-3">
                                 <input type="checkbox" class="custom-control-input" id="customCheck1" name="_remember_me">
                                 <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
                             </div>#}
-                            <button id="boutonValider" class="btn btn-lg btn-light btn-block text-uppercase" type="submit" style="visibility: hidden;">valider</button>
+                            <button id="boutonValider" class="btn btn-lg btn-success btn-block text-uppercase" type="submit" style="visibility: hidden;">valider</button>
 
                         </form>
                     </div>
@@ -91,4 +86,14 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function ab() {
+            var nb=document.getElementById('codePassword').value
+            if (nb=={{ nombre }}) {
+                document.getElementById('boutonValider').style.visibility='visible';
+
+            } else {                document.getElementById('boutonValider').style.visibility='hidden';
+            }
+        }
+    </script>
 {% endblock %}

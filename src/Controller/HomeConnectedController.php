@@ -198,20 +198,22 @@ class HomeConnectedController extends AbstractController
             $identifiant=$utili->getNomDeLaSociete();
             try{
                 $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-                $utilisateur = $utilisateurRepo->trouverUtilisateur($identifiant);
-
+                $utilisateur = $utilisateurRepo->trouverUtilisateur($identifiant." ");
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $this->addFlash('error', 'Problème d\'accès à la base de données: ');
                 return $this->redirectToRoute('/');
             }
+            $nomm=$utilisateur[0]->getNomDeLaSociete();
+            $roles=$utilisateur[0]->getRoles();
 
-            if ($utilisateur!=null) { return $this->redirectToRoute('app_login',['identifiant'=>$identifiant]);
+
+            if ($utilisateur!=null and $nomm==$identifiant." " and $roles==['ROLE_USER']) { return $this->redirectToRoute('app_login',['identifiant'=>$identifiant]);
             }
 
             try{
                 $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-                $utilisateur = $utilisateurRepo->trouverAdminis($identifiant);
+                $utilisateur = $utilisateurRepo->trouverAdminis($identifiant." ");
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $this->addFlash('error', 'Problème d\'accès à la base de données: ');
@@ -222,7 +224,9 @@ class HomeConnectedController extends AbstractController
                 $this->addFlash('error', 'Identifiant inconnu');
                 return $this->redirectToRoute('home');
             }
-            if ($utilisateur!=null) {
+            $nomm=$utilisateur[0]->getNomDeLaSociete();
+            $roles=$utilisateur[0]->getRoles();
+            if ($utilisateur!=null and $nomm==$identifiant." " and $roles==['ROLE_ADMIN', 'ROLE_USER']) {
                 $nombre=rand(10000,99999);
                 //envoi mail
                 $email = (new TemplatedEmail())
@@ -236,21 +240,12 @@ class HomeConnectedController extends AbstractController
                     ->text('Voici le code d\'accès pour identifier sur site seatrader-appli: '.$nombre)
                     ->htmlTemplate( 'mail/mail.html.twig');
                 $mailer->send($email);
-                // if ($this->getUser()) {
-                //     return $this->redirectToRoute('target_path');
-                // }
-
-                // get the login error if there is one
-                $error = $authenticationUtils->getLastAuthenticationError();
-                // last username entered by the user
-                $lastUsername = $authenticationUtils->getLastUsername();
-                $nomDLS=$identifiant;
-                $code=new Code();
-                //$code->setCode($nombre);
-                $codeForm = $this->createForm(CodeType::class, $code);
-                $codeForm->handleRequest($request);
+               if (1==1) {
+                   return $this->redirectToRoute('app_login', ['identifiant' => $identifiant]);
+               }
+                $nomDLS="";
                 return $this->render('security/login2.html.twig', ['identifiant'=>$identifiant, 'last_username' => $lastUsername, 'error' => $error,
-                    'nomDLS'=>$nomDLS,'nombre'=>$nombre, 'codeForm'=>$codeForm->createView(),]);
+                    'nomDLS'=>$nomDLS,'nombre'=>$nombre]);
             }
 
 
