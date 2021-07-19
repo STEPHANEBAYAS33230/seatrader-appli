@@ -4,8 +4,6 @@
 
  {% block stylesheets %}
      <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
-     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
  {% endblock %}
 
 {% block header %}
@@ -32,7 +30,7 @@
                                 </div>
                             {% endfor %}
                         {% endfor %}
-                        <form class="form-signin" method="post">
+                        <div class="form-signin">
                             <div class="form-label-group">
                                 {# read and display all flash messages #}
                                 {% for label, messages in app.flashes %}
@@ -42,37 +40,16 @@
                                         </div>
                                     {% endfor %}
                                 {% endfor %}
-                                {% if error %}
-                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'error') }}</div>
-                                {% endif %}
-
-                                {% if app.user %}
-                                    <div class="mb-3 text-light">
-                                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                                    </div>
-                                {% endif %}
-                                <input  class="form-control bg-input" type="text" value="{{ nomDLS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus readonly>
-                                <label for="inputNomDeLaSociete">Nom De La Société Identifiant</label>
+                                {{ form_start(identificationForm, { 'attr' : { 'style': '', 'class': 'caseForm' } }) }}
+                                {{ form_widget(identificationForm.nomDeLaSociete,{'attr':{'class':'form-control bg-input', 'placeholder':'Nom de la société identifiant', 'autofocus':'true' }}) }}
                             </div>
-
-                            <div class="form-label-group">
-
-                                <input class="form-control bg-input"  type="password" name="password" id="inputPassword" required>
-                                <label for="inputPassword">MOT DE PASSE</label>
-
-                                <input type="hidden" name="_csrf_token"
-                                       value="{{ csrf_token('authenticate') }}"
-                                >
-                            </div>
-
                             {# <div class="checkbox mb-3 custom-control custom-checkbox mb-3">
                                 <input type="checkbox" class="custom-control-input" id="customCheck1" name="_remember_me">
                                 <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
                             </div>#}
                             <button class="btn btn-lg btn-light btn-block text-uppercase" type="submit">valider</button>
-
-                        </form>
+                            {{ form_end(identificationForm) }}
+                        </div>
                     </div>
                 </div>
             </div>

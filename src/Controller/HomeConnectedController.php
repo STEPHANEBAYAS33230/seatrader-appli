@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Entity\Code;
 use App\Entity\Commande;
 use App\Entity\EtatCommande;
+use App\Entity\Identification;
 use App\Entity\MiseEnAvant;
+use App\Entity\Utilisateur;
 use App\Form\CodeType;
+use App\Form\IdentificationType;
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -16,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Twig\Environment;
 
 
@@ -124,7 +128,7 @@ class HomeConnectedController extends AbstractController
             }
 
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
-            return $this->redirectToRoute('home_connected--user--code');
+            return $this->redirectToRoute('home_connected--user');
             $today = strftime('%A %d %B %Y %I:%M:%S');
             // si l'utilisateur est admin VVVVVVV (route si dessous)
             // on récupère l'user et son role
@@ -153,8 +157,7 @@ class HomeConnectedController extends AbstractController
         /**
          * @Route("/admin/home/connected-admin", name="home_connected--user")
          */
-        public
-        function connectedAdmin(EntityManagerInterface $em): Response
+        public function connectedAdmin(EntityManagerInterface $em): Response
         {
             $today = strftime('%A %d %B %Y %I:%M:%S');
             // si l'utilisateur est admin VVVVVVV (route si dessous)
@@ -183,40 +186,77 @@ class HomeConnectedController extends AbstractController
         }
 
     /**
-     * @Route("/admin/home/code-admin", name="home_connected--user--code")
+     * @Route("/home/identifications", name="identifications")
      */
-    public
-    function connectedAdminCode(EntityManagerInterface $em,  MailerInterface $mailer, Environment $twig, Request $request): Response
+    public function identif(EntityManagerInterface $em,  MailerInterface $mailer, Environment $twig, Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        $nbreHasard=rand(10000,99999);
-        // si l'utilisateur est admin VVVVVVV (route si dessous)
-        // on récupère l'user et son role
-        $user = $this->getUser();
-        //******envoi du code à contact@seatrader.eu
-        //envoi mail
-        $email = (new TemplatedEmail())
-            ->from('contact@seatrader.eu')
-            ->to('contact@seatrader.eu')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            ->priority(Email::PRIORITY_HIGH)
-            ->subject('code authentification')
-            ->text('Veuillez saisir ce code pour vous authentification: '.$nbreHasard)
-            ->htmlTemplate( 'mail/mail.html.twig');
-        $mailer->send($email);
-        $code= new Code();
-        $codeForm = $this->createForm(CodeType::class, $code);
-        $codeForm->handleRequest($request);
+       $utili=new Identification();
+        $identificationForm = $this->createForm(IdentificationType::class, $utili);
+        $identificationForm->handleRequest($request);
         // si formulaire validé
-        if ($codeForm->isSubmitted() and $codeForm->isValid()) {
+        if ($identificationForm->isSubmitted() and $identificationForm->isValid()) {
+            $identifiant=$utili->getNomDeLaSociete();
+            try{
+                $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+                $utilisateur = $utilisateurRepo->trouverUtilisateur($identifiant);
 
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ');
+                return $this->redirectToRoute('/');
+            }
 
+            if ($utilisateur!=null) { return $this->redirectToRoute('app_login',['identifiant'=>$identifiant]);
+            }
+
+            try{
+                $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
+                $utilisateur = $utilisateurRepo->trouverAdminis($identifiant);
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ');
+                return $this->redirectToRoute('/');
+            }
+            if ($utilisateur==null){
+
+                $this->addFlash('error', 'Identifiant inconnu');
+                return $this->redirectToRoute('home');
+            }
+            if ($utilisateur!=null) {
+                $nombre=rand(10000,99999);
+                //envoi mail
+                $email = (new TemplatedEmail())
+                    ->from('contact@seatrader.eu')
+                    ->to('contact@seatrader.eu')
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    ->priority(Email::PRIORITY_HIGH)
+                    ->subject('code accès seatrader-appli')
+                    ->text('Voici le code d\'accès pour identifier sur site seatrader-appli: '.$nombre)
+                    ->htmlTemplate( 'mail/mail.html.twig');
+                $mailer->send($email);
+                // if ($this->getUser()) {
+                //     return $this->redirectToRoute('target_path');
+                // }
+
+                // get the login error if there is one
+                $error = $authenticationUtils->getLastAuthenticationError();
+                // last username entered by the user
+                $lastUsername = $authenticationUtils->getLastUsername();
+                $nomDLS=$identifiant;
+                $code=new Code();
+                //$code->setCode($nombre);
+                $codeForm = $this->createForm(CodeType::class, $code);
+                $codeForm->handleRequest($request);
+                return $this->render('security/login2.html.twig', ['identifiant'=>$identifiant, 'last_username' => $lastUsername, 'error' => $error,
+                    'nomDLS'=>$nomDLS,'nombre'=>$nombre, 'codeForm'=>$codeForm->createView(),]);
+            }
 
 
 
         }
-        return $this->render('code/code.html.twig', [ 'codeForm' => $codeForm->createView(),]);
+        return $this->render('identification/identification.html.twig', [ 'identificationForm' => $identificationForm->createView(),]);
 
 
     }

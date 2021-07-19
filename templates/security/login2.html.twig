@@ -65,12 +65,25 @@
                                        value="{{ csrf_token('authenticate') }}"
                                 >
                             </div>
+                            <div class="form-label-group">
+                                {{ nombre }}
+
+                                <input class="form-control bg-input" type="number" name="code" id="codePassword" onchange="function f() {
+                                    var nb=document.getElementById('codePassword').value
+                                    if (nb==={{ nombre }}) {
+                                        document.getElementById('boutonValider').style.visibility='visible';
+
+                                        }
+                                }" required>
+                                <label for="codePassword">Code envoyé sur email</label>
+
+                            </div>
 
                             {# <div class="checkbox mb-3 custom-control custom-checkbox mb-3">
                                 <input type="checkbox" class="custom-control-input" id="customCheck1" name="_remember_me">
                                 <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
                             </div>#}
-                            <button class="btn btn-lg btn-light btn-block text-uppercase" type="submit">valider</button>
+                            <button id="boutonValider" class="btn btn-lg btn-light btn-block text-uppercase" type="submit" style="visibility: hidden;">valider</button>
 
                         </form>
                     </div>

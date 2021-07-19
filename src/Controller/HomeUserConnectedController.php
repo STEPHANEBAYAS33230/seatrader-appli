@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cours;
 use App\Entity\FiltreDateMiseEnAvant;
 use App\Entity\MiseEnAvant;
+use App\Entity\Utilisateur;
 use App\Form\FiltreDateMiseEnAvantType;
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
