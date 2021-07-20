@@ -74,7 +74,7 @@
                             {% if role==['ROLE_USER'] %}
                                 <div class="" >
                                     <div class="ml-3">
-                                        <label for="robot"></label><input type="checkbox" class="text-white" id="robot" name="robot"><label class="text-light" onclick="ac();">Je ne suis pas un robot </label>
+                                        <label for="robot"></label><input type="checkbox" class="text-white" id="robot" name="robot" onclick="ac();"><label class="text-light" >Je ne suis pas un robot </label>
                                     </div>
                                 </div>
                             {% endif %}
@@ -116,7 +116,9 @@
         }
 
         function ac() {
-                document.getElementById('boutonValider').style.visibility = 'visible';
+            if (document.getElementById("robot").checked==true) {
+                document.getElementById('boutonValider').style.visibility = 'visible';}
+
         }
 
     </script>
