@@ -34,7 +34,7 @@
                             <div class="form-signin mb-2" >
                                 <form class="form-label-group">
                                     <input class="form-control" type="number" name="codePassword" id="codePassword" oninput="ab()" required>
-                                    <label for="codePassword">Code envoyé sur email</label>
+                                    <label for="codePassword">Code envoyé sur votre email</label>
                                 </form>
                             </div>
                          {% endif %}
@@ -54,43 +54,49 @@
                                 {% endif %}
 
                                 {% if app.user %}
-                                    <div class="mb-3 text-light">
-                                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                                    <div class="mb-3 text-warning">
+                                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">DECONNEXION</a>
                                     </div>
                                 {% endif %}
-                                <input  class="form-control bg-input" type="text"  value="{{ nomDNS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required autofocus readonly>
+
+
+                                <input  class="" id="nomDNS"  type="text"  value="{{ nomDNS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required >
                                 <label for="inputNomDeLaSociete">Nom De La Société Identifiant</label>
+                                <a class="text-center btn btn-outline-light mb-1" onclick="ad()">Entrer et valider mon identifiant...</a>
+
                             </div>
 
                             <div class="form-label-group">
+
                                 <input class="form-control bg-input"  type="password" name="password" id="inputPassword" required>
-                                <label for="inputPassword">MOT DE PASSE</label>
+                                <label for="inputPassword"> MOT DE PASSE</label>
+
 
                                 <input type="hidden" name="_csrf_token"
                                        value="{{ csrf_token('authenticate') }}"
                                 >
                             </div>
 
-                            {% if role==['ROLE_USER'] %}
-                                <div class="" >
-                                    <div class="ml-3">
-                                        <label for="robot"></label><input type="checkbox" class="text-white" id="robot" name="robot" onclick="ac();"><label class="text-light" >Je ne suis pas un robot </label>
-                                    </div>
-                                </div>
-                            {% endif %}
+
 
                             {# <div class="checkbox mb-3 custom-control custom-checkbox mb-3">
                                 <input type="checkbox" class="custom-control-input" id="customCheck1" name="_remember_me">
                                 <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
                             </div>#}
-                            {% if role[0]=='ROLE_ADMIN' %}
+                            {% if role[0]!=null and role[0]=='ROLE_ADMIN' %}
                             <button id="boutonValide" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">valider</button>
                             {% endif %}
-                            {% if role[0]=='ROLE_USER' %}
+                            {% if role[0]!=null and role[0]=='ROLE_USER' %}
                                 <button id="boutonValider" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">valider</button>
                             {% endif %}
                         </form>
-
+                        {% if role==['ROLE_USER'] %}
+                            <div class="" >
+                                <div class="ml-3">
+                                    <label for="robot"></label><input type="checkbox" class="text-white" id="robot" name="robot" onclick="ac();"><label class="text-light" >Je ne suis pas un robot </label>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -116,9 +122,20 @@
         }
 
         function ac() {
+            if (document.getElementById("robot").checked==false) {
+                document.getElementById('boutonValider').style.visibility = 'hidden';}
             if (document.getElementById("robot").checked==true) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
 
+        }
+
+        function  ad(){
+            nomDNS_js=document.getElementById('nomDNS').value;
+            if ((nomDNS_js==null)) {nomDNS_js="vide!!!";}
+            if ((nomDNS_js=="")) {nomDNS_js="vide!!!";}
+
+            url="{{ path('login-trouve',{'identifiant':'nomDNS' }) }}".replace('nomDNS',nomDNS_js);
+            window.location.href=url;
         }
 
     </script>

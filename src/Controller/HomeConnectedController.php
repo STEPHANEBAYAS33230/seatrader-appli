@@ -190,7 +190,7 @@ class HomeConnectedController extends AbstractController
      */
     public function identif(EntityManagerInterface $em,  MailerInterface $mailer, Environment $twig, Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-       $utili=new Identification();
+       $utili=new Utilisateur();
         $identificationForm = $this->createForm(IdentificationType::class, $utili);
         $identificationForm->handleRequest($request);
         // si formulaire validé

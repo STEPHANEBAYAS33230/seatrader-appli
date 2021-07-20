@@ -24,7 +24,7 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator implements
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'login-trouve';
 
     private $entityManager;
     private $urlGenerator;
@@ -100,6 +100,9 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator implements
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+        $identifiant="";
+       // return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+        return $this->urlGenerator->generate('app_login');
+
     }
 }
