@@ -86,11 +86,11 @@
                             {% if role[0]!=null and role[0]=='ROLE_ADMIN' %}
                             <button id="boutonValide" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">valider</button>
                             {% endif %}
-                            {% if role[0]!=null and role[0]=='ROLE_USER' %}
+                            {% if (role[0]!=null and role[0]=='ROLE_USER') or (phase==3) %}
                                 <button id="boutonValider" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">valider</button>
                             {% endif %}
                         </form>
-                        {% if role==['ROLE_USER'] %}
+                        {% if role==['ROLE_USER'] or phase==3 %}
                             <div class="" >
                                 <div class="ml-3">
                                     <label for="robot"></label><input type="checkbox" class="text-white" id="robot" name="robot" onclick="ac();"><label class="text-light" >Je ne suis pas un robot </label>

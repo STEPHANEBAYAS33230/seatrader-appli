@@ -78,12 +78,12 @@ class SecurityController extends AbstractController
         {
             $role=$utilisateur[0]->getRoles();
             $nomDNS=$utilisateur[0]->getNomDeLaSociete();
-            $phase=1;
+            $phase=2;
         }
         else{
             $nomDNS=$identifiant;
             $role=['0','0'];
-            $phase=0;
+            $phase=3;
         }
 
         if ($utilisateur!=null  and $role==['ROLE_ADMIN','ROLE_USER']) {//." " identifiant
