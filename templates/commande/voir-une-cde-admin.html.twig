@@ -71,7 +71,11 @@
                                 <td>{{ prod.nomProduit }}</td>
                                 <td>{{ prod.pieceOuKg }}</td>
                                 <td>
-
+                                    {% if prod.brochureFilename!=null %}
+                                        <img style="width: 54px; height: 30px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
+                                    {% else %}
+                                        <img style="width: 54px; height: 30px" class="m-0 p-0" src="{{ asset('assets/images/slide-01.jpg') }}" alt="photo banc de poissons">
+                                    {% endif %}
                                 </td>
 
                                 <td>quantité:{{ prod.quantite }}</td>

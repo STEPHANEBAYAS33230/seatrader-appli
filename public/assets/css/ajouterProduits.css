@@ -5,6 +5,13 @@
 .lobelo{
     display: none;
 }
+.decall{
+
+    }
+}
+
+.decall{
+    background-color: #d39e00;
 }
 body {
     scroll-behavior: smooth;
@@ -73,15 +80,16 @@ body {
 .caseform{
     color: white;
     text-align: center;
-    background-color: #e5d697;
+    background-color: #bceffd;
 
 }
+
 input{
-    background-color: #e5d697;
+    background-color: #97dfe5;
 }
 
 input:focus{
-    background-color: #e5d697;
+    background-color: #97dfe5;
     border-radius: 4px;
 }
 .css-passageCdeCard {

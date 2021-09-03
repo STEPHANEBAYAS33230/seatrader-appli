@@ -9,8 +9,8 @@
 {% block main %}
     {% if is_granted('ROLE_ADMIN') %}
     <div class="container marge-container">
-        <div class=row">
-            <div class="col-xl-12 justify-content-center titre">
+        <div class="row decall">
+            <div class="col-12 titre justify-content-center">
                 <div>
                     <h3 class="">Les Commandes des clients<i class="fas fa-fish"></i></h3>
                     <h4>STATUT: {{ statut }}</h4>
@@ -24,16 +24,16 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-xl-12 justify-content-center">
+            <div class="col-12 justify-content-center">
                 <table class="table table-striped table-secondary">
                     <thead class="bg-warning">
                     <tr>
-                        <th scope="col">N°</th>
+                        <th scope="col" class="lobelo">N°</th>
                         <th scope="col"></th>
                         <th scope="col">Date de livraison</th>
-                        <th scope="col">Date de création</th>
+                        <th scope="col" class="lobelo">Date de création</th>
                         <th scope="col">Etat</th>
-                        <th scope="col">Ligne(s)</th>
+                        <th scope="col" class="lobelo">Ligne(s)</th>
                         <th scope="col">Colis</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -46,16 +46,16 @@
                     <!--//************************cde apres jour modifiable supprimable-->
                     {% for cdeAJ in cde %}
                         <tr>
-                            <th scope="row">{{ cdeAJ.id }}</th>
+                            <th scope="row" class="lobelo">{{ cdeAJ.id }}</th>
                             <td scope="col">{{ cdeAJ.utilisateur.nom }}-{{ cdeAJ.utilisateur.nomDeLaSociete }}</td>
                             <td>{{ cdeAJ.jourDeLivraison |date('d/m/Y') }}</td>
-                            <td>{{ cdeAJ.dateCreationCommande |date('d/m/Y') }}</td>
+                            <td class="lobelo">{{ cdeAJ.dateCreationCommande |date('d/m/Y') }}</td>
                             <td>{{  cdeAJ.etatCommande }}</td>
                             {% set nbreLigne=0 %}{% set nbreColis=0 %}
                             {% for ligne in cdeAJ.object %}
                                 {% if ligne.quantite>0 %} {% set nbreLigne=nbreLigne+1 %} {% set nbreColis=nbreColis+ligne.quantite %}{% endif %}
                             {% endfor %}
-                            <td>{{ nbreLigne }}</td>
+                            <td class="lobelo">{{ nbreLigne }}</td>
                             <td>{{ nbreColis }}</td>
                             <td><a class="btn btn-primary" title="supprimer" data-toggle="modal" data-target="#SupprCde{{ cdeAJ.id }}" ><i class="fas fa-trash-alt"></i></a></td>
                             <td><a class="btn btn-primary" title="modifier" href="{{ path('modifier-cde',{'id': cdeAJ.id }) }}">modifier</a></td>
