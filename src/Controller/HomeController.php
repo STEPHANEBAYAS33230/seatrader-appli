@@ -56,8 +56,8 @@ class HomeController extends AbstractController
                 $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
-                return $this->redirectToRoute('home');
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeController59');
+                 return $this->redirectToRoute('home');
             }
             if (!empty($miseEnAvant)){
                 break;
@@ -86,7 +86,7 @@ class HomeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
                 } catch (\Doctrine\DBAL\Exception $e) {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeController89');
                     return $this->redirectToRoute('home');
                 }
                 if (!empty($miseEnAvant)){

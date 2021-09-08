@@ -41,7 +41,7 @@ class HomeUserConnectedController extends AbstractController
             $lecours = $coursRepo->findAll();
         } catch (\Doctrine\DBAL\Exception $e) {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeUserConnectedController44');
             return $this->redirectToRoute('app_logout');
         }
         $cours=$lecours[0];
@@ -60,7 +60,7 @@ class HomeUserConnectedController extends AbstractController
                 $lecours = $coursRepo->findAll();
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeUserConnectedController63');
                 return $this->redirectToRoute('app_logout');
             }
             $cours=$lecours[0];
@@ -71,7 +71,7 @@ class HomeUserConnectedController extends AbstractController
                 $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeUserConnectedController74');
                 return $this->redirectToRoute('app_logout');
             }
             $today = new \DateTime('now');
@@ -97,7 +97,7 @@ class HomeUserConnectedController extends AbstractController
                 $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' .'homeUserConnectedController100');
                 return $this->redirectToRoute('app_logout');
             }
             if (!empty($miseEnAvant)){
@@ -127,7 +127,7 @@ class HomeUserConnectedController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
                 } catch (\Doctrine\DBAL\Exception $e) {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données: ' .'homeUserConnectedController130');
                     return $this->redirectToRoute('app_logout');
                 }
                 if (!empty($miseEnAvant)){

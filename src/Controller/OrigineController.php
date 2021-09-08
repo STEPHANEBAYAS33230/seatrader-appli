@@ -97,8 +97,4 @@ class OrigineController extends AbstractController
 
 
     }
-
-
-
-
 }

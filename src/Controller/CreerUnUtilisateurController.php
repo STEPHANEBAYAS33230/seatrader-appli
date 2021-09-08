@@ -256,7 +256,7 @@ class CreerUnUtilisateurController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
+            $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.'creerunutilisateur259');
             if ($role == ['ROLE_ADMIN']) {
                 $this->denyAccessUnlessGranted('ROLE_ADMIN');
                 $this->addFlash('success', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
@@ -285,7 +285,7 @@ class CreerUnUtilisateurController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.$errorMessage);
+                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte client: '.'creerunutilisateur288');
                 if ($role ==['ROLE_ADMIN']) {
                 return $this->redirectToRoute('gerer_mes_clients', [ ]);}
                 if ($role ==['ROLE_USER']) {
@@ -329,7 +329,7 @@ class CreerUnUtilisateurController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données: '.'creerunutilisateur332');
             return $this->redirectToRoute('home_connected', [ ]);
         }
         $today = strftime('%A %d %B %Y %I:%M:%S');
@@ -360,7 +360,7 @@ class CreerUnUtilisateurController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte: '.$errorMessage);
+                $this->addFlash('error', 'Nous n\'avons pas pu modifier le compte: '.'creerunutilisateur363');
                 return $this->redirectToRoute('home_connected', [ ]);
             }
         }

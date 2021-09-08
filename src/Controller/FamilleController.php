@@ -20,8 +20,14 @@ class FamilleController extends AbstractController
         // on récupère l'user
         $user = $this->getUser();
         // recupere toutes les familles
-        $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
-        $famille = $familleProduitRepo->findAll();
+        try {
+            $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
+            $famille = $familleProduitRepo->findAll();
+        } catch (\Doctrine\DBAL\Exception $e)
+        {
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu accéder à la base de données. '.'familleController28');
+            return $this->redirectToRoute('ajouter-famille');
+        }
         $today = strftime('%A %d %B %Y %I:%M:%S');
 
         //************formulaire
@@ -36,10 +42,14 @@ class FamilleController extends AbstractController
 
             //sauvegarder mon produit
 
-
-            $em->persist($familla);
-            $em->flush();
-
+            try {
+                $em->persist($familla);
+                $em->flush();
+            } catch (\Doctrine\DBAL\Exception $e)
+            {
+                $this->addFlash('error', 'Erreur lors de la sauvegarde de la famille. '.'familleController50 '.$e);
+                return $this->redirectToRoute('ajouter-famille');
+            }
             //******************
 
             return $this->redirectToRoute('ajouter-famille', [
@@ -64,13 +74,13 @@ class FamilleController extends AbstractController
         $familleRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $famille = $familleRepo->find($id);
         if ($famille==null) {
-            $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression.');
+            $this->addFlash('error', 'Une erreur s\'est produite pendant la suppression. '.'familleController77');
             return $this->redirectToRoute('ajouter-famille');
         }
         //********************
         $list=$famille->getListingProduits();
         if (count($list)>0){
-            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la famille. Il se peut que cette famille contient encore des produits. Il faut supprimer les produits avant. ');
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la famille. Il se peut que cette famille contient encore des produits. Il faut supprimer les produits avant. '.'familleController83');
             return $this->redirectToRoute('ajouter-famille');
         }
         try {
@@ -79,7 +89,7 @@ class FamilleController extends AbstractController
             return $this->redirectToRoute('ajouter-famille');
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la famille. Il se peut que cette famille contient encore des produits. Il faut supprimer les produits avant. ');
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la famille. Il se peut que cette famille contient encore des produits. Il faut supprimer les produits avant. '.'familleController92');
             return $this->redirectToRoute('ajouter-famille');
         }
 

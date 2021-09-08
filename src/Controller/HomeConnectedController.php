@@ -42,7 +42,7 @@ class HomeConnectedController extends AbstractController
             $miseEnAvant = $miseEnAvantRepo->filtrer($dtplus, $dtmoins);
         } catch (\Doctrine\DBAL\Exception $e) {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données:' . $errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données:' . 'homeConnectedController45');
             return $this->redirectToRoute('app_logout');
         }
         //********************on boucle les miseEnavant à effacer
@@ -52,7 +52,7 @@ class HomeConnectedController extends AbstractController
                 $em->flush();
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Erreur maintenance Mise en Avant:' . $errorMessage);
+                $this->addFlash('error', 'Erreur maintenance Mise en Avant:' . 'homeConnectedController55');
                 return $this->redirectToRoute('app_logout');
             }
         }
@@ -70,7 +70,7 @@ class HomeConnectedController extends AbstractController
                 $etat = $etatRepo->find(1); //on recupere etat archivée
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données:' . $errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données:' . 'homeConnectedController73');
                 return $this->redirectToRoute('app_logout');
             }
             try {
@@ -81,7 +81,7 @@ class HomeConnectedController extends AbstractController
                 $em->flush();
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Erreur maintenance état commande:' . $errorMessage);
+                $this->addFlash('error', 'Erreur maintenance état commande:' . 'homeConnectedController84');
                 return $this->redirectToRoute('app_logout');
             }
             //**************************************************
@@ -96,7 +96,7 @@ class HomeConnectedController extends AbstractController
                 $cde = $cdeRepo->effacerArchive($etat);
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données:' . $errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données:' . ' homeConnectedController99');
                 return $this->redirectToRoute('app_logout');
             }
 
@@ -107,7 +107,7 @@ class HomeConnectedController extends AbstractController
                 $em->flush();
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Erreur maintenance cde archivée/supprimée:' . $errorMessage);
+                $this->addFlash('error', 'Erreur maintenance cde archivée/supprimée:' . 'homeConnectedController110');
                 return $this->redirectToRoute('app_logout');
             }
             //**************************************************
@@ -143,7 +143,7 @@ class HomeConnectedController extends AbstractController
             $commandesArchivee = $cdeRepo->filtreCdeStatut(1);
         } catch (\Doctrine\DBAL\Exception $e) {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeConnectedController146');
             return $this->redirectToRoute('app_logout');
         }
 
@@ -173,7 +173,7 @@ class HomeConnectedController extends AbstractController
                 $commandesArchivee = $cdeRepo->filtreCdeStatut(1);
             } catch (\Doctrine\DBAL\Exception $e) {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . $errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données: ' . 'homeConnected176');
                 return $this->redirectToRoute('app_logout');
             }
 

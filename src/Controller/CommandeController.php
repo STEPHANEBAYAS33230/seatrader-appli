@@ -40,7 +40,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller43');
             return $this->redirectToRoute('home_connected', [ ]);
         }
 
@@ -84,7 +84,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller87');
             return $this->redirectToRoute('home_connected', [ ]);
         }
 
@@ -123,7 +123,7 @@ class CommandeController extends AbstractController
                 }catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller126');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
 
@@ -150,7 +150,7 @@ class CommandeController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller153');
                 return $this->redirectToRoute('home_connected', [ ]);
             }
 
@@ -166,7 +166,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller169');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
                 //******************************************
@@ -237,7 +237,7 @@ class CommandeController extends AbstractController
                 }catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller248');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
 
@@ -266,7 +266,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller269');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
 
@@ -295,7 +295,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller298');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
                 //******************************************
@@ -322,7 +322,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller325');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
                 //******************************************
@@ -349,7 +349,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller352');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
                 //******************************************
@@ -375,7 +375,7 @@ class CommandeController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller378');
                 return $this->redirectToRoute('home_connected', [ ]);
             }
             foreach( $produits as $prd ) {//recupere les valeurs des input en formulaire pour les produits
@@ -390,7 +390,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller393');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
                 $commande->setEtatCommande($etat);
@@ -414,7 +414,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès àla base de données '.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller417');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
                 //****************************************
@@ -479,7 +479,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde: '.$errorMessage);
+                    $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde '.'commandecontroller482');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
 
@@ -519,7 +519,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données'.'commandecontroller522');
             return $this->redirectToRoute('home_connected', [ ]);
         }
         //***************************
@@ -541,7 +541,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données: '.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données: '.'commandecontroller544');
             return $this->redirectToRoute('home_connected', [ ]);
         }
 
@@ -563,7 +563,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur'.$errorMessage);
+            $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur'.' commandecontroller566');
             return $this->redirectToRoute('home_connected');
         }
     }
@@ -585,7 +585,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller588');
             return $this->redirectToRoute('home_connected');
         }
         //****securité verifier que la cde appartient bien à l'utilisateur connectée (client) sinon deconnexion
@@ -605,7 +605,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller608');
             return $this->redirectToRoute('home_connected');
         }
         //***CDE
@@ -627,7 +627,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller630');
             return $this->redirectToRoute('home_connected');
         }
         //******************************************
@@ -666,7 +666,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller669');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -702,7 +702,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller705');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -761,7 +761,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller764');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -791,7 +791,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller794');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -820,7 +820,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller823');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -848,7 +848,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller851');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -875,7 +875,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller878');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -902,7 +902,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller905');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -928,7 +928,7 @@ class CommandeController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller931');
                 return $this->redirectToRoute('home_connected');
             }
 
@@ -962,7 +962,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+                    $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller965');
                     return $this->redirectToRoute('home_connected');
                 }
                 //******************************************
@@ -1011,7 +1011,7 @@ class CommandeController extends AbstractController
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $errorMessage = $e->getMessage();
-                    $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde:'.$errorMessage);
+                    $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde:'.'commandecontroller1014');
                     return $this->redirectToRoute('home_connected');
                 }
 
@@ -1065,7 +1065,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller1068');
             return $this->redirectToRoute('home_connected');
         }
         //***********************************
@@ -1097,7 +1097,7 @@ class CommandeController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème d\'accès à la base de données:'.$errorMessage);
+            $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller1100');
             return $this->redirectToRoute('home_connected');
         }
         //********on change le statut de la cde
@@ -1112,7 +1112,7 @@ class CommandeController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.$errorMessage);
+                $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.'commandecontroller1115');
                 return $this->redirectToRoute('home_connected');
             }
         }
@@ -1134,7 +1134,7 @@ class CommandeController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.$errorMessage);
+                $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.' commandecontroller1137');
                 return $this->redirectToRoute('home_connected');
             }
             return $this->redirectToRoute('home_connected');

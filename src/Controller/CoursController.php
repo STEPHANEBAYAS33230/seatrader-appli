@@ -47,7 +47,7 @@ class CoursController extends AbstractController
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            $this->addFlash('error', 'Problème de connexion à la base de données/'.$errorMessage);
+            $this->addFlash('error', 'Problème de connexion à la base de données/'.'coursController50');
             return $this->redirectToRoute('home_connected', [ ]);
         }
 
@@ -89,7 +89,7 @@ class CoursController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // si une exception se produit pendant le telechargement/ ajout d'une message flash avant redirection
-                    $this->addFlash('error', "Une erreur s'est produite pendant le téléchargement: ".$e);
+                    $this->addFlash('error', "Une erreur s'est produite pendant le téléchargement: ".'courscontroller92');
                     return $this->redirectToRoute('mettre_le_cours_ligne'); //redirection vers un controller
                 }
                 // *** ecriture du nom du cours de produits
@@ -105,7 +105,7 @@ class CoursController extends AbstractController
             } catch (\Doctrine\DBAL\Exception $e)
             {
                 $errorMessage = $e->getMessage();
-                $this->addFlash('error', 'Nous n\' avons pas pu mettre en ligne le cours des produits/ '.$errorMessage);
+                $this->addFlash('error', 'Nous n\' avons pas pu mettre en ligne le cours des produits/ '.'courscontroller108');
                 return $this->redirectToRoute('home_connected', [ ]);
             }
 

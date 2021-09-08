@@ -9,6 +9,13 @@
 
     }
 }
+h1{
+    font-size: 55px;
+}
+.nonette
+{
+display: none;
+}
 
 .decall{
     background-color: #d39e00;
