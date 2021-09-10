@@ -84,7 +84,7 @@
                                 <label class="custom-control-label" for="customCheck1">Se souvenir de moi</label>
                             </div>#}
                             {% if role[0]!=null and role[0]=='ROLE_ADMIN' %}
-                            <button id="boutonValide" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">valider</button>
+                            <button id="boutonValide" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">{{ role[0] }}valider</button>
                             {% endif %}
                             {% if (role[0]!=null and role[0]=='ROLE_USER') or (phase==3) %}
                                 <button id="boutonValider" style="visibility: hidden;" class="btn btn-lg btn-light btn-block text-uppercase bg-success" type="submit">valider</button>
