@@ -100,7 +100,6 @@ class UtilisateurAuthenticator extends AbstractFormLoginAuthenticator implements
 
     protected function getLoginUrl()
     {
-
        // return $this->urlGenerator->generate(self::LOGIN_ROUTE);
         return $this->urlGenerator->generate('app_login');
 
