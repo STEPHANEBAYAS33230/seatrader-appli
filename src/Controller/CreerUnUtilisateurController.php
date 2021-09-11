@@ -315,18 +315,17 @@ class CreerUnUtilisateurController extends AbstractController
 
     //***********************************************************************************************
     /**
-     * @Route("/monCompte/monProfil", name="modif_cpte_adminas")
+     * @Route("/admin/monCompte/monProfil", name="modif_cpte_adminas")
      */
-    public function modifierAdmin(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function modifierAdmin(UserInterface $user,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        // on récupère l'user //**   UserInterface $user, */
+        // on récupère l'user //**    */
 
-        //$user=$this->getUser();
-        //$id=$user->getId();
+        $user=$this->getUser();
+        $id=$user->getId();
         try {
             $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
-            $utilisateur = $utilisateurRepo->find(13);
-            $user=$utilisateur;
+            $utilisateur = $utilisateurRepo->find($id);
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $errorMessage = $e->getMessage();

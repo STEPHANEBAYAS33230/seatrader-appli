@@ -10,7 +10,7 @@
  {% endblock %}
 
 {% block main %}
-{#     {% if is_granted('ROLE_ADMIN') %}#}
+    {% if is_granted('ROLE_ADMIN') %}
 
     <div class="container marge-container">
         <div class=row">
@@ -90,6 +90,6 @@
         </div>
 
     </div><!--fin de container-->
-{# {% endif %} #}
+ {% endif %}
 {% endblock %}
 
