@@ -15,7 +15,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
+            #lazy: true
             provider: app_user_provider
             guard:
                 authenticators:
@@ -25,7 +25,7 @@ security:
                 # where to redirect after logout
                 target: / #chemin apres deconnexion
             login_throttling:
-                max_attempts: 5
+               max_attempts: 5
             #login_throttling:
             #      max_attempts: 3
             # activate different ways to authenticate
@@ -37,7 +37,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/monCompte/monProfil, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/login, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/admin, roles: ROLE_ADMIN } #URL DEFINI POUR ROLE ADMIN
