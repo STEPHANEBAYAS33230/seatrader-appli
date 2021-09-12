@@ -1,5 +1,5 @@
 security:
-    enable_authenticator_manager: true
+    #enable_authenticator_manager: true
     encoders:
         App\Entity\Utilisateur:
             algorithm: auto
