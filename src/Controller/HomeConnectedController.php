@@ -32,7 +32,7 @@ class HomeConnectedController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //maintenance effacer les miseenavant de plus d'un mois
-        // récupère repository
+        // récupère repository----
         $dtplus = new \DateTime('now');
         $dtmoins = new \DateTime('now');
         $dtmoins->sub(new DateInterval('P365D'));
