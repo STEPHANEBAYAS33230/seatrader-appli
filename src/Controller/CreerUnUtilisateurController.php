@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CreerUnUtilisateurController extends AbstractController
 {
     /**
-     * @Route("/nouveau-client", name="creerUnUtilisateur")
+     * @Route("/admin/nouveau-client", name="creerUnUtilisateur")
      */
     public function index(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
