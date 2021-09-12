@@ -1,6 +1,6 @@
 security:
     enable_authenticator_manager: true
-    password_hashers:
+    encoders:
         App\Entity\Utilisateur:
             algorithm: auto
 
