@@ -21,29 +21,32 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
 
 class CommandeController extends AbstractController
 {
     /**
      * @Route("/monAppli/commande", name="faire_cde")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @return Response
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function index(EntityManagerInterface $em, Request $request,  MailerInterface $mailer, Environment $twig): Response
+    public function index(EntityManagerInterface $em, Request $request,  MailerInterface $mailer): Response
     {
 
         // recupere toutes les familles/produits
         try {
             $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
             $familleProduit = $familleProduitRepo->findAll();
-            $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
-            $produits = $produitRepo->findAll();
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
+
             $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller43');
             return $this->redirectToRoute('home_connected', [ ]);
         }
-
+        $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
+        $produits = $produitRepo->findAll();
 
         //***********mettre les quantité à zero pour les produits
         foreach( $produits as $prd ) {
@@ -83,7 +86,7 @@ class CommandeController extends AbstractController
             $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
+
             $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller87');
             return $this->redirectToRoute('home_connected', [ ]);
         }
@@ -122,7 +125,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 }catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller126');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -149,7 +151,6 @@ class CommandeController extends AbstractController
                 $openCalendrierLiv=$calendrierLivRepo->filtreDateOpen($dtt2);
             } catch (\Doctrine\DBAL\Exception $e)
             {
-                $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller153');
                 return $this->redirectToRoute('home_connected', [ ]);
             }
@@ -165,7 +166,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller169');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -186,7 +186,6 @@ class CommandeController extends AbstractController
             $dttjour=date("d");
             $dttmois=date("m");
             $dttan=date("Y");
-            $dtjour=date("d/m/Y");
             $dtjour2=new \DateTime('now');
             $dtjour2=date_format($dtjour2,"Y-m-d");
             //$diff = round((strtotime($dtt) - strtotime($dtjour))/(60*60*24)-1);
@@ -236,7 +235,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 }catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller248');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -265,7 +263,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller269');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -294,7 +291,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller298');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -321,7 +317,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller325');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -348,7 +343,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller352');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -374,7 +368,6 @@ class CommandeController extends AbstractController
                 $produits = $produitRepo->findAll();
             } catch (\Doctrine\DBAL\Exception $e)
             {
-                $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller378');
                 return $this->redirectToRoute('home_connected', [ ]);
             }
@@ -389,7 +382,6 @@ class CommandeController extends AbstractController
                     $etat = $etatRepo->find(2);
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller393');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -413,7 +405,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès àla base de données '.'commandecontroller417');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -478,7 +469,6 @@ class CommandeController extends AbstractController
                     return $this->redirectToRoute('voir_cde');
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde '.'commandecontroller482');
                     return $this->redirectToRoute('home_connected', [ ]);
                 }
@@ -518,7 +508,6 @@ class CommandeController extends AbstractController
             $commandeNonModifiable = $commandeRepo->filtrerLesCdesNonEgalToday($user);
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données'.'commandecontroller522');
             return $this->redirectToRoute('home_connected', [ ]);
         }
@@ -540,7 +529,6 @@ class CommandeController extends AbstractController
         $cde = $cdeRepo->find($id);
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données: '.'commandecontroller544');
             return $this->redirectToRoute('home_connected', [ ]);
         }
@@ -562,7 +550,6 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('voir_cde');
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur'.' commandecontroller566');
             return $this->redirectToRoute('home_connected');
         }
@@ -573,7 +560,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/monAppli/commande-modifier/{id}", name="modifier-cde")
      */
-    public function modifierCde($id, Request $request, EntityManagerInterface $em,   MailerInterface $mailer, Environment $twig)
+    public function modifierCde($id, Request $request, EntityManagerInterface $em,   MailerInterface $mailer)
     {    // on récupère l'user/ date today
         $user=$this->getUser();
         $role=$user->getRoles();
@@ -584,7 +571,6 @@ class CommandeController extends AbstractController
             $commande = $cdeRepo->find($id);
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller588');
             return $this->redirectToRoute('home_connected');
         }
@@ -604,7 +590,6 @@ class CommandeController extends AbstractController
         $familleProduit = $familleProduitRepo->findAll();
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller608');
             return $this->redirectToRoute('home_connected');
         }
@@ -626,7 +611,6 @@ class CommandeController extends AbstractController
             $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller630');
             return $this->redirectToRoute('home_connected');
         }
@@ -665,7 +649,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller669');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -701,7 +684,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller705');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -722,7 +704,6 @@ class CommandeController extends AbstractController
             $dttjour=date("d");
             $dttmois=date("m");
             $dttan=date("Y");
-            $dtjour=date("d/m/Y");
             $dtjour2=new \DateTime('now');
             $dtjour2=date_format($dtjour2,"Y-m-d");
             //$diff = round((strtotime($dtt) - strtotime($dtjour))/(60*60*24)-1);
@@ -760,7 +741,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller764');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -790,7 +770,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller794');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -819,7 +798,6 @@ class CommandeController extends AbstractController
                 $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller823');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -847,7 +825,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller851');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -874,7 +851,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller878');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -901,7 +877,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller905');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -927,7 +902,6 @@ class CommandeController extends AbstractController
             $produits = $produitRepo->findAll();
             } catch (\Doctrine\DBAL\Exception $e)
             {
-                $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller931');
                 return $this->redirectToRoute('home_connected');
             }
@@ -961,7 +935,6 @@ class CommandeController extends AbstractController
                     $miseEnAvant = $miseEnAvantRepo->filtrer($todayTrente, $today);//filtre ds le repository
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller965');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -1010,7 +983,6 @@ class CommandeController extends AbstractController
                     $mailer->send($email);
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
-                    $errorMessage = $e->getMessage();
                     $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde:'.'commandecontroller1014');
                     return $this->redirectToRoute('home_connected');
                 }
@@ -1043,7 +1015,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/admin/commandes/{statut}", name="voir-cde-admin")
      */
-    public function voirCdeAdmin($statut, Request $request, EntityManagerInterface $em)
+    public function voirCdeAdmin($statut)
     {    // on récupère l'user/ date today
         $user=$this->getUser();
         $today = new \DateTime('now');
@@ -1064,7 +1036,6 @@ class CommandeController extends AbstractController
             }
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller1068');
             return $this->redirectToRoute('home_connected');
         }
@@ -1096,7 +1067,6 @@ class CommandeController extends AbstractController
             $cde = $cdeRepo->find($id);
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $errorMessage = $e->getMessage();
             $this->addFlash('error', 'Problème d\'accès à la base de données:'.'commandecontroller1100');
             return $this->redirectToRoute('home_connected');
         }
@@ -1111,7 +1081,6 @@ class CommandeController extends AbstractController
                 $em->flush();
             } catch (\Doctrine\DBAL\Exception $e)
             {
-                $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.'commandecontroller1115');
                 return $this->redirectToRoute('home_connected');
             }
@@ -1133,7 +1102,6 @@ class CommandeController extends AbstractController
                 $em->flush();
             } catch (\Doctrine\DBAL\Exception $e)
             {
-                $errorMessage = $e->getMessage();
                 $this->addFlash('error', 'Nous n\'avons pas pu changer l\'état:'.' commandecontroller1137');
                 return $this->redirectToRoute('home_connected');
             }

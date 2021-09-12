@@ -38,7 +38,7 @@ class Utilisateur implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = ['ROLE_USER'];
+    private $roles = ['ROLE_ADMIN'];
 
     /**
      * @Assert\Regex(
