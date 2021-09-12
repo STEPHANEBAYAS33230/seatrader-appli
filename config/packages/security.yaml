@@ -13,7 +13,8 @@ security:
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+            security: true
+            stateless: true
         main:
             lazy: true
             provider: app_user_provider
