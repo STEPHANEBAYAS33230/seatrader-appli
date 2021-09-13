@@ -39,7 +39,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
-        - { path: ^/nouveau-client, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/admin, roles: ROLE_ADMIN } #URL DEFINI POUR ROLE ADMIN
         - { path: ^/monAppli, roles:  [ ROLE_ADMIN, ROLE_USER] } #URL DEFINI POUR ROLE USER
