@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login/recherche/{identifiant}", name="login-trouve")
+     * @Route("/login-find/recherche/{identifiant}", name="login-trouve")
      */
     public function loginTrouve($identifiant, AuthenticationUtils $authenticationUtils, MailerInterface $mailer, Environment $twig): Response
     {   $nombre=0.01;
