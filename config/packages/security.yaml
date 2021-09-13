@@ -38,7 +38,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/login/recherche, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
+        - { path: ^/login/recherche/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/login, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/admin, roles: ROLE_ADMIN } #URL DEFINI POUR ROLE ADMIN
