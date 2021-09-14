@@ -1,5 +1,5 @@
 security:
-    #***enable_authenticator_manager: true
+    enable_authenticator_manager: true
     encoders:
         App\Entity\Utilisateur:
             algorithm: auto
@@ -25,8 +25,8 @@ security:
                 path: app_logout #gestion de la deconnexion
                 # where to redirect after logout
                 target: / #chemin apres deconnexion
-            #login_throttling:
-            #   max_attempts: 5
+            login_throttling:
+               max_attempts: 5
             #login_throttling:
             #      max_attempts: 3
             # activate different ways to authenticate
@@ -40,6 +40,7 @@ security:
     access_control:
         - { path: ^/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/login, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
+        - { path: ^/login-, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/admin, roles: ROLE_ADMIN } #URL DEFINI POUR ROLE ADMIN
         - { path: ^/monAppli, roles:  [ ROLE_ADMIN, ROLE_USER] } #URL DEFINI POUR ROLE USER
 
