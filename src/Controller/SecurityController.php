@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils,  MailerInterface $mailer, Environment $twig): Response
+    public function login(AuthenticationUtils $authenticationUtils,  MailerInterface $mailer): Response
     {
 
 
@@ -66,7 +66,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login-/{identifiant}", name="login-trouve")
      */
-    public function loginTrouve($identifiant, AuthenticationUtils $authenticationUtils, MailerInterface $mailer, Environment $twig): Response
+    public function loginTrouve($identifiant, AuthenticationUtils $authenticationUtils, MailerInterface $mailer): Response
     {   $nombre=0.01;
         try{
             $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
