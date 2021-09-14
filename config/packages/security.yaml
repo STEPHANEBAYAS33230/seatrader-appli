@@ -1,5 +1,5 @@
 security:
-    enable_authenticator_manager: true
+    #enable_authenticator_manager: true
     encoders:
         App\Entity\Utilisateur:
             algorithm: auto
@@ -15,8 +15,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            #anonymous: true
+            anonymous: true
             lazy: true
+            stateless: true
             provider: app_user_provider
             guard:
                 authenticators:
@@ -25,8 +26,8 @@ security:
                 path: app_logout #gestion de la deconnexion
                 # where to redirect after logout
                 target: / #chemin apres deconnexion
-            login_throttling:
-               max_attempts: 5
+            #login_throttling:
+            #   max_attempts: 5
             #login_throttling:
             #      max_attempts: 3
             # activate different ways to authenticate
