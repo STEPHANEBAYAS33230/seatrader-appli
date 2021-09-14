@@ -40,7 +40,6 @@ security:
     access_control:
         - { path: ^/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/login, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
-        - { path: ^/login-find, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
         - { path: ^/admin, roles: ROLE_ADMIN } #URL DEFINI POUR ROLE ADMIN
         - { path: ^/monAppli, roles:  [ ROLE_ADMIN, ROLE_USER] } #URL DEFINI POUR ROLE USER
 
