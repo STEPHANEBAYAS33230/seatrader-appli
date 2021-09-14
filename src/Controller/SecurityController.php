@@ -41,11 +41,11 @@ class SecurityController extends AbstractController
         $mailer->send($email);
         }**/
         // get the login error if there is one
-       $error = $authenticationUtils->getLastAuthenticationError();
+       //$error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
-       $lastUsername = $authenticationUtils->getLastUsername();
-       // $lastUsername=null;
-        //$error=null;
+       //$lastUsername = $authenticationUtils->getLastUsername();
+        $lastUsername=null;
+       $error=null;
         $nomDNS="";
         $role=['0','0'];
         $phase=0;
