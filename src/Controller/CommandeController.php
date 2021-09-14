@@ -547,7 +547,7 @@ class CommandeController extends AbstractController
         try {
         $em->remove($cde);
         $em->flush();
-        return $this->redirectToRoute('voir_cde');
+        return $this->redirectToRoute('home_connected--user');
         } catch (\Doctrine\DBAL\Exception $e)
         {
             $this->addFlash('error', 'Erreur lors de la suppression : Nous n\' avons pas pu supprimer la commande. Contactez l administrateur'.' commandecontroller566');

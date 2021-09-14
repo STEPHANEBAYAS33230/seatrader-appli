@@ -51,6 +51,9 @@
                         <h6 class="nom-famille"><a href="#{{ famille.nomFamille }}">{{ famille.nomFamille }}</a></h6>{# affichage du nom de la famille #}
                     </div>
                 {% endfor %}
+                <div class="surCadre">
+                    <h6 class="nom-famille"><a href="#fincde">FINALISER LA COMMANDE</a></h6>{# affichage du nom de la famille #}
+                </div>
             </div>
         </div>
         <!--//*****************************-->
@@ -158,7 +161,7 @@
                 {% endfor %}
             </table>
         </div>
-        <div class="row col-xl-12">
+        <div class="row col-xl-12" id="fincde">
         {{ form_widget(commandeForm.note,{'value': 'message à remplir juste avant de clicker sur enregister et envoyer (impératif).'}) }}
         </div>
         <div class="row col-xl-12 mt-2">

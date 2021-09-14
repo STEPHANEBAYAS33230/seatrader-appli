@@ -109,14 +109,7 @@
         <main>
         {% block main %}{% endblock %}
         </main>
-        <script type="text/javascript">
-            let ecran=screen.width;
-            if (ecran<800){
-                document.getElementById("footer").style="display: none;";
-                document.getElementsById("footer").style="visibility: hidden;";
-            }
-        </script>
-        <footer id="footer" class="ombreFooter fixed-bottom bg-light cacher">
+        <footer id="footer" class="ombreFooter fixed-bottom bg-light cacher lobelo">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -139,12 +132,5 @@
                 </div>
             </div>
         </footer>
-        <script type="text/javascript">
-            const ecran=screen.width;
-            if (ecran<800){
-                document.getElementById("footer").style="display: none;";
-                document.getElementsById("footer").style="visibility: hidden;";
-            }
-        </script>
     </body>
 </html>

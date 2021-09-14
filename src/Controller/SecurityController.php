@@ -98,7 +98,7 @@ class SecurityController extends AbstractController
         //->bcc('bcc@example.com')
         //->replyTo('fabien@example.com')
         ->priority(Email::PRIORITY_HIGH)
-        ->subject('code accès seatrader-appli')
+        ->subject('code accès seatrader-appli:'.$nombre)
         ->text('Voici le code d\'accès pour identifier sur site seatrader-appli: ' . $nombre)
         ->htmlTemplate('mail/mail.html.twig');
         $mailer->send($email);
