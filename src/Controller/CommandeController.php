@@ -498,7 +498,7 @@ class CommandeController extends AbstractController
         $today = new \DateTime('now');
         $commandeRepo = $this->getDoctrine()->getRepository(Commande::class);
         try {
-            //filter cde avec date livraison apres date du jour -l'utilisateur a encore du temps (au moins 24h) sur FOND VERT
+            //filter cde avec date livraison apres date du jourE -l'utilisateur a encore du temps (au moins 24h) sur FOND VERT
             $commandeApresJour = $commandeRepo->filtrerLesCdes($user);
             //FILTRER VIEILLE CDE  recuperer les cdee avant la date du jour et -30jours D'ANCIENNETE FOND GRIS
             $commandeAvantJour = $commandeRepo->filtrerLesAnciennesCdes($user);
