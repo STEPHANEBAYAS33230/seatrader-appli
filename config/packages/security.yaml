@@ -36,12 +36,12 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
-    # Easy way to control access for large sections of your site
+    # Easy way to control access for large sections of your site ***requires_channel: https
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
-        - { path: ^/login, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
-        - { path: ^/login-/, roles: PUBLIC_ACCESS } #URL autorisé au visiteur anonymous
-        - { path: ^/admin, roles: ROLE_ADMIN } #URL DEFINI POUR ROLE ADMIN
-        - { path: ^/monAppli, roles:  [ ROLE_ADMIN, ROLE_USER] } #URL DEFINI POUR ROLE USER
+        - { path: ^/, roles: PUBLIC_ACCESS,requires_channel: https } #URL autorisé au visiteur anonymous
+        - { path: ^/login, roles: PUBLIC_ACCESS,requires_channel: https} #URL autorisé au visiteur anonymous
+        - { path: ^/login-/, roles: PUBLIC_ACCESS,requires_channel: https } #URL autorisé au visiteur anonymous
+        - { path: ^/admin, roles: ROLE_ADMIN,requires_channel: https } #URL DEFINI POUR ROLE ADMIN
+        - { path: ^/monAppli, roles:  [ ROLE_ADMIN, ROLE_USER],requires_channel: https } #URL DEFINI POUR ROLE USER
 
