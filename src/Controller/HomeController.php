@@ -114,8 +114,8 @@ class HomeController extends AbstractController
                 ->subject('formulaire de contact seatrader-appli')
                 ->text('email: '.$from.' nom: '.$nom.' vous a envoyé ce message du site seatrader-appli: '.$message.' tel:'.$number)
                 ->htmlTemplate( 'mail/mail2.html.twig')
-                ->attachFromPath( 'public/images/slide-01.jpg','public/images/seatraderLOGOsmall.png')
-                 ->context([
+                ->attachFromPath( 'public/assets/images/slide-01.jpg','public/assets/images/seatraderLOGOsmall.png')
+                ->context([
                     'message' => $message,
                     'from' => $from,
                     'nom' =>  $nom,
@@ -134,7 +134,7 @@ class HomeController extends AbstractController
                 ->subject('Accusé de réception: message envoyé')
                 ->text('Votre message a bien été envoyé à la société Seatrader. Vous serez contacter dans les plus brefs délais. Stéphane Moncorgé')
                 ->htmlTemplate( 'mail/mail.html.twig')
-                ->attachFromPath( 'public/images/slide-01.jpg','public/images/seatraderLOGOsmall.png')
+                ->attachFromPath( 'public/assets/images/slide-01.jpg','public/assets/images/seatraderLOGOsmall.png')
                 ->context([
                     'message' => $message,
                     'from' => $from,
