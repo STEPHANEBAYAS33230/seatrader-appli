@@ -116,7 +116,7 @@ class HomeController extends AbstractController
                 ->htmlTemplate( 'mail/mail.html.twig');
 
             $mailer->send($email);
-            $message='Votre message a bien été envoyé à la société Seatrader. Vous serez contacté dans les plus brefs délais. Stéphane Moncorgé';
+            $message='Votre message a bien été envoyé à la société Seatrader. Vous serez contacté dans les plus brefs délais. Cordialement Stéphane Moncorgé';
             //envoi mail2
             $email = (new TemplatedEmail())
                 ->from('contact@seatrader.eu')
