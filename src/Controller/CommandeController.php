@@ -508,7 +508,7 @@ class CommandeController extends AbstractController
             $commandeNonModifiable = $commandeRepo->filtrerLesCdesNonEgalToday($user);
         } catch (\Doctrine\DBAL\Exception $e)
         {
-            $this->addFlash('error', 'Problème d\'accès à la base de données'.'commandecontroller522');
+            $this->addFlash('error', 'Problème d\'accès à la base de données'.'commandecontroller512');
             return $this->redirectToRoute('home_connected', [ ]);
         }
         //***************************
