@@ -70,7 +70,7 @@
                                 <th>{{ prod.id }}</th>
                                 <td>{{ prod.nomProduit }}</td>
                                 <td>{{ prod.pieceOuKg }}</td>
-                                <td>
+                                <td class="lobelo">
                                     {% if prod.brochureFilename!=null %}
                                         <img style="width: 54px; height: 30px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
                                     {% else %}
