@@ -9,11 +9,14 @@
 
 {% block main %}
     {% if is_granted('ROLE_USER') %}
+        <script>
+            {% set screenWidth %}= screen.width;
+        </script>
     <div class="container marge-container" id="debut">
     <div class="row">
         <div class="col-xl-3 justify-content-center mt-5">
             <div class="card bg-light mb-3" style="max-width: 18rem;">
-                <div class="card-header">Passez vos commandes avant 11h</div>
+                <div class="card-header">Passez vos commandes avant 11h {{ screenWidth }}</div>
                 <div class="card-body">
                     <p class="card-title">Jour de commande->Jour de livraison</p>
                     <p class="card-text">Lun->Mar Mar->Mer Mer->Jeu Ven->Sam</p>
