@@ -63,7 +63,9 @@
                 {%  for famille in familleProduit %}
                     <thead id="{{ famille.nomFamille }}">
                     <tr class="bg-white mt-3">
-                        <th scope="col" ></th>
+                        <th scope="col" class="lobelo"></th>
+                        <th scope="col"></th>
+                        <th scope="col" class="lobelo"></th>
                         <th scope="col"></th>
                         <th scope="col" class="lobelo"></th>
                         <th scope="col"></th>
@@ -71,9 +73,10 @@
                     </thead>
                     <thead>
                     {% if clr==1 %}<tr class="bg-warning mt-1">{% set clr=2 %}{% elseif clr==2 %}<tr class="bg-primary mt-1">{% set clr=3 %}{% elseif clr==3 %}<tr class="bg-success mt-1">{% set clr=1 %}{% endif %}
-                        <th scope="col" >famille</th>
-                        <th scope="col"></th>
+                        <th scope="col" class="lobelo">famille</th>
                         <th scope="col"><h4 class="text-left text-dark">{{ famille.nomFamille }}</h4></th>
+                        <th scope="col" class="lobelo"></th>
+                        <th scope="col"></th>
                         <th scope="col" class="lobelo"></th>
                         <th scope="col"></th>
                     </tr>
