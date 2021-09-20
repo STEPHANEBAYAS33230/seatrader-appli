@@ -85,8 +85,8 @@
                     <tr>
                         <th scope="col" class="lobelo"></th>
                         <th scope="col">Produit</th>
-                        <th scope="col" class="">Photos</th>
-                        <th scope="col" class="">Unité</th>
+                        <th scope="col" class="lobelo2">Photos</th>
+                        <th scope="col" class="lobelo2">Unité</th>
                         <th scope="col"></th>
                         <th scope="col">quantité(colis)<a title="RETOUR EN HAUT DE PAGE" class="btn btn-info ml-1" href="#debut"><h6><i class="far fa-arrow-alt-circle-up"></i></h6></a></th>
 
@@ -134,8 +134,8 @@
                                     </div>
                                 </div>
                                 <!--****************************************************************************************************************************-->
-                                <td class="lobello">{{ prod.pieceOuKg }}</td>
-                                <td class="lobello">
+                                <td class="lobello2">{{ prod.pieceOuKg }}</td>
+                                <td class="lobello2">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
     {% if miseav.raison=="PAVILLON FRANCE" %}<h6 class="m-0 p-0" style="background: linear-gradient(to right,blue , white, red); margin: 0; padding: 0;">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</h6> <p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0"> colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
