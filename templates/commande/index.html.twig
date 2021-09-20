@@ -100,7 +100,7 @@
                             <tr>
                                 <th class="lobelo">{{ prod.id }}</th>
                                 <td><h6>{{ prod.nomProduit }}</h6></td>
-                                <td class="lobello"><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera lobelo"></i></button>
+                                <td class="lobelo"><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera lobelo"></i></button>
                                     {% if prod.brochureFilename!=null %}
                                         <img  style="width: 54px; height: 30px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
                                     {% else %}
@@ -134,15 +134,14 @@
                                     </div>
                                 </div>
                                 <!--****************************************************************************************************************************-->
-                                <td class="lobello2">{{ prod.pieceOuKg }}</td>
-                                <td class="lobello2">
+                                <td class="lobelo2">{{ prod.pieceOuKg }}</td>
+                                <td class="lobelo2">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
     {% if miseav.raison=="PAVILLON FRANCE" %}<h6 class="m-0 p-0" style="background: linear-gradient(to right,blue , white, red); margin: 0; padding: 0;">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</h6> <p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0"> colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
     {% else %}<h6 style="background-color: {{ miseav.couleur }}; margin: 0; padding: 0;" class="m-0 p-0">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</h6><p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0">colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>{% endif %}{% endif %}
                                     {% endfor %}
                                 </td>
-
                                 <td><label for="prod{{ prod.id }}">quantité:</label><input id="prod{{ prod.id }}" name="prod{{ prod.id }}" type="number" size="3" min="0" max="999" value="{{ prod.quantite }}"></td>
                             </tr>
                             </tbody>
