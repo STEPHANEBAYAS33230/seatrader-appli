@@ -135,8 +135,8 @@
                                 <td class="">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
-    {% if miseav.raison=="PAVILLON FRANCE" %}<p style="background: linear-gradient(to right,blue , white, red);">{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} <br>colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
-                                        {% else %}<p style="background-color: {{ miseav.couleur }};">{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} <br>colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>{% endif %}{% endif %}
+    {% if miseav.raison=="PAVILLON FRANCE" %}<p style="background: linear-gradient(to right,blue , white, red);">{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
+                                        {% else %}<p style="background-color: {{ miseav.couleur }};">{{ miseav.prix }}€/{{ prod.pieceOuKg }} {{ miseav.raison}} colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>{% endif %}{% endif %}
                                     {% endfor %}
                                 </td>
 
