@@ -67,7 +67,7 @@
                         <th scope="col"></th>
                         <th scope="col" class="lobelo"></th>
                         <th scope="col"></th>
-                        <th scope="col" class="lobelo"></th>
+                        <th scope="col" ></th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -77,7 +77,7 @@
                         <th scope="col"><h4 class="text-left text-dark">{{ famille.nomFamille }}</h4></th>
                         <th scope="col" class="lobelo"></th>
                         <th scope="col"></th>
-                        <th scope="col" class="lobelo"></th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -87,7 +87,7 @@
                         <th scope="col">Produit</th>
                         <th scope="col" class="lobelo">Photos</th>
                         <th scope="col">Unité</th>
-                        <th scope="col" class="lobelo"></th>
+                        <th scope="col"></th>
                         <th scope="col">quantité(colis)<a title="RETOUR EN HAUT DE PAGE" class="btn btn-info ml-1" href="#debut"><h6><i class="far fa-arrow-alt-circle-up"></i></h6></a></th>
 
                     </tr>
@@ -135,7 +135,7 @@
                                 </div>
                                 <!--****************************************************************************************************************************-->
                                 <td>{{ prod.pieceOuKg }}</td>
-                                <td class="m-0 p-0 lobelo">
+                                <td class="">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
     {% if miseav.raison=="PAVILLON FRANCE" %}<p class="m-0 p-0" style="background: linear-gradient(to right,blue , white, red); margin: 0; padding: 0;">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</p> <p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0"> colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
