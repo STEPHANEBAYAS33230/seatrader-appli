@@ -135,8 +135,8 @@
                                 <td class="m-0 p-0">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
-    {% if miseav.raison=="PAVILLON FRANCE" %}<p class="m-0 p-0" style="background: linear-gradient(to right,blue , white, red);">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</p> <p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0"> colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
-    {% else %}<p style="background-color: {{ miseav.couleur }};" class="m-0 p-0">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</p><p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0">colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>{% endif %}{% endif %}
+    {% if miseav.raison=="PAVILLON FRANCE" %}<p class="m-0 p-0" style="background: linear-gradient(to right,blue , white, red); margin: 0; padding: 0;">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</p> <p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0"> colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
+    {% else %}<p style="background-color: {{ miseav.couleur }}; margin: 0; padding: 0;" class="m-0 p-0">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</p><p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0">colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>{% endif %}{% endif %}
                                     {% endfor %}
                                 </td>
 
