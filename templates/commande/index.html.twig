@@ -135,7 +135,7 @@
                                 </div>
                                 <!--****************************************************************************************************************************-->
                                 <td class="lobelo2">{{ prod.pieceOuKg }}</td>
-                                <td class="lobelo2 lobelo">
+                                <td class="lobelo2">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
     {% if miseav.raison=="PAVILLON FRANCE" %}<h6 class="m-0 p-0" style="background: linear-gradient(to right,blue , white, red); margin: 0; padding: 0;">{{ miseav.prix }}€/{{ prod.pieceOuKg }}</h6> <p class="m-0 p-0">{{ miseav.raison}}</p><p class="m-0 p-0"> colis de {{ miseav.colisage }} {{ prod.pieceOuKg }}</p>
