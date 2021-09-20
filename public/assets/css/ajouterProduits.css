@@ -1,7 +1,7 @@
 .bgjaune {
     background-color: #c1af74;
 }
-@media (min-width: 0px) and (max-width: 650px) {
+@media (min-width: 0px) and (max-width: 350px) {
 .lobelo{
     display: none;
 }
