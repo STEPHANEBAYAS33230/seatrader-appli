@@ -86,7 +86,7 @@
                         <th scope="col" class="lobelo"></th>
                         <th scope="col">Produit</th>
                         <th scope="col" class="lobelo">Photos</th>
-                        <th scope="col">Unité</th>
+                        <th scope="col" class="lobelo">Unité</th>
                         <th scope="col"></th>
                         <th scope="col">quantité(colis)<a title="RETOUR EN HAUT DE PAGE" class="btn btn-info ml-1" href="#debut"><h6><i class="far fa-arrow-alt-circle-up"></i></h6></a></th>
 
@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
                                 <!--****************************************************************************************************************************-->
-                                <td>{{ prod.pieceOuKg }}</td>
+                                <td class="lobelo">{{ prod.pieceOuKg }}</td>
                                 <td class="">
                                     {% for miseav in miseEnAvant %}
 {% if (miseav.dateLivraisonMiseEnAvant|date("d/m/Y"))==(dateTodey|date("d/m/Y")) and miseav.produitMiseEnAvant.nomProduit==prod.nomProduit %}
