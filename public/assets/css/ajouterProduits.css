@@ -2,13 +2,16 @@
     background-color: #c1af74;
 }
 
-@media (min-width: 0px) and (max-width: 1200px) {
+@media (min-width: 362px) and (max-width: 1200px) {
 .lobelo{
     display: none;
 }
 }
 
 @media (min-width: 0px) and (max-width: 361px) {
+.lobelo{
+    display: none;
+}
 .lobelo2 {
         display: none;
     }
