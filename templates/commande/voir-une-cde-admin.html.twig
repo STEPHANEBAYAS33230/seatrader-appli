@@ -47,16 +47,16 @@
                         <th scope="col">famille</th>
                         <th scope="col"></th>
                         <th scope="col"><h4 class="text-left text-dark">{{ famille.nomFamille }}</h4></th>
-                        <th scope="col"></th>
+                        <th scope="col" class="lobelo"></th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
                     <thead>
                     <tr>
-                        <th scope="col"></th>
+                        <th scope="col" class="lobelo"></th>
                         <th scope="col">Produit</th>
                         <th scope="col">Unité</th>
-                        <th scope="col"></th>
+                        <th scope="col" class="lobelo"></th>
                         <th scope="col">quantité(colis)</th>
 
                     </tr>
@@ -67,7 +67,7 @@
                         {% if famille.nomFamille==prod.famille and prod.quantite>0 %}
                             <tbody>
                             <tr>
-                                <th>{{ prod.id }}</th>
+                                <th class="lobelo">{{ prod.id }}</th>
                                 <td>{{ prod.nomProduit }}</td>
                                 <td>{{ prod.pieceOuKg }}</td>
                                 <td class="lobelo">

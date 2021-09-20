@@ -82,7 +82,7 @@
                     <tr>
                         <th scope="col" class="lobelo"></th>
                         <th scope="col">Produit</th>
-                        <th scope="col">Photos</th>
+                        <th scope="col" class="lobelo">Photos</th>
                         <th scope="col">Unité</th>
                         <th scope="col"></th>
                         <th scope="col">quantité(colis)<a title="RETOUR EN HAUT DE PAGE" class="btn btn-info ml-1" href="#debut"><h6><i class="far fa-arrow-alt-circle-up"></i></h6></a></th>
@@ -97,7 +97,7 @@
                             <tr>
                                 <th class="lobelo">{{ prod.id }}</th>
                                 <td>{{ prod.nomProduit }}</td>
-                                <td CLASS="lobelo"><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera lobelo"></i></button>
+                                <td class="lobelo"><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera lobelo"></i></button>
                                     {% if prod.brochureFilename!=null %}
                                         <img  style="width: 54px; height: 30px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
                                     {% else %}
