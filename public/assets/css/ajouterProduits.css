@@ -2,7 +2,7 @@
     background-color: #c1af74;
 }
 
-@media (min-width: 362px) and (max-width: 1200px) {
+@media (min-width: 362px) and (max-width: 740px) {
 .lobelo{
     display: none;
 }
