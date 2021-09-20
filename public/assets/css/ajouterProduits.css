@@ -1,13 +1,11 @@
 .bgjaune {
     background-color: #c1af74;
 }
-@media (min-width: 0px) and (max-width: 1201px) {
+@media screen and (min-width: 0px) and (max-width: 370px) {
 .lobelo{
     display: none;
 }
-.decall{
 
-    }
 }
 h1{
     font-size: 55px;
