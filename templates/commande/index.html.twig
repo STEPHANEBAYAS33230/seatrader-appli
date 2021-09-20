@@ -99,7 +99,7 @@
                             <tbody>
                             <tr>
                                 <th class="lobelo">{{ prod.id }}</th>
-                                <td class="ml-1">{{ prod.nomProduit }}</td>
+                                <td class="ml-1"><h6>{{ prod.nomProduit }}</h6></td>
                                 <td class="lobelo"><button type="button" class="btn btn-primary p-1 m-1" data-toggle="modal" data-target="#detail{{ prod.id }}">Détails<i class="fas fa-camera lobelo"></i></button>
                                     {% if prod.brochureFilename!=null %}
                                         <img  style="width: 54px; height: 30px" class="m-0 p-0" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit">
