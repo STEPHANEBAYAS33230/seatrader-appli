@@ -6,16 +6,12 @@
 .lobelo{
     display: none;
 }
-}
-
-@media (min-width: 0px) and (max-width: 361px) {
-.lobelo{
-    display: none;
-}
-.lobelo2 {
-        display: none;
+    .produit{
+        font-size: 8px;
     }
 }
+
+
 h1{
     font-size: 55px;
 }
