@@ -432,6 +432,8 @@ class CommandeController extends AbstractController
             $numUtilisateur=$utilisateur->getTelephoneSociete();
             $nomUtilisateur=$utilisateur->getNomDeLaSociete();
             $nameUtilisateur=$utilisateur->getNom();
+            $emailUtilisateur=$utilisateur->getEmailSociete();
+
             if ($idUtilisateur=$user->getId()){
 
                 //**************************
@@ -453,6 +455,31 @@ class CommandeController extends AbstractController
                     $email = (new TemplatedEmail())
                         ->from('contact@seatrader.eu')
                         ->to('contact@seatrader.eu')
+                        //->cc('cc@example.com')
+                        //->bcc('bcc@example.com')
+                        //->replyTo('fabien@example.com')
+                        ->priority(Email::PRIORITY_HIGH)
+                        ->subject('commande reçue sur https://seatrader.eu/')
+                        ->text('message du site seatrader-appli: une nouvelle cde de '.$nomUtilisateur.
+                            ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur)
+                        ->htmlTemplate( 'mail/mail3.html.twig')
+                        ->attachFromPath( $publicDir.'/public/assets/images/slide-01.jpg')
+                        ->attachFromPath( $publicDir.'/public/assets/images/seatraderBIG.png')
+                        ->context([
+                            'message' => $message,
+                            'nom' => $nameUtilisateur,
+                            'nom2'=> $nomUtilisateur,
+                            '$numero' =>  $numUtilisateur,
+                            'commande'=> $commande
+                        ]);
+                    $mailer->send($email);
+                    //***************************
+                    //******************************************************************************************************
+                    $message="Bonjour: confimation de l'envoi de votre commande. Merci de votre confiance SEATRADER";
+                    //envoi mail2
+                    $email = (new TemplatedEmail())
+                        ->from('contact@seatrader.eu')
+                        ->to($emailUtilisateur)
                         //->cc('cc@example.com')
                         //->bcc('bcc@example.com')
                         //->replyTo('fabien@example.com')
