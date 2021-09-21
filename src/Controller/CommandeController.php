@@ -596,7 +596,7 @@ class CommandeController extends AbstractController
     /**
      * @Route("/monAppli/commande-modifier/{id}", name="modifier-cde")
      */
-    public function modifierCde($id, Request $request, EntityManagerInterface $em,   MailerInterface $mailer)
+    public function modifierCde($id, Request $request, EntityManagerInterface $em,   MailerInterface $mailer, $publicDir)
     {    // on récupère l'user/ date today
         $user=$this->getUser();
         $role=$user->getRoles();
@@ -1018,6 +1018,8 @@ class CommandeController extends AbstractController
                         ->context([
                             'message' => $message
                         ])
+                        ->attachFromPath( $publicDir.'/public/assets/images/slide-01.jpg')
+                        ->attachFromPath( $publicDir.'/public/assets/images/seatraderBIG.png')
                         ->htmlTemplate( 'mail/mail.html.twig');
 
                     $mailer->send($email);
@@ -1032,6 +1034,8 @@ class CommandeController extends AbstractController
                         ->context([
                             'message' => $message
                         ])
+                        ->attachFromPath( $publicDir.'/public/assets/images/slide-01.jpg')
+                        ->attachFromPath( $publicDir.'/public/assets/images/seatraderBIG.png')
                         ->htmlTemplate( 'mail/mail.html.twig');
 
                     $mailer->send($email);
