@@ -1,0 +1,41 @@
+{% extends 'baseEmail.html.twig' %}
+
+{% block title %}SEATRADER-APPLI{% endblock %}
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
+
+{% block main %}
+
+    <div class="container marge-container">
+        <div class=row">
+            <div class="col-xl-12 justify-content-center titre">
+                <div>
+                    <h1 class="text-primary">SEATRADER mail: contact@seatrader.eu</h1>
+
+                    <h2 class="mt-3 mt-6 text-danger">
+                        DE LA MER A CHEZ VOUS...
+                    </h2>
+                    <h2>NOUVEAU MESSAGE: commande reçue...</h2>
+                    <h3>{{ message }} : {{ nom2 }} ( {{ nom }} ).</h3>
+                    <h3>Son identifiant est : {{ nom2 }}</h3>
+                    <h3>Son numéro de téléphone est : {{ number }}</h3>
+                    <h3>Sa commande: </h3>
+
+                    <h6 class="text-primary">
+                        {% for ligne in commande.object %}
+                            {% if ligne.quantite>0 %}
+                                {{ ligne.nomProduit }}_____quantité en colis:{{ ligne.quantite }}
+                                <hr>
+                            {% endif %}
+                        {% endfor %}
+                    </h6>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

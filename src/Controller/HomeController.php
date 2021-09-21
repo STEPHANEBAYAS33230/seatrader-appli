@@ -143,6 +143,7 @@ class HomeController extends AbstractController
                     '$nom' =>  $nom
                 ]);
                 $mailer->send($email);
+                //***************************
             return $this->redirectToRoute('home', [
 
             ]);

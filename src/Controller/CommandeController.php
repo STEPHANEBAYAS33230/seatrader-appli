@@ -32,7 +32,7 @@ class CommandeController extends AbstractController
      * @return Response
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function index(EntityManagerInterface $em, Request $request,  MailerInterface $mailer): Response
+    public function index(EntityManagerInterface $em, Request $request,  MailerInterface $mailer, $publicDir): Response
     {
 
         // recupere toutes les familles/produits
@@ -447,7 +447,9 @@ class CommandeController extends AbstractController
                     $utili->addCommande($commande);
                     $em->persist($utili);
                     $em->flush();
-                    //envoi mail
+                    //******************************************************************************************************
+                    $message="Bonjour, vous venez de recevoir une commande passée par:";
+                    //envoi mail2
                     $email = (new TemplatedEmail())
                         ->from('contact@seatrader.eu')
                         ->to('contact@seatrader.eu')
@@ -455,14 +457,21 @@ class CommandeController extends AbstractController
                         //->bcc('bcc@example.com')
                         //->replyTo('fabien@example.com')
                         ->priority(Email::PRIORITY_HIGH)
-                        ->subject('commande reçue')
+                        ->subject('commande reçue sur https://seatrader.eu/')
                         ->text('message du site seatrader-appli: une nouvelle cde de '.$nomUtilisateur.
                             ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur)
-                        ->htmlTemplate( 'mail/mail.html.twig');
-
+                        ->htmlTemplate( 'mail/mail3.html.twig')
+                        ->attachFromPath( $publicDir.'/public/assets/images/slide-01.jpg')
+                        ->attachFromPath( $publicDir.'/public/assets/images/seatraderBIG.png')
+                        ->context([
+                            'message' => $message,
+                            'nom' => $nameUtilisateur,
+                            'nom2'=> $nomUtilisateur,
+                            '$numero' =>  $numUtilisateur,
+                            'commande'=> $commande
+                        ]);
                     $mailer->send($email);
-                    //******************************************************************************************************
-
+                    //***************************
                     //***********redirection vers voir mes commandes
                     $this->addFlash('success', "Commande enregistrée et envoyée");
 
