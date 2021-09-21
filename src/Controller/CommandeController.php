@@ -1006,19 +1006,37 @@ class CommandeController extends AbstractController
                     $em->persist($commande);
                     $em->flush();
                     //envoi mail
+                    $message="BONJOUR, PETIT MESSAGE D'ALERTE:la commande de".$nomUtilisateur."( ".$nameUtilisateur."-".$numUtilisateur.") vient d'être modifié par ".$modificateur."...
+                    Vous pouvez vérifier la commande si vous n'êtes pas l'auteur de la modification sur https://seatrader.eu/ .";
                     $email = (new TemplatedEmail())
                         ->from('contact@seatrader.eu')
                         ->to('contact@seatrader.eu')
-                        ->cc($emailSociete)
-                        //->bcc('bcc@example.com')
-                        ->replyTo($emailSociete)
                         ->priority(Email::PRIORITY_HIGH)
-                        ->subject('modification dans une commande par :'.$modificateur)
+                        ->subject('modification d\'une commande par :'.$modificateur)
                         ->text('message du site seatrader-appli: une MODIFICATION la cde de '.$nomUtilisateur.
                             ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur." par ".$modificateur)
+                        ->context([
+                            'message' => $message
+                        ])
                         ->htmlTemplate( 'mail/mail.html.twig');
 
                     $mailer->send($email);
+                    //email 2 au client
+                    $email = (new TemplatedEmail())
+                        ->from('contact@seatrader.eu')
+                        ->to($emailSociete)
+                        ->priority(Email::PRIORITY_HIGH)
+                        ->subject('modification d\'une commande par :'.$modificateur)
+                        ->text('message du site seatrader-appli: une MODIFICATION la cde de '.$nomUtilisateur.
+                            ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur." par ".$modificateur)
+                        ->context([
+                            'message' => $message
+                        ])
+                        ->htmlTemplate( 'mail/mail.html.twig');
+
+                    $mailer->send($email);
+
+                    //*******************
                 } catch (\Doctrine\DBAL\Exception $e)
                 {
                     $this->addFlash('error', 'Nous n\'avons pas pu enregistrer la cde:'.'commandecontroller1014');
