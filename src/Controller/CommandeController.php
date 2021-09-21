@@ -996,6 +996,8 @@ class CommandeController extends AbstractController
             $nomUtilisateur=$utilisateur->getNomDeLaSociete();
             $nameUtilisateur=$utilisateur->getNom();
             $role=$user->getRoles();
+            $modificateur=$user->getNomDeLaSociete();
+            $emailSociete=$user->getEmailSociete();
             if ( $idUtilisateur==$user->getId() or $role==['ROLE_ADMIN','ROLE_USER']){
 
                 //**************************
@@ -1009,10 +1011,10 @@ class CommandeController extends AbstractController
                         ->to('contact@seatrader.eu')
                         //->cc('cc@example.com')
                         //->bcc('bcc@example.com')
-                        //->replyTo('fabien@example.com')
+                        ->replyTo($emailSociete)
                         ->priority(Email::PRIORITY_HIGH)
-                        ->subject('commande modifiée reçue')
-                        ->text('message du site seatrader-appli: une MODIFICATION cde de '.$nomUtilisateur.
+                        ->subject('ATTENTION: une modification dans une commande par :'.$modificateur)
+                        ->text('message du site seatrader-appli: une MODIFICATION la cde de '.$nomUtilisateur.
                             ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur)
                         ->htmlTemplate( 'mail/mail.html.twig');
 
