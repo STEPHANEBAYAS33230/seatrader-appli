@@ -1009,13 +1009,13 @@ class CommandeController extends AbstractController
                     $email = (new TemplatedEmail())
                         ->from('contact@seatrader.eu')
                         ->to('contact@seatrader.eu')
-                        //->cc('cc@example.com')
+                        ->cc($emailSociete)
                         //->bcc('bcc@example.com')
                         ->replyTo($emailSociete)
                         ->priority(Email::PRIORITY_HIGH)
-                        ->subject('ATTENTION: une modification dans une commande par :'.$modificateur)
+                        ->subject('modification dans une commande par :'.$modificateur)
                         ->text('message du site seatrader-appli: une MODIFICATION la cde de '.$nomUtilisateur.
-                            ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur)
+                            ' tel:'.$numUtilisateur.' nom: '.$nameUtilisateur." par ".$modificateur)
                         ->htmlTemplate( 'mail/mail.html.twig');
 
                     $mailer->send($email);
