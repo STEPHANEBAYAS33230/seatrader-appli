@@ -469,7 +469,7 @@ class CommandeController extends AbstractController
                             'message' => $message,
                             'nom' => $nameUtilisateur,
                             'nom2'=> $nomUtilisateur,
-                            '$numero' =>  $numUtilisateur,
+                            'numero' =>  $numUtilisateur,
                             'commande'=> $commande
                         ]);
                     $mailer->send($email);
@@ -494,7 +494,7 @@ class CommandeController extends AbstractController
                             'message' => $message,
                             'nom' => $nameUtilisateur,
                             'nom2'=> $nomUtilisateur,
-                            '$numero' =>  $numUtilisateur,
+                            'numero' =>  $numUtilisateur,
                             'commande'=> $commande
                         ]);
                     $mailer->send($email);
