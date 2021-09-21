@@ -31,8 +31,9 @@ font & reset css
 reset
 --------------------------------------------- 
 */
-img {
+.floute {
   filter: blur(5px);
+  -webkit-filter: blur(5px);
 }
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, div
 pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q,
