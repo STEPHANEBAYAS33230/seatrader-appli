@@ -69,7 +69,7 @@
                             <div class="form-label-group">
 
                                 <input class="form-control bg-input"  type="password" name="password" id="inputPassword" required>
-                                <label for="inputPassword"> MOT DE PASSE</label>
+                                <label for="inputPassword"> MOT DE PASSE</label><i class="far fa-eye" onmouseover="voir();" onmouseout="cache();"></i>
 
 
                                 <input type="hidden" name="_csrf_token"
@@ -137,7 +137,12 @@
             url="{{ path('login-trouve',{'identifiant':'nomDNS' }) }}".replace('nomDNS',nomDNS_js);
             window.location.href=url;
         }
-
+        function voir() {
+            document.getElementById("inputPassword").type="text";
+        }
+        function cache() {
+            document.getElementById("inputPassword").type="password";
+        }
     </script>
 
 {% endblock %}
