@@ -22,25 +22,7 @@ class SecurityController extends AbstractController
 
 
         $nombre=0.01;
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-        /**if ($utilisateur!=null and $nomDNS==$identifiant." " and $roles==['ROLE_ADMIN','ROLE_USER']) {
-        $nombre = rand(10000, 99999);
-        //envoi mail
-        $email = (new TemplatedEmail())
-        ->from('contact@seatrader.eu')
-        ->to('contact@seatrader.eu')
-        //->cc('cc@example.com')
-        //->bcc('bcc@example.com')
-        //->replyTo('fabien@example.com')
-        ->priority(Email::PRIORITY_HIGH)
-        ->subject('code accès seatrader-appli')
-        ->text('Voici le code d\'accès pour identifier sur site seatrader-appli: ' . $nombre)
-        ->htmlTemplate('mail/mail.html.twig');
-        $mailer->send($email);
-        }**/
-        // get the login error if there is one
+
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
