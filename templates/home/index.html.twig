@@ -45,6 +45,9 @@
 
 <!-- ***** Header Area Start ***** -->
 <header class="header-area header-sticky">
+    <div id="CSC" class="bg-info mt-3 mb-3">
+        <h6 class="text-white"> This site requires cookies to function properly. You may disable cookies in browser settings. <button class="text-success p-1" onclick="hider();">continue</button></h6>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -681,6 +684,9 @@
         });
     });
 
+    function hider(){
+        document.getElementById("CSC").style="visibility: hidden;"
+    }
 </script>
 </body>
 </html>
