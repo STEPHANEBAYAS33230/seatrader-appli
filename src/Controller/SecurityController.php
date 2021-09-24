@@ -21,6 +21,9 @@ class SecurityController extends AbstractController
 
 
         $nombre=0.01;
+        $nombre1 = 0;
+        $nombre2 = 0;
+        $nombre3=  0;
 
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -30,7 +33,7 @@ class SecurityController extends AbstractController
         $nomDNS="";
         $role=['0','0'];
         $phase=0;
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername,
+        return $this->render('security/login.html.twig', ['nombre3'=>$nombre3, 'nombre2'=>$nombre2, 'nombre1'=>$nombre1,'last_username' => $lastUsername,
             'error' => $error,'role'=>$role,'nomDNS'=>$nomDNS, 'nombre'=>$nombre, 'phase'=>$phase]);
         //return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error,'nomDNS'=>$nomDNS]);
 
