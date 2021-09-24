@@ -50,7 +50,10 @@ class SecurityController extends AbstractController
      */
     public function loginTrouve($identifiant, AuthenticationUtils $authenticationUtils, MailerInterface $mailer): Response
     {   $nombre=0.01;
-        try{
+        $nombre1 = rand(1, 10);
+        $nombre2 = rand(1, 10);
+        $nombre3=($nombre1*$nombre2)-$nombre2;
+    try{
             $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
             $utilisateur = $utilisateurRepo->trouverUtilisateur($identifiant." ");//." "
         } catch (\Doctrine\DBAL\Exception $e)
@@ -85,12 +88,16 @@ class SecurityController extends AbstractController
         ->htmlTemplate('mail/mail.html.twig');
         $mailer->send($email);
         }
+        if ($utilisateur!=null  and $role==['ROLE_USER']) {
+            $phase=2;
+        }
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername,
+        return $this->render('security/login.html.twig', [ 'nombre3'=>$nombre3, 'nombre2'=>$nombre2, 'nombre1'=>$nombre1, 'last_username' => $lastUsername,
             'error' => $error,'role'=>$role,'nomDNS'=>$nomDNS, 'nombre'=>$nombre, 'phase'=>$phase]);
     }
 }
