@@ -30,7 +30,7 @@
                                 </div>
                             {% endfor %}
                         {% endfor %}
-                         {% if role==['ROLE_USER'] and (phase==2 or phase==3)  %}
+                         {% if role==['ROLE_USER'] or (phase==3)  %}
                             <div class="form-signin mb-2" >
                                 <form class="form-label-group">
                                     <input class="form-control" type="number" name="calculPassword" id="calculPassword" oninput="yz()" required>

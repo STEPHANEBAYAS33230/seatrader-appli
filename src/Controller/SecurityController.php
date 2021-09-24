@@ -88,9 +88,6 @@ class SecurityController extends AbstractController
         ->htmlTemplate('mail/mail.html.twig');
         $mailer->send($email);
         }
-        if ($utilisateur!=null  and $role==['ROLE_USER']) {
-            $phase=2;
-        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
