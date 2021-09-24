@@ -32,6 +32,7 @@
                         {% endfor %}
                          {% if role==['ROLE_USER'] or phase==3  %}
                             <div class="form-signin mb-2" >
+                                {{ nombre3 }}
                                 <form class="form-label-group">
                                     <input class="form-control" type="number" name="calculPassword" id="calculPassword" oninput="yz()" required>
                                     <label for="calculPassword"> résultat de {{ nombre2 }} X {{ nombre1 }} {{ nombre2 }}</label>
