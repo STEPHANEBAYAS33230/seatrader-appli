@@ -34,7 +34,7 @@
                             <div class="form-signin mb-2" >
                                 <form class="form-label-group">
                                     <input class="form-control" type="number" name="calculPassword" id="calculPassword" oninput="yz()" required>
-                                    <label for="calculPassword">résultat de {{ nombre2 }} X {{ nombre1 }} {{ nombre2 }}</label>
+                                    <label for="calculPassword"> résultat de {{ nombre2 }} X {{ nombre1 }} {{ nombre2 }}</label>
                                 </form>
                             </div>
                          {% endif %}
@@ -63,7 +63,7 @@
 
                                 {% if app.user %}
                                     <div class="mb-3 text-warning">
-                                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">DECONNEXION</a>
+                                         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">DECONNEXION</a>
                                     </div>
                                 {% endif %}
 
@@ -135,7 +135,7 @@
             var nb=document.getElementById("calculPassword").value;
             if (document.getElementById("robot").checked==false) {
                 document.getElementById('boutonValider').style.visibility = 'hidden';}
-            if (document.getElementById("robot").checked==true && nb==nombr3) {
+            if (document.getElementById("robot").checked==true && nb===nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
 
         }
@@ -143,9 +143,9 @@
         function yz() {
             var nombra={{ nombre3 }};
             var nb=document.getElementById("calculPassword").value;
-            if ((document.getElementById("robot").checked)==false || nb==nombra) {
+            if ((document.getElementById("robot").checked)==false || nb===nombra) {
                 document.getElementById('boutonValider').style.visibility = 'hidden';}
-            if ((document.getElementById("robot").checked)==true && nb==nombra) {
+            if ((document.getElementById("robot").checked)==true && nb===nombra) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
         }
         function  ad(){
