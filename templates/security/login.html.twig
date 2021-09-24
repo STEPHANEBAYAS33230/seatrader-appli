@@ -132,18 +132,20 @@
 
         function ac() {
             var nombr3={{ nombre3 }};
+            var nb=document.getElementById("calculPassword").value;
             if (document.getElementById("robot").checked==false) {
                 document.getElementById('boutonValider').style.visibility = 'hidden';}
-            if (document.getElementById("robot").checked==true && document.getElementById("calculPassword").value==nombr3) {
+            if (document.getElementById("robot").checked==true && nb==nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
 
         }
 
         function yz() {
             var nombr3={{ nombre3 }};
-            if ((document.getElementById("robot").checked)==false || (document.getElementById("calculPassword").value)==nombr3) {
+            var nb=document.getElementById("calculPassword").value;
+            if ((document.getElementById("robot").checked)==false || nb!=nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'hidden';}
-            if ((document.getElementById("robot").checked)==true && (document.getElementById("calculPassword").value)==nombr3) {
+            if ((document.getElementById("robot").checked)==true && nb==nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
         }
         function  ad(){
