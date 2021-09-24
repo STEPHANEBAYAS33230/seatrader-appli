@@ -62,8 +62,8 @@
                                 {% endif %}
 
                                 {% if app.user %}
-                                    <div class="mb-3 text-warning">
-                                         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">DECONNEXION</a>
+                                    <div class="mb-3 text-dark bg-secondary">
+                                         Vous êtes connecté sous {{ app.user.username }}, <a class="bg-secondary text-dark" href="{{ path('app_logout') }}">DECONNEXION</a>
                                     </div>
                                 {% endif %}
 
