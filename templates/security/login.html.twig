@@ -34,7 +34,7 @@
                             <div class="form-signin mb-2" >
                                 <form class="form-label-group">
                                     <input class="form-control" type="number" name="calculPassword" id="calculPassword" oninput="yz()" required>
-                                    <label for="calculPassword">résultat de ({{ nombre2 }}X{{ nombre1 }})-{{ nombre2 }}</label>
+                                    <label for="calculPassword">résultat de {{ nombre2 }} X {{ nombre1 }} {{ nombre2 }}</label>
                                 </form>
                             </div>
                          {% endif %}
@@ -68,7 +68,7 @@
                                 {% endif %}
 
 
-                                <input  class="" id="nomDNS"  type="text"  value="{{ nomDNS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required >
+                                <input  id="nomDNS"  type="text"  value="{{ nomDNS }}" name="nomDeLaSociete" id="inputNomDeLaSociete" class="form-control" required >
                                 <label for="inputNomDeLaSociete">Nom De La Société Identifiant</label>
                                 <a class="text-center btn btn-outline-light mb-1" onclick="ad()">Entrer et valider mon identifiant...</a>
 
@@ -117,6 +117,7 @@
                 return false;
             }
         }, true); // "true" => phase de capture
+
         function ab() {
             var nombr={{ nombre }};
             var nb = document.getElementById('codePassword').value;
@@ -133,18 +134,17 @@
             var nombr3={{ nombre3 }};
             if (document.getElementById("robot").checked==false) {
                 document.getElementById('boutonValider').style.visibility = 'hidden';}
-            if (document.getElementById("robot").checked==true && document.getElementById('calculPassword').value==nombr3) {
+            if (document.getElementById("robot").checked==true && document.getElementById("calculPassword").value==nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
 
         }
 
         function yz() {
             var nombr3={{ nombre3 }};
-            if ((document.getElementById("robot").checked)==false || (document.getElementById('calculPassword').value)!=nombr3) {
+            if ((document.getElementById("robot").checked)==false || (document.getElementById("calculPassword").value)==nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'hidden';}
-            if ((document.getElementById("robot").checked)==true && (document.getElementById('calculPassword').value)==nombr3) {
+            if ((document.getElementById("robot").checked)==true && (document.getElementById("calculPassword").value)==nombr3) {
                 document.getElementById('boutonValider').style.visibility = 'visible';}
-
         }
         function  ad(){
             nomDNS_js=document.getElementById('nomDNS').value;
