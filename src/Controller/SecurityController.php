@@ -54,7 +54,7 @@ class SecurityController extends AbstractController
     {   $nombre=0.01;
         $nombre1 = rand(1, 10);
         $nombre2 = rand(1, 10);
-        $nombre3=($nombre1*$nombre2)-$nombre2;
+        $nombre3=($nombre1*$nombre2);
     try{
             $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
             $utilisateur = $utilisateurRepo->trouverUtilisateur($identifiant." ");//." "
