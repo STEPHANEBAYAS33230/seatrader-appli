@@ -114,7 +114,6 @@ class HomeController extends AbstractController
                 ->subject('formulaire de contact seatrader-appli')
                 ->text('email: '.$from.' nom: '.$nom.' vous a envoyé ce message du site seatrader-appli: '.$message.' tel:'.$number)
                 ->htmlTemplate( 'mail/mail2.html.twig')
-                ->attachFromPath( $publicDir.'/public/assets/images/slide-01.jpg','/public/assets/images/seatraderLOGOsmall.png')
                 ->attachFromPath( $publicDir.'/public/assets/images/seatraderBIG.png')
                 ->context([
                     'message' => $message,
