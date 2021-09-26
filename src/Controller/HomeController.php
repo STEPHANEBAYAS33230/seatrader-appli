@@ -124,9 +124,10 @@ class HomeController extends AbstractController
                 ]);
             $mailer->send($email);
             $message='Votre message a bien été envoyé à la société Seatrader. Vous serez contacté dans les plus brefs délais. Cordialement Stéphane Moncorgé';
+
             //envoi mail2
             $email = (new TemplatedEmail())
-                ->from('contact@seatrader.eu')
+                ->from('dylf7375@down.o2switch.net')
                 ->to($from)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
