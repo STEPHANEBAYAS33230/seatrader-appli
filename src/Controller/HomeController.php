@@ -105,7 +105,7 @@ class HomeController extends AbstractController
 
             //envoi mail
             $email = (new TemplatedEmail())
-                ->from($from)
+                ->from("dylf7375@down.o2switch.net")
                 ->to('contact@seatrader.eu')
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
