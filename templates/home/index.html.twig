@@ -700,10 +700,10 @@
         document.getElementById("imgx").src=imageZoom+zoomString;
     }
     function arrondi(idi$) {
-        document.getElementById(idi$).class="rounded-circle";
+        document.getElementById(idi$).style="clip-path:ellipse(75% 75%);";
     }
     function carre(idi$) {
-        document.getElementById(idi$).class="rounded-0";
+        document.getElementById(idi$).style="clip-path:ellipse(100% 100%);";
     }
 </script>
 </body>
