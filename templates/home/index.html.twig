@@ -166,7 +166,7 @@
                             <img  src="{{ asset('assets/images/about-thumb-01.jpg') }}" alt="label rouge">
                         </div>
                         <div class="col-4">
-                            <img class="rounded-circle" src="{{ asset('assets/images/about-thumb-02.jpg') }}" alt="chalutier">
+                            <img src="{{ asset('assets/images/about-thumb-02.jpg') }}" alt="chalutier">
                         </div>
                         <div class="col-4" >
                             <img  src="{{ asset('assets/images/about-thumb-03.jpg') }}" alt="haccp">
@@ -205,9 +205,9 @@
                             <div class="row">
                                 <div class="col-lg-6 offset-lg-3">
                                     <ul>
-                                        <li><a href='#tabs-1'><img src="{{ asset('assets/images/tab-icon-01.png') }}" alt="">PRODUITS FRAIS</a></li>
-                                        <li><a href='#tabs-2'><img src="{{ asset('assets/images/tab-icon-02.png') }}" alt="">PRODUITS TRANSFORMES</a></li>
-                                        <li><a href='#tabs-3'><img src="{{ asset('assets/images/tab-icon-03.png') }}" alt="">PRODUITS SURGELES</a></li>
+                                        <li><a href='#tabs-1'><img onmouseout="carre()" onmouseover="arrondi('pf')" id="pf"src="{{ asset('assets/images/tab-icon-01.png') }}" alt="produits frais">PRODUITS FRAIS</a></li>
+                                        <li><a href='#tabs-2'><img onmouseout="carre()" onmouseover="arrondi('pt')" id="pt" src="{{ asset('assets/images/tab-icon-02.png') }}" alt="produits transformes">PRODUITS TRANSFORMES</a></li>
+                                        <li><a href='#tabs-3'><img onmouseout="carre()" onmouseover="arrondi('surgeles')" id="surgeles"src="{{ asset('assets/images/tab-icon-03.png') }}" alt="produits surgeles">PRODUITS SURGELES</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -698,6 +698,14 @@
         if (zoomx>2.60) {zoomx=0;}
         var zoomString=zoomx.toString();
         document.getElementById("imgx").src=imageZoom+zoomString;
+    }
+    function arrondi(idi) {
+        document.getElementById(idi).class="rounded-circle";
+    }
+    function carre() {
+        document.getElementById("pt").class="";
+        document.getElementById("pf").class="";
+        document.getElementById("surgeles").class="";
     }
 </script>
 </body>
