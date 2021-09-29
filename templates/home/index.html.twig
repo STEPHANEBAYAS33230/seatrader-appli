@@ -673,7 +673,7 @@
 <script>
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.49&fp-y=.60&fp-z=";
     let zoomx=0;
-    setInterval("zoomer()",500);
+    setInterval("zoomer()",100);
     $(function() {
         var selectedClass = "";
         $("p").click(function(){
@@ -694,7 +694,7 @@
     }
 
     function zoomer() {
-        zoomx=zoomx+0.05;
+        zoomx=zoomx+0.01;
         if (zoomx>1.99) {zoomx=0;}
         var zoomString=zoomx.toString();
         document.getElementById("imgx").src=imageZoom+zoomString;
