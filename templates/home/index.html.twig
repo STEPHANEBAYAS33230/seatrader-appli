@@ -673,7 +673,7 @@
 <script>
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.15&fp-y=.60&fp-z=";
     let zoomx=0;
-    setTimeout(zoomer,1000);
+    setInterval("zoomer()",1000);
     $(function() {
         var selectedClass = "";
         $("p").click(function(){
