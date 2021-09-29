@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -177,7 +177,7 @@
             <div class="col-lg-6 col-md-6 col-xs-12">
                 <div class="right-content">
                     <div class="thumb" style="border-width: 4px; border-color:cadetblue; border-style: solid;">
-                        <img src="{{ asset('assets/images/about-video-bg.jpg') }}" alt="carte des apports de peche de boulogne sur mer">
+                        <img id="imgx" src="{{ asset('assets/images/about-video-bg.jpg') }}" alt="carte des apports de peche de boulogne sur mer">
                     </div>
                 </div>
             </div>
@@ -671,7 +671,9 @@
 <!-- Global Init -->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script>
-
+    const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg/?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.15&fp-y=0.60&fp-z=";
+    let zoom=0;
+    setTimeout('zoom()',1000);
     $(function() {
         var selectedClass = "";
         $("p").click(function(){
@@ -689,6 +691,13 @@
     function hider(){
         document.getElementById("CSC").style="display: none;"
         document.getElementById("cacheBarCookie").style="visibility: visible;"
+    }
+
+    function zoom() {
+        zoom=zoom+0.1;
+        if (zoom==2) {zoom=0;}
+        var zoomString=zoom.toString();
+        document.getElementById("imgx").src=imageZoom+zoomString;
     }
 </script>
 </body>
