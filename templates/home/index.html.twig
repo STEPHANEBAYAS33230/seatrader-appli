@@ -494,7 +494,7 @@
                 <div class="chef-item">
                     <div class="thumb">
 
-                        <img src="{{ asset('') }}assets/images/logis-01.jpg" alt="stef">
+                        <img id="imgx2" src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
                     </div>
                     <div class="down-content">
                         <h4>STEF</h4>
@@ -672,6 +672,7 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script>
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.49&fp-y=.60&fp-z=";
+    const imageZoom2="https://noam2010.imgix.net/logis-01.jpg?auto=compress&w=360&h=342&fit=crop&crop=focalpoint&fp-x=.50&fp-y=.50&fp-z=";
     let zoomx=0;
     setInterval("zoomer()",250);
     $(function() {
@@ -698,6 +699,8 @@
         if (zoomx>2.60) {zoomx=0;}
         var zoomString=zoomx.toString();
         document.getElementById("imgx").src=imageZoom+zoomString;
+        document.getElementById("imgx2").src=imageZoom2+zoomString;
+
     }
     function arrondi(idi$) {
         document.getElementById(idi$).style="clip-path:ellipse(50% 50%);";
