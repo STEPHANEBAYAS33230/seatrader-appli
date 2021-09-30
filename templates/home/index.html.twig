@@ -674,7 +674,7 @@
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.49&fp-y=.60&fp-z=";
     const imageZoom2="https://noam2010.imgix.net/slide-01.jpg?auto=compress&w=1500&h=1000&fit=crop&crop=focalpoint&fp-x=.15&fp-y=.15&fp-z=";
     let zoomx=0;
-    setInterval("zoomer()",100);
+    setInterval("zoomer()",250);
     $(function() {
         var selectedClass = "";
         $("p").click(function(){
@@ -695,7 +695,7 @@
     }
 
     function zoomer() {
-        zoomx=zoomx+0.04;
+        zoomx=zoomx+0.06;
         if (zoomx>2.60) {zoomx=0;}
         var zoomString=zoomx.toString();
         document.getElementById("imgx").src=imageZoom+zoomString;
