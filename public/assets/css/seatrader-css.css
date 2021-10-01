@@ -1827,7 +1827,7 @@ responsive
   width: 324px;
   height:307px;
   background: #4978fb;
-  animation: zoom-in-zoom-out 4s ease infinite;
+  animation: zoom-in-zoom-out 7s ease infinite;
 }
 
 @keyframes zoom-in-zoom-out {
