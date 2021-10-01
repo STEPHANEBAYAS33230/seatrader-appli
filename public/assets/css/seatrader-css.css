@@ -1823,7 +1823,7 @@ responsive
   font-size: 15px;
 }
 .zoom-in-out-box {
-
+  justify-content: center;
   width: 324px;
   height:307px;
   background: #4978fb;
