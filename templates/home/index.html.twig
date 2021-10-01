@@ -493,7 +493,7 @@
             <div class="col-lg-4">
                 <div class="chef-item">
                     <div class="thumb">
-                        <img  src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
+                        <img  class="animLogistique" src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
                     </div>
                     <div class="down-content">
                         <h4>STEF</h4>
@@ -508,7 +508,7 @@
                         <p>
                             les livraisons
                         </p>
-                        <img src="{{ asset('assets/images/logis-02.jpg') }}" alt="les livraisons">
+                        <img x src="{{ asset('assets/images/logis-02.jpg') }}" alt="les livraisons">
                     </div>
                     <div class="down-content textelogistique">
                         <h6>LA LIVRAISON S'EFFECTUE EN A pour B SUR TOUTE LA FRANCE<br></h6>
@@ -521,7 +521,7 @@
                     <div class="thumb">
 
 
-                        <img src="{{ asset('assets/images/logis-03.jpg') }}" alt="delanchy">
+                        <img class="animLogistique" src="{{ asset('assets/images/logis-03.jpg') }}" alt="delanchy">
                     </div>
                     <div class="down-content">
                         <h4>DELANCHY</h4>
@@ -675,9 +675,11 @@
 <!-- Global Init -->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script>
+    let tailleLogis=0;
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.49&fp-y=.60&fp-z=";
     let zoomx=0;
     setInterval("zoomer()",100);
+    setInterval("animlogistique",2000);
     $(function() {
         var selectedClass = "";
         $("p").click(function(){
@@ -708,6 +710,17 @@
     }
     function carre(idi$) {
         document.getElementById(idi$).style="clip-path:ellipse(100% 100%);";
+    }
+    function animlogistique() {
+        if (tailleLogis==0) {
+            document.getElementsByClassName("animLogistique").style="width: 110%; heigth: 110%;";
+            tailleLogis=1;
+        }
+        else if (tailleLogis==1) {
+            document.getElementsByClassName("animLogistique").style="width: 110%; heigth: 110%;";
+            tailleLogis=0;
+
+        }
     }
 </script>
 </body>
