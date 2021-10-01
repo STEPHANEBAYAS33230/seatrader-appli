@@ -492,8 +492,8 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="chef-item">
-                    <div class="thumb animLogistique">
-                        <img  class="" src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
+                    <div class="thumb">
+                        <img  class="animLogistique" src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
                     </div>
                     <div class="down-content">
                         <h4>STEF</h4>
@@ -518,10 +518,10 @@
             </div>
             <div class="col-lg-4">
                 <div class="chef-item">
-                    <div class="thumb animLogistique">
+                    <div class="thumb">
 
 
-                        <img class="" src="{{ asset('assets/images/logis-03.jpg') }}" alt="delanchy">
+                        <img class="animLogistique" src="{{ asset('assets/images/logis-03.jpg') }}" alt="delanchy">
                     </div>
                     <div class="down-content">
                         <h4>DELANCHY</h4>
@@ -679,7 +679,7 @@
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.49&fp-y=.60&fp-z=";
     let zoomx=0;
     setInterval("zoomer()",100);
-    setInterval("animlogistique",2000);
+    setInterval("animlogistique()",2000);
     $(function() {
         var selectedClass = "";
         $("p").click(function(){
