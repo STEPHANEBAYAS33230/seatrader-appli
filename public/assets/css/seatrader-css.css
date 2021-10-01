@@ -1833,11 +1833,17 @@ responsive
 @keyframes zoom-in-zoom-out {
   0% {
     transform: scale(1, 1);
+    justify-content: center;
+
   }
   50% {
     transform: scale(0.8, 0.8);
+    justify-content: center;
+
   }
   100% {
     transform: scale(1, 1);
+    justify-content: center;
+
   }
 }
