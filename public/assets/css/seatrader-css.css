@@ -1824,8 +1824,8 @@ responsive
 }
 .zoom-in-out-box {
 
-  width: 324px;
-  height:308px;
+  width: 292px;
+  height:269px;
   background: #f50057;
   animation: zoom-in-zoom-out 3s ease infinite;
 }
