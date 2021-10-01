@@ -713,13 +713,16 @@
     }
     function animlogistique() {
         if (tailleLogis==0) {
-            document.getElementsByClassName("animLogistique").style="width: 360px; height: 342px;";
+            document.getElementsByClassName("animLogistique").style.width="360px";
+            document.getElementsByClassName("animLogistique").style.height="342px";
             tailleLogis=1;
         }
         else  {
-            document.getElementsByClassName("animLogistique").style="width: 396px; height: 377px;";
+            document.getElementsByClassName("animLogistique").style.width="396px";
+            document.getElementsByClassName("animLogistique").style.height="377px";
+
             tailleLogis=0;
-            alert(tailleLogis);
+           // alert(tailleLogis);
         }
     }
 </script>
