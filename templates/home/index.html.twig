@@ -492,8 +492,8 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="chef-item">
-                    <div class="thumb">
-                        <img  class="animLogistique" src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
+                    <div class="thumb zoom-in-out-box">
+                        <img  src="{{ asset('assets/images/logis-01.jpg') }}" alt="stef">
                     </div>
                     <div class="down-content">
                         <h4>STEF</h4>
@@ -518,10 +518,10 @@
             </div>
             <div class="col-lg-4">
                 <div class="chef-item">
-                    <div class="thumb">
+                    <div class="thumb zoom-in-out-box">
 
 
-                        <img class="animLogistique" src="{{ asset('assets/images/logis-03.jpg') }}" alt="delanchy">
+                        <img  src="{{ asset('assets/images/logis-03.jpg') }}" alt="delanchy">
                     </div>
                     <div class="down-content">
                         <h4>DELANCHY</h4>
@@ -711,20 +711,7 @@
     function carre(idi$) {
         document.getElementById(idi$).style="clip-path:ellipse(100% 100%);";
     }
-    function animlogistique() {
-        if (tailleLogis==0) {
-            document.getElementsByClassName("animLogistique").style.width="360px";
-            document.getElementsByClassName("animLogistique").style.height="342px";
-            tailleLogis=1;
-        }
-        else  {
-            document.getElementsByClassName("animLogistique").style.width="396px";
-            document.getElementsByClassName("animLogistique").style.height="377px";
 
-            tailleLogis=0;
-           // alert(tailleLogis);
-        }
-    }
 </script>
 </body>
 </html>
