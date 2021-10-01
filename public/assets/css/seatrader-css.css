@@ -1823,7 +1823,7 @@ responsive
   font-size: 15px;
 }
 .zoom-in-out-box {
-  justify-content: center;
+  margin: 5px;
   width: 324px;
   height:307px;
   background: #4978fb;
@@ -1833,17 +1833,11 @@ responsive
 @keyframes zoom-in-zoom-out {
   0% {
     transform: scale(1, 1);
-    justify-content: center;
-
   }
   50% {
     transform: scale(0.8, 0.8);
-    justify-content: center;
-
   }
   100% {
     transform: scale(1, 1);
-    justify-content: center;
-
   }
 }
