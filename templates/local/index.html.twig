@@ -8,7 +8,7 @@
  {% endblock %}
 
 {% block main %}
-    {% if is_granted('ROLE_USER') %}
+
         <div id="infoposition">POSITION</div>
         <script>
             function maPosition(position) {
@@ -53,5 +53,5 @@
             }
             //document.getElementById("infoposition").innerHTML = info;
         </script>
-    {% endif %}
+
 {% endblock %}
