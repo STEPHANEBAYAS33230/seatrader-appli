@@ -38,7 +38,7 @@
                 var p1 = new google.maps.LatLng(oldLat,oldLong);
                 var p2 = new google.maps.LatLng(Nlat, Nlong);
                 let p=(google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
-                distanceParcours=distanceParcours+p;//distance(oldLong,oldLat,Nlong,Nlat);
+                distanceParcours=distanceParcours+distance(oldLong,oldLat,Nlong,Nlat);
                 document.getElementById("infoposition").innerHTML = infopos;
                 document.getElementById("infoposition2").innerHTML = "dist: "+distanceParcours;
                 oldLat=Nlat;
