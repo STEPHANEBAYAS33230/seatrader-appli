@@ -42,7 +42,7 @@
                 oldLong=Nlong;
             }
             function alertpos(){
-                navigator.geolocation.getCurrentPosition(maPosition, erreurPosition, false, 5000);
+                navigator.geolocation.getCurrentPosition(maPosition, erreurPosition, { enableHighAccuracy: false, timeout: 5000});
             }
             function surveillePosition(position) {
                 let infopos = "Position déterminée :\n";
