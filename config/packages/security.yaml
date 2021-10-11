@@ -42,6 +42,7 @@ security:
         - { path: ^/, roles: PUBLIC_ACCESS,requires_channel: https } #URL autorisé au visiteur anonymous
         - { path: ^/login, roles: PUBLIC_ACCESS,requires_channel: https} #URL autorisé au visiteur anonymous
         - { path: ^/login-/, roles: PUBLIC_ACCESS,requires_channel: https } #URL autorisé au visiteur anonymous
+        - { path: ^/local, roles: PUBLIC_ACCESS,requires_channel: https} #URL autorisé au visiteur anonymous
         - { path: ^/admin, roles: ROLE_ADMIN,requires_channel: https } #URL DEFINI POUR ROLE ADMIN
         - { path: ^/monAppli, roles:  [ ROLE_ADMIN, ROLE_USER],requires_channel: https } #URL DEFINI POUR ROLE USER
 
