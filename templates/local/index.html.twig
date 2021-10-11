@@ -16,18 +16,20 @@
         </div>
     </div>
         <script>
+            setInterval(alertpos,5000);
             function maPosition(position) {
                 let infopos = "Position déterminée :\n";
-                alert("-----"+position.coords.latitude);
+
                 infopos += "Latitude : "+position.coords.latitude +"\n";
                 infopos += "Longitude: "+position.coords.longitude+"\n";
                 infopos += "Altitude : "+position.coords.altitude +"\n";
                 document.getElementById("infoposition").innerHTML = infopos;
             }
-
-            if(navigator.geolocation) {alert("pos");
+            function alertpos(){
+            if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(maPosition);
-            }
+            }}
+
             // Fonction de callback en cas de succès
             function surveillePosition(position) {
                 let infopos = "Position déterminée :\n";
