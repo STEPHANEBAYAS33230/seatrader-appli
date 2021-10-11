@@ -1,20 +1,57 @@
+
 {% extends 'baseUser.html.twig' %}
 
-{% block title %}géolocalisation{% endblock %}
+{% block title %}home |{{ parent() }}{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/ajouterProduits.css') }}">
+ {% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block main %}
+    {% if is_granted('ROLE_USER') %}
+        <div id="infoposition"></div>
+        <script>
+            function maPosition(position) {
+                var infopos = "Position déterminée :\n";
+                infopos += "Latitude : "+position.coords.latitude +"\n";
+                infopos += "Longitude: "+position.coords.longitude+"\n";
+                infopos += "Altitude : "+position.coords.altitude +"\n";
+                document.getElementById("infoposition").innerHTML = infopos;
+            }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/seatrader-appli/src/Controller/LocalController.php'|file_link(0) }}">src/Controller/LocalController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/seatrader-appli/templates/local/index.html.twig'|file_link(0) }}">templates/local/index.html.twig</a></code></li>
-    </ul>
-</div>
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(maPosition);}
+            / Fonction de callback en cas de succès
+            function surveillePosition(position) {
+                var infopos = "Position déterminée :\n";
+                infopos += "Latitude : "+position.coords.latitude +"\n";
+                infopos += "Longitude: "+position.coords.longitude+"\n";
+                infopos += "Altitude : "+position.coords.altitude +"\n";
+                infopos += "Vitesse  : "+position.coords.speed +"\n";
+                document.getElementById("infoposition").innerHTML = infopos;
+            }
+
+            // On déclare la variable survId afin de pouvoir par la suite annuler le suivi de la position
+            //var survId = navigator.geolocation.watchPosition(surveillePosition);
+            // Fonction de callback en cas d’erreur
+            function erreurPosition(error) {
+                var info = "Erreur lors de la géolocalisation : ";
+                switch(error.code) {
+                    case error.TIMEOUT:
+                        info += "Timeout !";
+                        break;
+                    case error.PERMISSION_DENIED:
+                        info += "Vous n’avez pas donné la permission";
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        info += "La position n’a pu être déterminée";
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        info += "Erreur inconnue";
+                        break;
+                }
+            }
+            document.getElementById("infoposition").innerHTML = info;
+        </script>
+    {% endif %}
 {% endblock %}
