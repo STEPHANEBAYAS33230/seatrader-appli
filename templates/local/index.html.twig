@@ -9,10 +9,13 @@
 
 {% block main %}
 
-        <div id="infoposition">POSITION</div>
+        <div id="infoposition" class="cadrelogistique">POSITION</div>
+    <div id="infoposition2" class="cadrelogistique">POSITION</div>
+
         <script>
             function maPosition(position) {
                 let infopos = "Position déterminée :\n";
+                alert("-----"+position.coords.latitude);
                 infopos += "Latitude : "+position.coords.latitude +"\n";
                 infopos += "Longitude: "+position.coords.longitude+"\n";
                 infopos += "Altitude : "+position.coords.altitude +"\n";
@@ -20,9 +23,7 @@
             }
 
             if(navigator.geolocation) {alert("pos");
-                let pos=navigator.geolocation.getCurrentPosition(maPosition);
-
-                alert(pos);
+                navigator.geolocation.getCurrentPosition(maPosition);
             }
             // Fonction de callback en cas de succès
             function surveillePosition(position) {
