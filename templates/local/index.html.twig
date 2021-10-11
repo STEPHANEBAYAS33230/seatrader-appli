@@ -20,7 +20,9 @@
             let oldLat=0;
             let oldLong=0;
             distanceParcours=0;
-            setInterval(alertpos, 5000);
+            if(navigator.geolocation) {
+                setInterval(alertpos, 5000);
+            }
             function maPosition(position) {
                 let infopos = "Position déterminée :\n";
                 let Nlat=position.coords.latitude;
@@ -39,10 +41,7 @@
                 oldLong=Nlong;
             }
             function alertpos(){
-               // if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(maPosition);}
-            //}
-            // Fonction de callback en cas de succès
             function surveillePosition(position) {
                 let infopos = "Position déterminée :\n";
                 infopos += "Latitude : "+position.coords.latitude +"\n";
