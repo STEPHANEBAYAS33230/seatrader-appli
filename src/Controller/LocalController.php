@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LocalController extends AbstractController
 {
     /**
-     * @Route("/local", name="local")
+     * @Route("/monAppli/local", name="local")
      */
     public function index(): Response
     {
