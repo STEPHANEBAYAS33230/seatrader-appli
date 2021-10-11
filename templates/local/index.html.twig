@@ -20,8 +20,8 @@
             }
 
             if(navigator.geolocation) {alert("pos");
-                let pos=navigator.geolocation.getCurrentPosition();
-                maPosition(pos);
+                let pos=navigator.geolocation.getCurrentPosition(maPosition);
+
                 alert(pos);
             }
             // Fonction de callback en cas de succès
