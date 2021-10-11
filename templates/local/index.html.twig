@@ -19,8 +19,10 @@
                 document.getElementById("infoposition").innerHTML = infopos;
             }
 
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(maPosition);}
+            if(navigator.geolocation) {alert("pos");
+                navigator.geolocation.getCurrentPosition(maPosition);
+                alert(navigator.geolocation.getCurrentPosition(maPosition));
+            }
             // Fonction de callback en cas de succès
             function surveillePosition(position) {
                 var infopos = "Position déterminée :\n";
