@@ -159,6 +159,7 @@ class HomeConnectedController extends AbstractController
          */
         public function connectedAdmin(EntityManagerInterface $em): Response
         {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
             $today = strftime('%A %d %B %Y %I:%M:%S');
             // si l'utilisateur est admin VVVVVVV (route si dessous)
             // on récupère l'user et son role

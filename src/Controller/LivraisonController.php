@@ -19,6 +19,7 @@ class LivraisonController extends AbstractController
      */
     public function index( EntityManagerInterface $em): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //*******recup datejour et user
         $user=$this->getUser();
         $today = new \DateTime('now');
@@ -81,6 +82,7 @@ class LivraisonController extends AbstractController
      * @Route("/livraison/{dtt}", name="bloquer_date")
      */
     public function bloquerdate($dtt, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //$cdeRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
         $newCalendrierLiv = new CalendrierLivraison();
         $newCalendrierLiv->setDateLivraison(date_create_from_format("d-m-Y",$dtt));
@@ -104,6 +106,7 @@ class LivraisonController extends AbstractController
      * @Route("/livraison/ouvrir/{id}", name="debloquer_date")
      */
     public function debloquerdate($id, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // recupere la date
         try {
             $calendrierRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
@@ -125,6 +128,7 @@ class LivraisonController extends AbstractController
      * @Route("/livraison/blocquer/{dtt}", name="debloquer_wk")
      */
     public function debloquer_wk($dtt, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //$cdeRepo = $this->getDoctrine()->getRepository(CalendrierLivraison::class);
         $newCalendrierLiv = new CalendrierLivraison();
         $newCalendrierLiv->setDateLivraison(date_create_from_format("d-m-Y",$dtt));

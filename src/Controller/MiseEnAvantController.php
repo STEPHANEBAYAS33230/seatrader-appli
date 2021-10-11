@@ -185,6 +185,7 @@ class MiseEnAvantController extends AbstractController
      */
     public function gestionMiseEnAvan(EntityManagerInterface $em, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //recuperer toutes les mises en avant
         // on récupère l'user
         $user = $this->getUser();
@@ -219,6 +220,7 @@ class MiseEnAvantController extends AbstractController
      * @Route("/gestion-mise-en-avant/{id}", name="supprimer-misEa")
      */
     public function supprimerMiseEnAvant($id, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //****************on recupere la miseEnAvant
         try {
             $miseEnAvantRepo = $this->getDoctrine()->getRepository(MiseEnAvant::class);
@@ -252,7 +254,9 @@ class MiseEnAvantController extends AbstractController
      * @Route("/mise-en-avant/modifier/{id}", name="modifier_mise_en_avant")
      */
     public function modifierMise($id ,EntityManagerInterface $em, Request $request): Response
-    {    // on récupère l'user
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // on récupère l'user
         $user=$this->getUser();
         //****************on recupere la miseEnAvant
         try {

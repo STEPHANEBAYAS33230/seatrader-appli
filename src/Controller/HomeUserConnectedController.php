@@ -23,7 +23,9 @@ class HomeUserConnectedController extends AbstractController
      * @Route("/home/user-connected", name="home_connected_user")
      */
     public function index(EntityManagerInterface $em, Request $request): Response
-    {   $dateChoisie=null;
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $dateChoisie=null;
         $today = new \DateTime('now');
         $dtplus = new \DateTime('now');
         $dtmoins= new \DateTime('now');

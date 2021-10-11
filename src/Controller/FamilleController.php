@@ -17,6 +17,7 @@ class FamilleController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // on récupère l'user
         $user = $this->getUser();
         // recupere toutes les familles
@@ -69,8 +70,8 @@ class FamilleController extends AbstractController
      * @Route("/admin/famille/{id}", name="supprimer_famille")
      */
     public function supprimerProduit($id, EntityManagerInterface $em,Request $request){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //****************
-
         $familleRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
         $famille = $familleRepo->find($id);
         if ($famille==null) {

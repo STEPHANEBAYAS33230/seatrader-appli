@@ -27,6 +27,7 @@ class ProduitsController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // on récupère l'user
         $user=$this->getUser();
         // recupere toutes les familles
@@ -109,6 +110,7 @@ class ProduitsController extends AbstractController
      * @Route("/produits/{id}", name="supprimer_produit")
      */
     public function supprimerProduit($id, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //****************on recupere le produit
         try {
             $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
@@ -149,6 +151,7 @@ class ProduitsController extends AbstractController
      * @Route("/produits-photo/{id}", name="telecharger-photo_produit")
      */
     public function telechargerPhotoProduit($id, EntityManagerInterface $em,Request $request, SluggerInterface $slugger){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //****************on recupere le produit
         try {
             $produitRepo = $this->getDoctrine()->getRepository(Produit::class);
@@ -231,6 +234,7 @@ class ProduitsController extends AbstractController
      * @Route("/m-produits/{id}", name="modifier_produit")
      */
     public function modifierProduit($id, EntityManagerInterface $em,Request $request){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // recupere toutes les familles
         try {
             $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);

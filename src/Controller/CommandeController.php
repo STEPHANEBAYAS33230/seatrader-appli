@@ -33,9 +33,9 @@ class CommandeController extends AbstractController
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function index(EntityManagerInterface $em, Request $request,  MailerInterface $mailer, $publicDir): Response
-    {
-
-        // recupere toutes les familles/produits
+        {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            // recupere toutes les familles/produits
         try {
             $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);
             $familleProduit = $familleProduitRepo->findAll();
@@ -597,7 +597,9 @@ class CommandeController extends AbstractController
      * @Route("/monAppli/commande-modifier/{id}", name="modifier-cde")
      */
     public function modifierCde($id, Request $request, EntityManagerInterface $em,   MailerInterface $mailer, $publicDir)
-    {    // on récupère l'user/ date today
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // on récupère l'user/ date today
         $user=$this->getUser();
         $role=$user->getRoles();
         $today = new \DateTime('now');
@@ -1077,6 +1079,7 @@ class CommandeController extends AbstractController
      */
     public function voirCdeAdmin($statut)
     {    // on récupère l'user/ date today
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user=$this->getUser();
         $today = new \DateTime('now');
         try {
@@ -1114,6 +1117,7 @@ class CommandeController extends AbstractController
      */
     public function voirUneCdeAdmin($id, EntityManagerInterface $em, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // recupere toutes les familles/produits
         try {
             $familleProduitRepo = $this->getDoctrine()->getRepository(FamilleProduit::class);

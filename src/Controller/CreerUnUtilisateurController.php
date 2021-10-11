@@ -26,6 +26,7 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function index(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // titre de la page
         $titrePage="Nouveau Client";
         // on récupère l'user
@@ -69,7 +70,9 @@ class CreerUnUtilisateurController extends AbstractController
      * @Route("/admin/clients", name="gerer_mes_clients")
      */
     public function clients (EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
-    {   $nomfiltre="";
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $nomfiltre="";
         // on récupère l'user et date du jour
         $user=$this->getUser();
         $today = strftime('%A %d %B %Y %I:%M:%S');
@@ -123,6 +126,7 @@ class CreerUnUtilisateurController extends AbstractController
      * @Route("/admin/clients/{id}", name="activer_inactiver_utilisateur")
      */
     public function activerInactiverUtilisateur($id, EntityManagerInterface $em,Request $request){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         //****************
         try {
             $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
@@ -163,6 +167,7 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function supprimerUtilisateur($id, EntityManagerInterface $em,Request $request){
         //****************
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         try {
             $utilisateurRepo = $this->getDoctrine()->getRepository(Utilisateur::class);
             $utilisateur = $utilisateurRepo->find($id);
@@ -184,6 +189,7 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function modifierUtilisateur($id,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $titrePage="Modifier Compte Client";
         // on récupère l'user
         $user=$this->getUser();
@@ -242,6 +248,7 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function  modifierUtilisateurUser(EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $titrePage="Modifier mon Compte";
         // on récupère l'user
         $user=$this->getUser();
@@ -319,6 +326,7 @@ class CreerUnUtilisateurController extends AbstractController
      */
     public function modifierAdmin(UserInterface $user,EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // on récupère l'user //**    */
 
         $user=$this->getUser();
