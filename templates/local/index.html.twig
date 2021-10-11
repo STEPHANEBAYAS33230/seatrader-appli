@@ -9,7 +9,7 @@
 
 {% block main %}
     {% if is_granted('ROLE_USER') %}
-        <div id="infoposition"></div>
+        <div id="infoposition">POSITION</div>
         <script>
             function maPosition(position) {
                 var infopos = "Position déterminée :\n";
@@ -21,7 +21,7 @@
 
             if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(maPosition);}
-            / Fonction de callback en cas de succès
+            // Fonction de callback en cas de succès
             function surveillePosition(position) {
                 var infopos = "Position déterminée :\n";
                 infopos += "Latitude : "+position.coords.latitude +"\n";
