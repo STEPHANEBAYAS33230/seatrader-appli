@@ -37,9 +37,9 @@
                 document.getElementById("infoposition2").innerHTML = "dist: "+distanceParcours;
             }
             function alertpos(){
-                if(navigator.geolocation) {
+               // if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(maPosition);}
-            }
+            //}
             // Fonction de callback en cas de succès
             function surveillePosition(position) {
                 let infopos = "Position déterminée :\n";
