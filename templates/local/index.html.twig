@@ -17,8 +17,8 @@
         </div>
     </div>
         <script>
-            const oldLat=0;
-            const oldLong=0;
+            let oldLat=0;
+            let oldLong=0;
             distanceParcours=0;
             if(navigator.geolocation) {
                 setInterval(alertpos, 5000);
@@ -31,8 +31,8 @@
                 infopos += "Longitude: "+Nlong+"\n";
                 //infopos += "Altitude : "+position.coords.altitude +"\n";
                 if (oldLat==0 || oldLat==null && oldLong==0 || oldLong==null) {
-                    const oldLat=Nlat;
-                    const oldLong=Nlong;
+                    oldLat=Nlat;
+                    oldLong=Nlong;
                 }
                 distanceParcours=distanceParcours+distance(oldLong,oldLat,Nlong,Nlat);
                 document.getElementById("infoposition").innerHTML = infopos;
