@@ -36,7 +36,7 @@
                 }
                 distanceParcours=distanceParcours+distance(oldLong,oldLat,Nlong,Nlat);
                 document.getElementById("infoposition").innerHTML = infopos;
-                document.getElementById("infoposition").innerHTML = distanceParcours;
+                document.getElementById("infoposition2").innerHTML = "dist: "+distanceParcours;
             }
             function alertpos(){
                 navigator.geolocation.getCurrentPosition(maPosition);
