@@ -35,6 +35,8 @@
                 distanceParcours=distanceParcours+distance(oldLong,oldLat,Nlong,Nlat);
                 document.getElementById("infoposition").innerHTML = infopos;
                 document.getElementById("infoposition2").innerHTML = "dist: "+distanceParcours;
+                oldLat=Nlat;
+                oldLong=Nlong;
             }
             function alertpos(){
                // if(navigator.geolocation) {
