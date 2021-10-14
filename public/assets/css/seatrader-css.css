@@ -1848,3 +1848,12 @@ responsive
   border-width: 5px;
   border-radius: 4px;
 }
+
+.waves {
+  display: block;
+  height: 52px;
+  background-repeat: repeat-x;
+  background-size: contain;
+  background-position: center center;
+  background-image: url("https://caluyadesign.com/wp-content/uploads/2021/06/waveset-svg-main.jpg");
+}
