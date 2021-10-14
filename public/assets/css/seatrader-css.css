@@ -1851,5 +1851,8 @@ responsive
 
 .waves svg{
   display: block;
+}
+
+.waves {
   height: 65px;
 }
