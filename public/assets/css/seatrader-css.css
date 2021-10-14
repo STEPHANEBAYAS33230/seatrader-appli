@@ -1500,6 +1500,7 @@ offers
 
 #offers {
   padding-top: 120px;
+  background-color: rgba(0,153,255,0.35);
 }
 
 #offers .section-heading {
