@@ -425,7 +425,7 @@ header
 .header-area .main-nav .nav {
   float: right;
   margin-top: 30px;
-  margin-right: 0px;
+  margin-right: 0;
   background-color: transparent;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
@@ -441,7 +441,7 @@ header
 }
 
 .header-area .main-nav .nav li:last-child {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .header-area .main-nav .nav li a {
@@ -508,9 +508,9 @@ header
 }
 
 .header-area .main-nav .nav li.submenu ul li {
-  margin-left: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .header-area .main-nav .nav li.submenu ul li a {
@@ -700,13 +700,13 @@ header
   }
   .header-area {
     background-color: #f7f7f7;
-    padding: 0px 15px;
+    padding: 0 15px;
     height: 100px;
     box-shadow: none;
     text-align: center;
   }
   .header-area .container {
-    padding: 0px;
+    padding: 0;
   }
   .header-area .logo {
     margin-left: 30px;
@@ -1849,11 +1849,6 @@ responsive
   border-radius: 4px;
 }
 
-.waves {
+.waves svg{
   display: block;
-  height: 52px;
-  background-repeat: repeat-x;
-  background-size: contain;
-  background-position: center center;
-  background-image: url(../images/wave.svg);
 }
