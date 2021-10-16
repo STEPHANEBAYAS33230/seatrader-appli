@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -17,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(
  *     fields={"nomProduit"},
  *     errorPath="nomProduit",
- *     message="ce produit existe déjà")
- *
+ *     message="ce produit existe déjà"
+ * )
  */
 class Produit
 {
@@ -31,8 +29,6 @@ class Produit
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Assert\NotBlank (message="nom du produit obligatoire")
-     * @Assert\Length (min=1, max=30)
      */
     private $nomProduit;
 
@@ -52,7 +48,6 @@ class Produit
 
     /**
      * @ORM\Column(type="string", length=15)
-     * @Assert\NotBlank (message="piece ou kg obligatoire ?")
      */
     private $pieceOuKg;
 

@@ -30,7 +30,6 @@ class FamilleProduit
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Type("string")
-     * @Assert\NotBlank (message="le nom de la famille: obligatoire")
      */
     private $nomFamille;
 
