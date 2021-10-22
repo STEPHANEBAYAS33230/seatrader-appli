@@ -1858,17 +1858,29 @@ responsive
 
 }
 .turnp {
-  animation-duration: 7s;
+  animation-duration: 10s;
   animation-name: slidein;
   animation-iteration-count: infinite;
 }
 
 @keyframes slidein {
-  from {
+  0% {
     transform: rotate(0deg); /* Équivalent à rotateZ(45deg) */
   }
 
-  to {
-    transform: rotate(360deg); /* Équivalent à rotateZ(45deg) */
+  25% {
+    transform: rotate(45deg); /* Équivalent à rotateZ(45deg) */
+  }
+
+  50% {
+    transform: rotate(0deg); /* Équivalent à rotateZ(45deg) */
+  }
+
+  75% {
+    transform: rotate(-45deg); /* Équivalent à rotateZ(45deg) */
+  }
+
+  100% {
+    transform: rotate(0deg); /* Équivalent à rotateZ(45deg) */
   }
 }
