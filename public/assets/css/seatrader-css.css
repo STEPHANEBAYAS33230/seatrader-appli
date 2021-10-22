@@ -1857,3 +1857,18 @@ responsive
 .waves {
 
 }
+.turnp {
+  animation-duration: 7s;
+  animation-name: slidein;
+  animation-iteration-count: infinite;
+}
+
+@keyframes slidein {
+  from {
+    transform: rotate(0deg); /* Équivalent à rotateZ(45deg) */
+  }
+
+  to {
+    transform: rotate(360deg); /* Équivalent à rotateZ(45deg) */
+  }
+}
