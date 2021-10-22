@@ -1858,7 +1858,7 @@ responsive
 
 }
 .turnp {
-  animation-duration: 10s;
+  animation-duration: 6s;
   animation-name: slidein;
   animation-iteration-count: infinite;
 }
