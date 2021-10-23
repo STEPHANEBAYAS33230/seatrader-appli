@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/aa652281aa.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Train+One&display=swap" rel="stylesheet">
     <title>SEATRADER APPLICATION</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!--
 
     site sea trader
@@ -168,7 +169,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-xs-12">
                 <div class="right-content">
-                    <div class="thumb" style="border-width: 4px; border-color:cadetblue; border-style: solid;">
+                    <div class="thumb" data-aos="fade-right" style="border-width: 4px; border-color:cadetblue; border-style: solid;">
                         <img id="imgx" src="{{ asset('assets/images/about-video-bg.jpg') }}" alt="carte des apports de peche de boulogne sur mer">
                     </div>
                 </div>
@@ -678,7 +679,9 @@
 
 <!-- Global Init -->
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+    AOS.init();
     let tailleLogis=0;
     const imageZoom="https://noam2009.imgix.net/about-video-bg.jpg?auto=compress&w=540&h=507&fit=crop&crop=focalpoint&fp-x=.49&fp-y=.60&fp-z=";
     let zoomx=0;
