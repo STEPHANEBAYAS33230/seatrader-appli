@@ -470,6 +470,11 @@
                             <div class="justify-content-center section-heading" data-aos="fade-right">
                                 <div><h2>Parmi des centaines de produits...</h2></div>
                                 <div><h2>Pour Dynamiser vos ventes...</h2></div>
+                                <div>
+                                    {%  for prod in lesproduits %}
+                                        <img style="width: 22px; height: 12px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     {% endif %}

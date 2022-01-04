@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Formulaire;
 use App\Entity\MiseEnAvant;
+use App\Entity\Produit;
 use App\Form\FormulaireType;
 use DateInterval;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,9 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, MailerInterface $mailer, Environment $twig, $publicDir): Response
     {
+        //recup des produits/pour plage opportiunités
+        $lesproduitsRepo = $this->getDoctrine()->getRepository(Produit::class);
+        $lesproduits = $lesproduitsRepo->findAll();
         //*********creation du formulaire
         $formulaire=new Formulaire();
         $formulaireForm = $this->createForm(FormulaireType::class, $formulaire);
@@ -158,6 +162,7 @@ class HomeController extends AbstractController
         //****************************************************************
         return $this->render('home/index.html.twig', [
             "miseEnAvant" => $miseEnAvant, "today"=>$today, 'formulaireForm'=>$formulaireForm->createView(),
+            "lesproduits" => $lesproduits
 
         ]);
     }
