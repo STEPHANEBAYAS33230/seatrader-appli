@@ -472,7 +472,9 @@
                                 <div><h2>Pour Dynamiser vos ventes...</h2></div>
                                 <div>
                                     {%  for prod in lesproduits %}
-                                        <img style="width: 22px; height: 12px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
+                                        {% if prod.brochureFilename!=null %}
+                                        <img style="width: 27px; height: 15px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
+                                         {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
