@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -427,70 +427,72 @@
     </div >
 </section >
 <div class="waves">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="0.10" d="M0,192L40,208C80,224,160,256,240,256C320,256,400,224,480,202.7C560,181,640,171,720,186.7C800,203,880,245,960,256C1040,267,1120,245,1200,245.3C1280,245,1360,267,1400,277.3L1440,288L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg><!-- ***** produits Ends ***** -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="0.10" d="M0,192L40,208C80,224,160,256,240,256C320,256,400,224,480,202.7C560,181,640,171,720,186.7C800,203,880,245,960,256C1040,267,1120,245,1200,245.3C1280,245,1360,267,1400,277.3L1440,288L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg><!-- ***** produits Ends ***** -->
 </div>
 <!-- ***** Menu nos opportunités ***** -->
 
- <div  class="container" id="nosOpportunites">
+<div  class="container" id="nosOpportunites">
 
-        <div class="col-12 justify-content-center">
-            <div class="row">
-                <div class="justify-content-center section-heading" data-aos="fade-right">
-                    <div><h6>Nos Opportunités </h6></div>
-                    <div><h2>Retrouvez chaque jour notre sélection</h2></div>
-                </div>
+    <div class="col-12 justify-content-center">
+        <div class="row">
+            <div class="justify-content-center section-heading" data-aos="fade-right">
+                <div><h6>Nos Opportunités </h6></div>
+                <div><h2>Retrouvez chaque jour notre sélection</h2></div>
             </div>
+        </div>
 
-            <div class="row justify-content-around">
+        <div class="row justify-content-around">
 
-                    {%  for miseEa in miseEnAvant %}
-                        <div  class="card-miseEn-Avant" >
-                            {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to right,blue, white,red);"><h4 class="raison" >{{ miseEa.raison.raison }}</h4></div>{% else %}<div style="background-color: {{ miseEa.couleur }}"><h4 class="raison" >{{ miseEa.raison.raison }}</h4></div>{% endif %}
-                            <div class="leproduit">
-                            {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
-                                {% if miseEa.produitMiseEnAvant.brochureFilename!=null %}
-                                <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
-                                {% else %}
-                                    <img style="width: 260px; height: 144px" src="{{ asset('assets/images/slide-01.jpg') }}" alt="photo banc de poissons">
-                                {% endif %}
-                            </div>
-                                <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
-                        <div class="align-items-center">
+            {%  for miseEa in miseEnAvant %}
+                <div  class="card-miseEn-Avant" >
+                    {% if miseEa.raison.raison=="PAVILLON FRANCE" %}<div style="background: linear-gradient(to right,blue, white,red);"><h4 class="raison" >{{ miseEa.raison.raison }}</h4></div>{% else %}<div style="background-color: {{ miseEa.couleur }}"><h4 class="raison" >{{ miseEa.raison.raison }}</h4></div>{% endif %}
+                    <div class="leproduit">
+                        {# <img src="{{ asset('assets/images/imageProduit/filet-cabillaud.jpg') }}" alt="cabillaud filet">#}
+                        {% if miseEa.produitMiseEnAvant.brochureFilename!=null %}
+                            <img style="width: 260px; height: 144px" src="{{ asset('uploads/brochures/' ~ miseEa.produitMiseEnAvant.brochureFilename) }}" alt="photo du produit">
+                        {% else %}
+                            <img style="width: 260px; height: 144px" src="{{ asset('assets/images/slide-01.jpg') }}" alt="photo banc de poissons">
+                        {% endif %}
+                    </div>
+                    <p class="livraisonProduit">livraison prévue le {{ miseEa.dateLivraisonMiseEnAvant |date('d-m-Y') }}</p>
+                    <div class="align-items-center">
                         <h4 class="prix" >prix: {{ miseEa.prix }} €/kg</h4>
-                        </div>
-                            <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
-                            <p class="text-center">{{ miseEa.origine }}</p>
-                            <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
-                        </div>
-                            {# % endif %#}
-                    {% endfor %}
-                    {% if miseEnAvant==null %}
-                        <div class="row">
-                            <div class="justify-content-center section-heading" data-aos="fade-right">
-                                <div><h2>Parmi des centaines de produits...</h2></div>
-                                <div><h2>Pour Dynamiser vos ventes...</h2></div>
-                                <div class="justify-content-around">
-                                    {% set nbProd=0 %}
-                                    {%  for prod in lesproduits %}
-                                        {% if prod.brochureFilename!=null %}
-                                            {% if nbProd<100 %}
+                    </div>
+                    <h3 class="text-center">{{ miseEa.produitMiseEnAvant.nomProduit }}</h3>
+                    <p class="text-center">{{ miseEa.origine }}</p>
+                    <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
+                </div>
+                {# % endif %#}
+            {% endfor %}
+            {% if miseEnAvant==null %}
+                <div class="row">
+                    <div class="justify-content-center section-heading" data-aos="fade-right">
+                        <div><h2>Parmi des centaines de produits...</h2></div>
+                        <div><h2>Pour Dynamiser vos ventes...</h2></div>
+                        <div class="justify-content-around">
+                            {% set nbProd=0 %}
+                            {%  for prod in lesproduits %}
+                                {% if prod.brochureFilename!=null %}
+                                    {% if nbProd<100 %}
+                                        <div>
                                             <img style="width: 48px; height: 30px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
-                                            {% set nbProd=nbProd+1 %}
-                                            {% endif %}
-                                        {% endif %}
+                                        </div>
+                                        {% set nbProd=nbProd+1 %}
+                                    {% endif %}
+                                {% endif %}
 
-                                    {% endfor %}
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
-                    {% endif %}
+                    </div>
+                </div>
+            {% endif %}
 
-
-            </div>
 
         </div>
 
-  </div>
+    </div>
+
+</div>
 <!--***menu passage de cde via l application de cde-->
 <div  class="container mt-5" id="nosAppli">
 
@@ -590,7 +592,7 @@
                         <h2>Coordonnées:</h2>
                     </div>
                     <p>Service administratif et comptabilité: 10 Rue Des Flots 66000 Perpignan
-                    <br>Entrepot Boulogne-Sur-Mer(62) Zone Capécure (Latitude 66)</p>
+                        <br>Entrepot Boulogne-Sur-Mer(62) Zone Capécure (Latitude 66)</p>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="phone">
@@ -629,7 +631,7 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
-                                   {#  <label for="email"></label> #}
+                                    {#  <label for="email"></label> #}
                                     {{ form_label(formulaireForm.email) }}
                                     {{ form_widget(formulaireForm.email,{'attr':{'placeholder':'Votre Email*','pattern':'[^ @]*@[^ @]*','type':'text'}}) }}
                                     {# <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Votre Email*" required="">#}
@@ -663,7 +665,7 @@
             <div class="col-lg-12 mt-2 p-1"> <!--//******carte google-->
                 <iframe class="bordureBlanche m-1" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=1100&amp;height=300&amp;hl=en&amp;q=%20+(capecure)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" width="1100" height="300" frameborder="0"></iframe> <a href='http://mapswebsite.net/fr'>MapsWebsite.net/fr</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=cb1feb2c282805ca4af54b6c73e4b5125302a7f0'></script>
             </div>
-            </div>
+        </div>
     </div>
 </section>
 <!-- ***** Reservation Area Ends ***** -->
@@ -694,7 +696,7 @@
             </div>
             <div class="col-lg-3 text-center">
 
-                    <p class="text-white">©Copyright Seatrader V1.21</p>
+                <p class="text-white">©Copyright Seatrader V1.21</p>
 
             </div>
             <div class="col-lg-3 text-center">
