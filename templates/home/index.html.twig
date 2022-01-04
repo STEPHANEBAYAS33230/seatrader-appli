@@ -475,7 +475,7 @@
                                         {% if prod.brochureFilename!=null %}
                                             {% if nbProd<49 %}
                                             <img style="width: 48px; height: 30px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
-                                            {% nbProd=nbProd+1 %}
+                                            {% set nbProd=nbProd+1 %}
                                             {% endif %}
                                         {% endif %}
 
