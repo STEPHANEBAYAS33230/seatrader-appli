@@ -463,7 +463,6 @@
                             <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
                         </div>
                             {# % endif %#}
-
                     {% endfor %}
                     {% if miseEnAvant==null %}
                         <div class="row">
@@ -471,10 +470,13 @@
                                 <div><h2>Parmi des centaines de produits...</h2></div>
                                 <div><h2>Pour Dynamiser vos ventes...</h2></div>
                                 <div>
+                                    {% set nbProd=0 %}
                                     {%  for prod in lesproduits %}
-                                        {% if prod.brochureFilename!=null %}
-                                        <img style="width: 38px; height: 21px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
-                                         {% endif %}
+                                        {% if prod.brochureFilename!=null and nbProd<49%}
+                                            <img style="width: 48px; height: 30px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
+                                            {% nbProd=nbProd+1 %}
+                                        {% endif %}
+
                                     {% endfor %}
                                 </div>
                             </div>
@@ -488,9 +490,9 @@
 
   </div>
 <!--***menu passage de cde via l application de cde-->
-<div  class="container" id="nosOpportunites">
+<div  class="container" id="nosAppli">
 
-    <div class="col-12 justify-content-center">
+    <div class="col-12 justify-content-center mt-6">
         <div class="row">
             <div class="justify-content-center section-heading" data-aos="fade-right">
                 <div><h6>Découvrez Notre application de commande</h6></div>
