@@ -472,9 +472,11 @@
                                 <div>
                                     {% set nbProd=0 %}
                                     {%  for prod in lesproduits %}
-                                        {% if prod.brochureFilename!=null and nbProd<49%}
+                                        {% if prod.brochureFilename!=null %}
+                                            {% if nbProd<49 %}
                                             <img style="width: 48px; height: 30px; margin: 1px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
                                             {% nbProd=nbProd+1 %}
+                                            {% endif %}
                                         {% endif %}
 
                                     {% endfor %}
