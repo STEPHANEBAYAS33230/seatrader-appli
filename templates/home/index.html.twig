@@ -462,6 +462,7 @@
                     <p class="text-center">{{ miseEa.origine }}</p>
                     <p class="text-center">colis par {{ miseEa.colisage }} {{ miseEa.produitMiseEnAvant.pieceOuKg }}</p>
                 </div>
+        </div>
                 {# % endif %#}
             {% endfor %}
             {% if miseEnAvant==null %}
@@ -469,24 +470,21 @@
                     <div class="justify-content-around section-heading col-xl-12" data-aos="fade-right">
                         <div><h2>Parmi des centaines de produits...</h2></div>
                         <div><h2>Pour Dynamiser vos ventes...</h2></div>
-                            {% set nbProd=0 %}
-                            {%  for prod in lesproduits %}
-                                {% if prod.brochureFilename!=null %}
-                                    {% if nbProd<65 %}
+                        {% set nbProd=0 %}
+                        {%  for prod in lesproduits %}
+                            {% if prod.brochureFilename!=null %}
+                                {% if nbProd<65 %}
 
-                                            <img style="width: 48px; height: 30px; margin: 5px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
+                                    <img style="width: 48px; height: 30px; margin: 5px;" class="" src="{{ asset('uploads/brochures/' ~ prod.brochureFilename) }}" alt="photo du produit:{{ prod.nomProduit }}">
 
-                                        {% set nbProd=nbProd+1 %}
-                                    {% endif %}
+                                    {% set nbProd=nbProd+1 %}
                                 {% endif %}
+                            {% endif %}
 
-                            {% endfor %}
+                        {% endfor %}
                     </div>
                 </div>
             {% endif %}
-
-
-        </div>
 
     </div>
 
