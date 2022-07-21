@@ -705,6 +705,8 @@
 <script>
     var mymusic = document.createElement("audio");
     var srce1 = "{{ asset('assets/js/sonMer.mp3') }}";
+    var volume=5;
+    mymusic.volume = volume / 10;
     mymusic.src =srce1;
     mymusic.play();
 </script>
