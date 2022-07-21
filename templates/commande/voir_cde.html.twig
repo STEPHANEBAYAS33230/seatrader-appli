@@ -51,7 +51,7 @@
                             {% set nbreLigne=0 %}{% set nbreColis=0 %} {# creation de deux variables nombre de colis et nombre de ligne de la cde #}
                             {% for ligne in cdeAJ.object %} {# on boucle pour caculer le nombre de ligne et colis de la cde #}
                                 {% if ligne.quantite>0 %} {# si quantité>0 on ajoute une ligne et on ajoute le nbre de colis(quantité) de cette ligne de cde #}
-                                    {% set nbreLigne=nbreLigne+1 %} {% set nbreColis=nbreColis+ligne.quantite %}
+                                     {% set nbreLigne=nbreLigne+1 %} {% set nbreColis=nbreColis+ligne.quantite %}
                                 {% endif %}
                             {% endfor %}
                             <td class="lobelo">{{ nbreLigne }}</td>

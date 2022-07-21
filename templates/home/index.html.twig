@@ -701,7 +701,14 @@
         </div>
     </div>
 </footer>
-
+<!--son vagues -->
+<script>
+    var mymusic = document.createElement("audio");
+    var monvolume = 10;
+    var srce1 = "{{ asset('assets/js/sonMer.mp3') }}";
+    mymusic.volume = monvolume / 10;
+    mymusic.play();
+</script>
 <!-- jQuery -->
 <script src="{{ asset('assets/js/jquery-2.1.0.min.js') }}"></script>
 
